@@ -72,7 +72,7 @@ const Preview = () => {
             <div>
               <p className="label mb-1 text-zinc-500">Live preview</p>
               <p className="text-xs text-zinc-500">
-                Click your name or headline to edit directly.
+                Click any profile text to edit directly.
               </p>
             </div>
           </div>
