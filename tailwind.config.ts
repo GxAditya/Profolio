@@ -57,6 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        dropzone: {
+          DEFAULT: "hsl(var(--dropzone))",
+          border: "hsl(var(--dropzone-border))",
+          active: "hsl(var(--dropzone-active))",
+          "active-border": "hsl(var(--dropzone-active-border))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
