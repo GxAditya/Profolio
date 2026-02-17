@@ -1,23 +1,36 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, FileText, Loader2 } from "lucide-react";
+import { Upload, FileText, Loader2, CheckCircle2 } from "lucide-react";
+import { parseLinkedInPDF } from "@/lib/parseLinkedInPDF";
+import { useResume } from "@/context/ResumeContext";
 
 const UploadSection = () => {
   const [parsing, setParsing] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [parsed, setParsed] = useState(false);
+  const { setProfile } = useResume();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length === 0) return;
-    const file = acceptedFiles[0];
-    console.log("Uploaded file:", file);
-    setFileName(file.name);
-    setParsing(true);
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      if (acceptedFiles.length === 0) return;
+      const file = acceptedFiles[0];
+      setFileName(file.name);
+      setParsing(true);
+      setParsed(false);
 
-    // Simulate parsing
-    setTimeout(() => {
-      setParsing(false);
-    }, 2500);
-  }, []);
+      try {
+        const profile = await parseLinkedInPDF(file);
+        console.log("Parsed profile:", profile);
+        setProfile(profile);
+        setParsed(true);
+      } catch (err) {
+        console.error("Parse failed:", err);
+      } finally {
+        setParsing(false);
+      }
+    },
+    [setProfile]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -45,6 +58,14 @@ const UploadSection = () => {
             <Loader2 className="h-10 w-10 animate-spin text-primary" />
             <p className="text-sm font-medium text-muted-foreground">
               Parsing <span className="text-foreground">{fileName}</span>...
+            </p>
+          </div>
+        ) : parsed && fileName ? (
+          <div className="flex flex-col items-center gap-3">
+            <CheckCircle2 className="h-10 w-10 text-green-600" />
+            <p className="text-sm font-medium text-foreground">{fileName}</p>
+            <p className="text-xs text-muted-foreground">
+              Parsed successfully · Drop another file to replace
             </p>
           </div>
         ) : fileName ? (
