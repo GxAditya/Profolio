@@ -20,30 +20,39 @@ const Index = () => {
   const ActiveComponent = templateMap[activeTemplate];
 
   return (
-    <div className="min-h-screen bg-background text-foreground grain scanlines">
-      <div className="mx-auto max-w-6xl">
-        <HeroSection />
+    <div className="paper-grain relative min-h-screen overflow-hidden bg-background text-foreground">
+      <div className="relative mx-auto max-w-7xl pb-20">
+        <HeroSection hasProfile={Boolean(profile)} />
         <StepsSection />
         <UploadSection />
 
         {profile && (
-          <section className="mx-auto max-w-5xl px-6 pb-24">
-            <h2 className="mb-3 text-center text-sm font-medium uppercase tracking-[0.22em] text-zinc-500">
-              Templates
-            </h2>
-            <p className="mb-8 text-center text-2xl font-semibold tracking-tight text-zinc-100">
-              Choose how your story is presented
-            </p>
-            <div className="mx-auto max-w-lg">
-              <TemplateSelector
-                active={activeTemplate}
-                onChange={setActiveTemplate}
-                label="Portfolio template"
-              />
+          <section className="mx-auto max-w-6xl px-6 pb-10">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="kicker text-foreground/55">Template Lab</p>
+                <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
+                  Choose your portfolio direction
+                </h2>
+              </div>
+              <p className="max-w-sm text-sm leading-relaxed text-foreground/70">
+                This is a direct rendering of your parsed profile. Switch styles and continue in
+                live preview for inline edits.
+              </p>
             </div>
 
-            <div className="mt-10 rounded-3xl border border-zinc-800 bg-black/60 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.85)]">
-              <ActiveComponent profile={profile} />
+            <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
+              <aside className="page-panel rounded-[1.8rem] p-5 sm:p-6 lg:sticky lg:top-6 lg:h-fit">
+                <TemplateSelector
+                  active={activeTemplate}
+                  onChange={setActiveTemplate}
+                  label="Portfolio template"
+                />
+              </aside>
+
+              <div className="page-panel-strong rounded-[2rem] p-4 sm:p-5">
+                <ActiveComponent profile={profile} />
+              </div>
             </div>
           </section>
         )}

@@ -1,4 +1,5 @@
-import { ChevronDown, Layout, Columns2, Palette } from "lucide-react";
+import { Columns2, LayoutTemplate, Palette } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export type TemplateName = "minimal" | "professional" | "creative";
 
@@ -9,24 +10,33 @@ interface Props {
   label?: string;
 }
 
-const templates: { name: TemplateName; label: string; icon: typeof Layout; desc: string }[] = [
+const templates: {
+  name: TemplateName;
+  label: string;
+  icon: typeof LayoutTemplate;
+  desc: string;
+  mood: string;
+}[] = [
   {
     name: "minimal",
-    label: "Editorial Portfolio",
-    icon: Layout,
-    desc: "Warm paper, narrative-first storytelling",
+    label: "Editorial",
+    icon: LayoutTemplate,
+    desc: "Story-first layout with warm paper tones",
+    mood: "Calm",
   },
   {
     name: "professional",
-    label: "Product Portfolio",
+    label: "Studio",
     icon: Columns2,
-    desc: "Studio-grade dark mode with structured case blocks",
+    desc: "Structured dark case-study presentation",
+    mood: "Strategic",
   },
   {
     name: "creative",
-    label: "Signal Portfolio",
+    label: "Signal",
     icon: Palette,
-    desc: "High-contrast experimental page with bold type",
+    desc: "Bold high-contrast system with expressive blocks",
+    mood: "Energetic",
   },
 ];
 
@@ -36,29 +46,49 @@ const TemplateSelector = ({
   className = "",
   label = "Template style",
 }: Props) => {
-  const activeTemplate = templates.find((template) => template.name === active) ?? templates[0];
-  const ActiveIcon = activeTemplate.icon;
-
   return (
-    <div className={`w-full ${className}`}>
-      <label className="label mb-2 block text-zinc-500">{label}</label>
-      <div className="relative">
-        <select
-          value={active}
-          onChange={(event) => onChange(event.target.value as TemplateName)}
-          className="w-full appearance-none rounded-2xl border border-zinc-800/80 bg-zinc-950/85 px-4 py-3 pr-10 text-sm font-semibold text-zinc-100 outline-none transition-colors hover:border-primary/60 focus:border-primary/70"
-        >
-          {templates.map((template) => (
-            <option key={template.name} value={template.name}>
-              {template.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-      </div>
-      <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
-        <ActiveIcon className="h-3.5 w-3.5 text-primary" />
-        <span>{activeTemplate.desc}</span>
+    <div className={cn("w-full", className)}>
+      <p className="kicker mb-3 text-foreground/55">{label}</p>
+      <div className="grid gap-3">
+        {templates.map((template) => {
+          const Icon = template.icon;
+          const selected = template.name === active;
+
+          return (
+            <button
+              key={template.name}
+              type="button"
+              onClick={() => onChange(template.name)}
+              className={cn(
+                "spring-hover rounded-2xl border bg-card px-4 py-3 text-left transition-colors",
+                selected
+                  ? "border-primary/70 bg-primary/10 shadow-[0_10px_24px_rgba(153,64,35,0.16)]"
+                  : "border-foreground/12 hover:border-primary/45"
+              )}
+            >
+              <div className="flex items-start gap-3">
+                <span
+                  className={cn(
+                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border",
+                    selected
+                      ? "border-primary/30 bg-primary text-primary-foreground"
+                      : "border-foreground/15 bg-card text-foreground/70"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+
+                <span className="block">
+                  <span className="block text-sm font-semibold text-foreground">{template.label}</span>
+                  <span className="mt-1 block text-xs text-foreground/70">{template.desc}</span>
+                  <span className="mono mt-2 inline-block text-[0.64rem] uppercase tracking-[0.16em] text-primary">
+                    {template.mood}
+                  </span>
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
