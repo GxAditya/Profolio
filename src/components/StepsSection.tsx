@@ -21,21 +21,29 @@ const steps = [
 
 const StepsSection = () => {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-20">
-      <h2 className="mb-12 text-center text-2xl font-semibold tracking-tight md:text-3xl">
-        How it works
-      </h2>
-      <div className="grid gap-8 md:grid-cols-3">
+    <section className="mx-auto max-w-5xl px-6 py-16">
+      <div className="mb-10 text-center">
+        <p className="label mb-2 text-zinc-500">Pipeline</p>
+        <h2 className="text-2xl font-semibold tracking-tight text-zinc-100 md:text-3xl">
+          From LinkedIn export to live site in three steps
+        </h2>
+      </div>
+      <div className="grid gap-6 md:grid-cols-3">
         {steps.map((step, i) => (
-          <div key={i} className="flex flex-col items-center text-center">
-            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+          <div
+            key={i}
+            className="spring-hover glass-soft flex flex-col items-center rounded-2xl border border-zinc-800/80 px-5 py-6 text-center"
+          >
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
               <step.icon className="h-5 w-5" />
             </div>
             <span className="mb-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Step {i + 1}
             </span>
-            <h3 className="mb-2 text-lg font-semibold">{step.title}</h3>
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <h3 className="mb-2 text-base font-semibold text-zinc-100">
+              {step.title}
+            </h3>
+            <p className="text-sm leading-relaxed text-zinc-400">
               {step.description}
             </p>
           </div>
