@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Copy, Expand, Loader2, Minimize } from "lucide-react";
+import { ArrowLeft, Check, Copy, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { type TemplateName } from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
@@ -51,9 +51,7 @@ const tbSecondary =
 const Preview = () => {
   const { profile, updateProfile } = useResume();
   const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
-  const [fullscreen, setFullscreen] = useState(false);
-  const [hideAddSectionControlsInFullscreen, setHideAddSectionControlsInFullscreen] =
-    useState(false);
+  const [hideAddSectionControls, setHideAddSectionControls] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -90,20 +88,6 @@ const Preview = () => {
       setPublishError("Couldn't copy the link. Please copy it manually.");
     }
   };
-
-  useEffect(() => {
-    if (!fullscreen) return;
-    const previous = document.body.style.overflow;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setFullscreen(false);
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = previous;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [fullscreen]);
 
   useEffect(() => {
     if (!copied) return;
@@ -144,9 +128,9 @@ const Preview = () => {
     );
   }
 
-  /* ── Floating toolbar (shared between normal + fullscreen) ── */
-  const renderToolbar = (isFullscreenMode: boolean) => (
-    <div className={`pointer-events-none fixed inset-x-0 top-0 z-[${isFullscreenMode ? 71 : 60}] flex justify-center p-4`}>
+  /* ── Floating toolbar ── */
+  const renderToolbar = () => (
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center p-4">
       <div className="pointer-events-auto flex flex-wrap items-center gap-1.5 rounded-2xl border border-white/[0.1] bg-black/60 px-3 py-2 shadow-[0_16px_48px_rgba(0,0,0,0.45)] backdrop-blur-xl">
         {templateOptions.map((option) => (
           <button
@@ -171,42 +155,18 @@ const Preview = () => {
           {publishing ? "Publishing..." : publishedUrl ? "Republish" : "Publish"}
         </button>
 
-        {!isFullscreenMode && (
-          <button
-            type="button"
-            onClick={() => setFullscreen(true)}
-            className={tbSecondary}
-          >
-            <Expand className="h-3.5 w-3.5" />
-            Full Screen
-          </button>
-        )}
-
         <button
           type="button"
-          onClick={() =>
-            setHideAddSectionControlsInFullscreen((prev) => !prev)
-          }
+          onClick={() => setHideAddSectionControls((prev) => !prev)}
           className={tbSecondary}
         >
-          {hideAddSectionControlsInFullscreen ? "Show Sections" : "Hide Sections"}
+          {hideAddSectionControls ? "Show Sections" : "Hide Sections"}
         </button>
 
-        {isFullscreenMode ? (
-          <button
-            type="button"
-            onClick={() => setFullscreen(false)}
-            className={tbSecondary}
-          >
-            <Minimize className="h-3.5 w-3.5" />
-            Exit
-          </button>
-        ) : (
-          <Link to="/linkedin" className={tbSecondary}>
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back
-          </Link>
-        )}
+        <Link to="/linkedin" className={tbSecondary}>
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Back
+        </Link>
       </div>
     </div>
   );
@@ -251,26 +211,13 @@ const Preview = () => {
         <ActiveComponent
           profile={profile}
           editable
-          showAddSectionControls={!hideAddSectionControlsInFullscreen}
+          showAddSectionControls={!hideAddSectionControls}
           onProfileChange={updateProfile}
           sectionStyle="plain"
         />
-        {renderToolbar(false)}
+        {renderToolbar()}
         {renderPublishBar()}
       </div>
-
-      {fullscreen && (
-        <div className="fixed inset-0 z-[70] overflow-auto">
-          <ActiveComponent
-            profile={profile}
-            editable
-            showAddSectionControls={!hideAddSectionControlsInFullscreen}
-            onProfileChange={updateProfile}
-            sectionStyle="plain"
-          />
-          {renderToolbar(true)}
-        </div>
-      )}
     </>
   );
 };
