@@ -86,19 +86,34 @@ const workflowSteps = [
 
 const faqs = [
   {
-    question: "What can I build today?",
+    question: "How does it work?",
     answer:
-      "The LinkedIn PDF flow is fully available: upload, edit, switch templates, and export your portfolio as a clean standalone HTML file.",
+      "Export your LinkedIn profile as a PDF, upload it here, and Profolio automatically parses your experience, skills, and education. Pick a template, tweak any text inline, and download your finished portfolio.",
   },
   {
-    question: "Can I update my portfolio after exporting?",
+    question: "What gets imported from my LinkedIn PDF?",
     answer:
-      "Yes. Come back to Profolio, continue editing, pick a new template if you like, and export a fresh copy anytime.",
+      "Your name, headline, summary, work experience, education, skills, and any projects listed in your profile. You can edit or remove any field before exporting.",
   },
   {
-    question: "Who is this for?",
+    question: "Can I edit the content before exporting?",
     answer:
-      "Developers, students, and engineers who want a polished portfolio without building a site from scratch.",
+      "Yes — everything is editable inline. Click any text to update it, reorder sections, or remove items you don't want shown.",
+  },
+  {
+    question: "How do I publish my portfolio?",
+    answer:
+      "Export it as a single self-contained HTML file — no build step, no dependencies. Drop it on GitHub Pages, Netlify, Vercel, or any static host and it's live.",
+  },
+  {
+    question: "Can I switch templates after editing?",
+    answer:
+      "Yes. Your content is stored separately from the design, so you can switch between any of the available templates at any point without losing your edits.",
+  },
+  {
+    question: "Can I update my portfolio later?",
+    answer:
+      "Absolutely. Come back to Profolio, upload a fresh LinkedIn export or continue from where you left off, make your changes, and export a new copy anytime.",
   },
 ];
 

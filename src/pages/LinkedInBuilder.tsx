@@ -76,13 +76,6 @@ const LinkedInBuilder = () => {
               <ArrowLeft className="h-3.5 w-3.5" />
               Back
             </Link>
-            <Link
-              to="/preview"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-[0_0_24px_hsl(72_100%_50%_/_0.2)]"
-            >
-              <Expand className="h-3.5 w-3.5" />
-              Full Preview
-            </Link>
           </div>
         </header>
 
@@ -110,9 +103,13 @@ const LinkedInBuilder = () => {
                     Pick a template, edit inline
                   </h2>
                 </div>
-                <p className="max-w-sm text-sm leading-relaxed text-foreground/35">
-                  Changes update instantly. Jump to full-screen preview at any time.
-                </p>
+                <Link
+                  to="/preview"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-[0_0_24px_hsl(72_100%_50%_/_0.25)]"
+                >
+                  <Expand className="h-3.5 w-3.5" />
+                  Full Preview
+                </Link>
               </div>
 
               <div className="app-panel p-5 sm:p-6">
@@ -132,6 +129,20 @@ const LinkedInBuilder = () => {
                 onProfileChange={updateProfile}
                 sectionStyle="plain"
               />
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="mx-auto mt-10 max-w-5xl px-6 sm:px-10">
+              <div className="flex items-center justify-between rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-6 py-4">
+                <p className="text-sm text-foreground/40">Happy with how it looks?</p>
+                <Link
+                  to="/preview"
+                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-[0_0_24px_hsl(72_100%_50%_/_0.25)]"
+                >
+                  <Expand className="h-3.5 w-3.5" />
+                  Full Preview
+                </Link>
+              </div>
             </div>
           </section>
         )}

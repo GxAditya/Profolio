@@ -56,19 +56,6 @@ const HeroSection = () => {
 
       {/* ── Hero content ── */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-8">
-        {/* Live badge */}
-        <div
-          className="landing-reveal mb-8 inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/[0.06] px-4 py-1.5"
-        >
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-          </span>
-          <span className="text-xs font-medium tracking-wide text-primary/80">
-            LinkedIn PDF import is live
-          </span>
-        </div>
-
         {/* Headline */}
         <h1
           className="landing-reveal max-w-4xl text-center"
