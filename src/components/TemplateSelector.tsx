@@ -92,8 +92,9 @@ const TemplateSelector = ({
     <div className={cn("w-full", className)}>
       <p className="app-kicker mb-3 text-foreground/30">{label}</p>
 
-      {/* Horizontal scrollable strip — scales cleanly from 3 to 15+ templates */}
-      <div className="-mx-1 flex gap-2.5 overflow-x-auto px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {/* Wrapper with right-fade hint so users know more templates exist */}
+      <div className="relative">
+        <div className="-mx-1 flex gap-2.5 overflow-x-auto px-1 pb-2.5 [scrollbar-color:hsl(72_100%_50%_/_0.45)_hsl(0_0%_100%_/_0.05)] [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[hsl(72_100%_50%_/_0.45)] [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-white/[0.05]">
         {templates.map((template) => {
           const selected = template.name === active;
 
@@ -140,6 +141,9 @@ const TemplateSelector = ({
             </button>
           );
         })}
+        </div>
+        {/* Right-edge fade to hint at overflow */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 rounded-r-xl bg-gradient-to-l from-background/80 to-transparent" />
       </div>
     </div>
   );

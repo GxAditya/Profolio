@@ -131,42 +131,48 @@ const Preview = () => {
   /* ── Floating toolbar ── */
   const renderToolbar = () => (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center p-4">
-      <div className="pointer-events-auto flex flex-wrap items-center gap-1.5 rounded-2xl border border-white/[0.1] bg-black/60 px-3 py-2 shadow-[0_16px_48px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-        {templateOptions.map((option) => (
+      <div className="pointer-events-auto flex min-w-0 max-w-[calc(100vw-2rem)] items-center gap-1.5 rounded-2xl border border-white/[0.1] bg-black/60 px-3 py-2 shadow-[0_16px_48px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+        {/* Scrollable template list */}
+        <div className="flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto [scrollbar-color:hsl(72_100%_50%_/_0.4)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[hsl(72_100%_50%_/_0.4)] [&::-webkit-scrollbar-track]:bg-transparent pb-1">
+          {templateOptions.map((option) => (
+            <button
+              key={option.key}
+              type="button"
+              onClick={() => setActiveTemplate(option.key)}
+              className={`shrink-0 ${tbBase} ${option.key === activeTemplate ? tbActive : tbInactive}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        <span className="mx-1 h-5 w-px shrink-0 bg-white/[0.1]" />
+
+        {/* Fixed action buttons */}
+        <div className="flex shrink-0 items-center gap-1.5">
           <button
-            key={option.key}
             type="button"
-            onClick={() => setActiveTemplate(option.key)}
-            className={`${tbBase} ${option.key === activeTemplate ? tbActive : tbInactive}`}
+            onClick={handlePublish}
+            disabled={publishing}
+            className={`inline-flex items-center gap-2 ${tbBase} ${tbActive} disabled:cursor-not-allowed disabled:opacity-60`}
           >
-            {option.label}
+            {publishing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+            {publishing ? "Publishing..." : publishedUrl ? "Republish" : "Publish"}
           </button>
-        ))}
 
-        <span className="mx-1 h-5 w-px bg-white/[0.1]" />
+          <button
+            type="button"
+            onClick={() => setHideAddSectionControls((prev) => !prev)}
+            className={tbSecondary}
+          >
+            {hideAddSectionControls ? "Show Sections" : "Hide Sections"}
+          </button>
 
-        <button
-          type="button"
-          onClick={handlePublish}
-          disabled={publishing}
-          className={`inline-flex items-center gap-2 ${tbBase} ${tbActive} disabled:cursor-not-allowed disabled:opacity-60`}
-        >
-          {publishing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-          {publishing ? "Publishing..." : publishedUrl ? "Republish" : "Publish"}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setHideAddSectionControls((prev) => !prev)}
-          className={tbSecondary}
-        >
-          {hideAddSectionControls ? "Show Sections" : "Hide Sections"}
-        </button>
-
-        <Link to="/linkedin" className={tbSecondary}>
-          <ArrowLeft className="h-3.5 w-3.5" />
-          Back
-        </Link>
+          <Link to="/linkedin" className={tbSecondary}>
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Back
+          </Link>
+        </div>
       </div>
     </div>
   );
