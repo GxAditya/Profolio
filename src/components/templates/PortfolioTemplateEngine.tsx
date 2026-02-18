@@ -12,7 +12,7 @@ import type {
   ProjectLink,
 } from "@/types/linkedin";
 
-export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism";
+export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material";
 export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
@@ -330,6 +330,66 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     iconButton:
       "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.85rem] border-[2px] border-[#bfdbfe] bg-[#eff6ff] text-[#3b82f6] hover:bg-[#dbeafe]",
   },
+  material: {
+    page: "relative min-h-screen w-full bg-[#F4F6F8] text-[#1C1B1F]",
+    ambience: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(25,118,210,0.06),transparent_40%)]",
+    contentWrap: "relative px-5 pb-12 pt-5 sm:px-8 sm:pt-6",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 rounded-2xl bg-[#1565C0] px-6 py-6 shadow-[0_4px_12px_rgba(21,101,192,0.35),0_1px_3px_rgba(0,0,0,0.12)]",
+    headingKicker: "text-[0.62rem] uppercase tracking-[0.18em] text-[#90CAF9]",
+    headingName:
+      "mt-1.5 text-3xl font-medium tracking-[-0.01em] text-white [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "rounded-full bg-white/[0.15] px-4 py-1.5 text-xs font-medium tracking-[0.02em] text-white/90 backdrop-blur-sm",
+    section:
+      "rounded-2xl bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_rgba(0,0,0,0.06)] transition-shadow duration-200 hover:shadow-[0_4px_12px_rgba(0,0,0,0.10),0_2px_4px_rgba(0,0,0,0.06)]",
+    sectionDropTarget:
+      "shadow-[0_6px_20px_rgba(21,101,192,0.18),0_2px_6px_rgba(0,0,0,0.08)] ring-2 ring-[#1976D2]/40",
+    sectionHandle:
+      "mb-4 inline-flex cursor-grab items-center gap-2 rounded-full bg-[#E3F2FD] px-3 py-1.5 text-[0.62rem] font-medium uppercase tracking-[0.14em] text-[#1565C0]",
+    sectionLabel: "text-[0.6rem] uppercase tracking-[0.18em] text-[#1976D2]",
+    sectionTitle:
+      "mt-1 text-xl font-medium tracking-[-0.01em] text-[#1C1B1F] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-1.5 text-sm leading-relaxed text-[#49454F]",
+    bodyText: "text-sm leading-relaxed text-[#49454F]",
+    mutedText: "text-xs text-[#79747E]",
+    link: "font-medium text-[#1976D2] underline decoration-[#1976D2]/30 underline-offset-4 hover:decoration-[#1976D2]/70",
+    input:
+      "w-full rounded-xl border border-[#C9C5CA] bg-[#F7F2FA] px-4 py-2.5 text-sm text-[#1C1B1F] outline-none transition placeholder:text-[#79747E] focus:border-[#1976D2] focus:bg-white focus:ring-2 focus:ring-[#1976D2]/20",
+    controlPanel:
+      "mt-6 rounded-2xl bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_rgba(0,0,0,0.06)]",
+    controlPanelTitle:
+      "mt-1.5 text-lg font-medium tracking-[-0.01em] text-[#1C1B1F] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-xs font-medium text-[#49454F]",
+    heroSummary:
+      "mt-4 max-w-2xl rounded-xl bg-[#EAF2FF] p-4 text-sm leading-relaxed text-[#374151]",
+    contactCard:
+      "rounded-xl border border-[#BBDEFB] bg-[#E3F2FD] p-4",
+    skillChip:
+      "inline-flex items-center gap-1 rounded-full border border-[#1976D2]/30 bg-[#E3F2FD] pl-3 pr-1 text-[0.64rem] font-medium tracking-[0.04em] text-[#1565C0]",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#BBDEFB] text-[#1565C0] hover:bg-[#90CAF9]",
+    addChipButton:
+      "inline-flex items-center gap-1 rounded-full border border-[#1976D2]/30 bg-[#E3F2FD] px-3 py-1 text-[0.62rem] font-medium tracking-[0.04em] text-[#1565C0] hover:bg-[#BBDEFB]",
+    projectCard:
+      "relative rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_rgba(0,0,0,0.06)] transition-shadow duration-200 hover:shadow-[0_6px_16px_rgba(0,0,0,0.10),0_2px_4px_rgba(0,0,0,0.06)]",
+    educationCard:
+      "rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_rgba(0,0,0,0.06)] transition-shadow duration-200 hover:shadow-[0_6px_16px_rgba(0,0,0,0.10),0_2px_4px_rgba(0,0,0,0.06)]",
+    certificationCard:
+      "flex items-start justify-between gap-2 rounded-2xl bg-white px-4 py-3.5 text-sm text-[#1C1B1F] shadow-[0_1px_3px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)] transition-shadow duration-200 hover:shadow-[0_4px_10px_rgba(0,0,0,0.09)]",
+    customCard:
+      "relative rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_rgba(0,0,0,0.06)] transition-shadow duration-200 hover:shadow-[0_6px_16px_rgba(0,0,0,0.10),0_2px_4px_rgba(0,0,0,0.06)]",
+    customTag:
+      "rounded-full bg-[#E3F2FD] px-3 py-1 text-[0.6rem] font-medium tracking-[0.06em] text-[#1565C0]",
+    emptyState:
+      "mt-4 rounded-2xl border border-dashed border-[#C9C5CA] bg-[#FAFAFA] px-5 py-4 text-sm text-[#79747E]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 rounded-full bg-[#1976D2] px-5 py-2 text-xs font-medium uppercase tracking-[0.1em] text-white shadow-[0_2px_6px_rgba(25,118,210,0.4)] transition-shadow duration-200 hover:shadow-[0_4px_12px_rgba(25,118,210,0.5)] active:shadow-none",
+    secondaryButton:
+      "inline-flex items-center gap-1 rounded-full border border-[#1976D2]/40 bg-[#E3F2FD] px-3.5 py-1.5 text-[0.64rem] font-medium uppercase tracking-[0.08em] text-[#1565C0] hover:bg-[#BBDEFB]",
+    iconButton:
+      "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E3F2FD] text-[#1565C0] shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:bg-[#BBDEFB]",
+  },
   minimalism: {
     page: "relative min-h-screen w-full bg-white text-[#111111]",
     ambience: "pointer-events-none absolute inset-0",
@@ -409,6 +469,10 @@ const themeTypography: Record<PortfolioTheme, { body: string; heading: string }>
   minimalism: {
     body: '"Inter", "DM Sans", sans-serif',
     heading: '"Inter", "DM Sans", sans-serif',
+  },
+  material: {
+    body: '"Roboto", "Google Sans", sans-serif',
+    heading: '"Google Sans", "Roboto", sans-serif',
   },
 };
 
@@ -1060,14 +1124,18 @@ const PortfolioTemplateEngine = ({
       ? "bg-white/30"
       : theme === "neobrutalism"
         ? "bg-black/35"
-        : "bg-[#60738f]/35";
+        : theme === "material"
+          ? "bg-[#BBDEFB]"
+          : "bg-[#60738f]/35";
 
   const timelineMarkerClass =
     theme === "glassmorphism"
       ? "border-white/45 bg-cyan-200/25 text-white"
       : theme === "neobrutalism"
         ? "border-black bg-[#ffef72] text-black"
-        : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
+        : theme === "material"
+          ? "border-[#1976D2]/40 bg-[#E3F2FD] text-[#1565C0]"
+          : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
   const sectionStackClassName =
     sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 

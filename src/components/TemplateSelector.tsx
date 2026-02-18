@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism";
+export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material";
 
 interface Props {
   active: TemplateName;
@@ -51,6 +51,13 @@ const templates: {
     mood: "Clean",
     moodColor: "#6b7280",
     swatches: ["#ffffff", "#e5e5e5", "#111111"],
+  },
+  {
+    name: "material",
+    label: "Material",
+    mood: "Elevated",
+    moodColor: "#1976D2",
+    swatches: ["#1565C0", "#E3F2FD", "#F4F6F8"],
   },
 ];
 

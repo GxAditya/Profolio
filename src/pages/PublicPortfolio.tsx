@@ -5,6 +5,7 @@ import type { TemplateName } from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
 import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
+import MaterialTemplate from "@/components/templates/MaterialTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import {
@@ -18,10 +19,11 @@ const templateMap = {
   glassmorphism: GlassmorphismTemplate,
   claymorphism: ClaymorphismTemplate,
   minimalism: MinimalismTemplate,
+  material: MaterialTemplate,
 } as const;
 
 const isTemplateName = (value: string): value is TemplateName =>
-  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism";
+  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism" || value === "material";
 
 const PublicPortfolio = () => {
   const { id } = useParams<{ id: string }>();
