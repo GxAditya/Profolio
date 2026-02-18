@@ -367,9 +367,20 @@ const normalizeSectionOrder = (
 
 const LEGACY_LINKEDIN_LINK_ID = "connect-legacy-linkedin";
 
+const normalizeExternalUrl = (value: string): string => {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (/^[a-z][a-z\d+\-.]*:/i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
+  return `https://${trimmed.replace(/^\/+/, "")}`;
+};
+
 const getNormalizedConnectLinks = (profile: LinkedInProfile): ProjectLink[] => {
   if ((profile.connectLinks?.length ?? 0) > 0) {
-    return profile.connectLinks ?? [];
+    return (profile.connectLinks ?? []).map((link) => ({
+      ...link,
+      url: normalizeExternalUrl(link.url),
+    }));
   }
 
   const legacyLinkedInUrl = profile.linkedinUrl?.trim();
@@ -379,7 +390,7 @@ const getNormalizedConnectLinks = (profile: LinkedInProfile): ProjectLink[] => {
     {
       id: LEGACY_LINKEDIN_LINK_ID,
       label: "LinkedIn",
-      url: legacyLinkedInUrl,
+      url: normalizeExternalUrl(legacyLinkedInUrl),
     },
   ];
 };
@@ -390,7 +401,7 @@ const getLinkedInUrlFromConnectLinks = (
   const linkedInLink = links.find(
     (link) => /linkedin\.com/i.test(link.url) || /linkedin/i.test(link.label)
   );
-  const linkedInUrl = linkedInLink?.url.trim();
+  const linkedInUrl = normalizeExternalUrl(linkedInLink?.url ?? "");
   return linkedInUrl ? linkedInUrl : undefined;
 };
 
@@ -476,7 +487,7 @@ const PortfolioTemplateEngine = ({
   };
 
   const addConnectLink = (label: string, url: string): boolean => {
-    const nextUrl = url.trim();
+    const nextUrl = normalizeExternalUrl(url);
     if (!nextUrl) return false;
 
     const nextLabel = label.trim();
@@ -1218,9 +1229,9 @@ const PortfolioTemplateEngine = ({
                         <div className="mt-3 space-y-2">
                           {connectLinks.map((link) => (
                             <div key={link.id} className="flex flex-wrap items-center gap-2">
-                              {link.url ? (
+                              {normalizeExternalUrl(link.url) ? (
                                 <a
-                                  href={link.url}
+                                  href={normalizeExternalUrl(link.url)}
                                   target="_blank"
                                   rel="noreferrer"
                                   className={palette.secondaryButton}
@@ -1303,10 +1314,10 @@ const PortfolioTemplateEngine = ({
                         connectLinks.length > 0 && (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {connectLinks.map((link) =>
-                              link.url ? (
+                              normalizeExternalUrl(link.url) ? (
                                 <a
                                   key={link.id}
-                                  href={link.url}
+                                  href={normalizeExternalUrl(link.url)}
                                   target="_blank"
                                   rel="noreferrer"
                                   className={palette.secondaryButton}
