@@ -3,15 +3,19 @@ import { ArrowLeft, Expand } from "lucide-react";
 import { Link } from "react-router-dom";
 import UploadSection from "@/components/UploadSection";
 import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
+import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
+import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import { useResume } from "@/context/ResumeContext";
 
 const templateMap = {
   neumorphism: NeumorphismTemplate,
   neobrutalism: NeobrutalismTemplate,
   glassmorphism: GlassmorphismTemplate,
+  claymorphism: ClaymorphismTemplate,
+  minimalism: MinimalismTemplate,
 } as const;
 
 const LinkedInBuilder = () => {

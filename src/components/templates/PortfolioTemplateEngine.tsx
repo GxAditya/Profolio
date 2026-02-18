@@ -12,7 +12,7 @@ import type {
   ProjectLink,
 } from "@/types/linkedin";
 
-export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism";
+export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism";
 export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
@@ -269,6 +269,124 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     iconButton:
       "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.16] bg-white/[0.09] text-white/80 hover:bg-white/[0.16]",
   },
+  claymorphism: {
+    page: "relative min-h-screen w-full overflow-hidden bg-[#f0f7ff] text-[#1e293b]",
+    ambience:
+      "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(147,197,253,0.4),transparent_38%),radial-gradient(circle_at_85%_15%,rgba(167,243,208,0.32),transparent_36%),radial-gradient(circle_at_50%_96%,rgba(253,164,175,0.28),transparent_34%)]",
+    contentWrap: "relative px-6 pb-12 pt-6 sm:px-9 sm:pt-7",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 rounded-[1.6rem] border-[2.5px] border-[#bfdbfe] bg-white px-5 py-5 shadow-[0_6px_0_#93c5fd,0_14px_36px_rgba(147,197,253,0.25)]",
+    headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-[#3b82f6]/70",
+    headingName:
+      "mt-2 text-3xl font-extrabold tracking-[-0.02em] text-[#1e3a5f] [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "rounded-[1.2rem] border-[2px] border-[#bfdbfe] bg-[#eff6ff] px-4 py-2 text-xs font-semibold text-[#3b82f6]",
+    section:
+      "rounded-[1.5rem] border-[2.5px] border-[#e0f2fe] bg-white p-5 shadow-[0_5px_0_#bae6fd,0_12px_28px_rgba(186,230,253,0.28)]",
+    sectionDropTarget:
+      "border-[#67e8f9] shadow-[0_5px_0_#22d3ee,0_12px_28px_rgba(34,211,238,0.28)]",
+    sectionHandle:
+      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-[1.2rem] border-[2px] border-[#a7f3d0] bg-[#d1fae5] px-3 py-1.5 text-[0.63rem] font-bold uppercase tracking-[0.13em] text-[#047857]",
+    sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-[#60a5fa]/70",
+    sectionTitle:
+      "mt-1 text-2xl font-extrabold tracking-[-0.02em] text-[#1e3a5f] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#475569]",
+    bodyText: "text-sm leading-relaxed text-[#475569]",
+    mutedText: "text-xs text-[#94a3b8]",
+    link: "font-semibold text-[#3b82f6] underline decoration-[#3b82f6]/30 underline-offset-4",
+    input:
+      "w-full rounded-[1.2rem] border-[2px] border-[#bfdbfe] bg-[#eff6ff] px-3 py-2 text-sm text-[#1e3a5f] outline-none transition placeholder:text-[#94a3b8] focus:border-[#60a5fa] focus:bg-white",
+    controlPanel:
+      "mt-6 rounded-[1.5rem] border-[2.5px] border-[#e0f2fe] bg-white p-5 shadow-[0_5px_0_#bae6fd,0_12px_28px_rgba(186,230,253,0.28)]",
+    controlPanelTitle:
+      "mt-2 text-xl font-extrabold tracking-[-0.02em] text-[#1e3a5f] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-xs font-semibold text-[#475569]",
+    heroSummary:
+      "mt-4 max-w-3xl rounded-[1.3rem] border-[2px] border-[#e0f2fe] bg-[#f0f9ff] p-4 text-sm leading-relaxed text-[#475569]",
+    contactCard:
+      "rounded-[1.3rem] border-[2px] border-[#e0f2fe] bg-[#f0f9ff] p-4",
+    skillChip:
+      "inline-flex items-center gap-1 rounded-[1.2rem] border-[2px] border-[#a7f3d0] bg-[#d1fae5] pl-3 pr-1 text-[0.66rem] font-bold uppercase tracking-[0.1em] text-[#065f46]",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center rounded-[0.75rem] border-[2px] border-[#6ee7b7] bg-[#ecfdf5] text-[#047857] hover:bg-[#a7f3d0]",
+    addChipButton:
+      "inline-flex items-center gap-1 rounded-[1.2rem] border-[2px] border-[#fecdd3] bg-[#fff1f2] px-3 py-1 text-[0.64rem] font-bold uppercase tracking-[0.12em] text-[#e11d48] hover:bg-[#ffe4e6]",
+    projectCard:
+      "relative rounded-[1.3rem] border-[2px] border-[#fde68a] bg-white p-4 shadow-[0_5px_0_#fbbf24,0_10px_22px_rgba(251,191,36,0.2)] transition-transform duration-200 hover:-translate-y-1",
+    educationCard:
+      "rounded-[1.3rem] border-[2px] border-[#ddd6fe] bg-white p-4 shadow-[0_5px_0_#c4b5fd,0_10px_22px_rgba(196,181,253,0.2)] transition-transform duration-200 hover:-translate-y-1",
+    certificationCard:
+      "flex items-start justify-between gap-2 rounded-[1.3rem] border-[2px] border-[#fbcfe8] bg-white px-3 py-2.5 text-sm text-[#1e293b] shadow-[0_4px_0_#f9a8d4,0_8px_18px_rgba(249,168,212,0.2)]",
+    customCard:
+      "rounded-[1.3rem] border-[2px] border-[#fde68a] bg-white p-4 shadow-[0_5px_0_#fbbf24,0_10px_22px_rgba(251,191,36,0.2)] transition-transform duration-200 hover:-translate-y-1",
+    customTag:
+      "rounded-[1.2rem] border-[2px] border-[#fed7aa] bg-[#fff7ed] px-3 py-1 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#c2410c]",
+    emptyState:
+      "mt-4 rounded-[1.3rem] border-[2px] border-[#e0f2fe] bg-[#f0f9ff] px-4 py-3 text-sm text-[#475569]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 rounded-[1.2rem] border-[2px] border-[#93c5fd] bg-[#3b82f6] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_4px_0_#1d4ed8] transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none",
+    secondaryButton:
+      "inline-flex items-center gap-1 rounded-[1.2rem] border-[2px] border-[#bfdbfe] bg-[#eff6ff] px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.13em] text-[#3b82f6] hover:bg-[#dbeafe]",
+    iconButton:
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.85rem] border-[2px] border-[#bfdbfe] bg-[#eff6ff] text-[#3b82f6] hover:bg-[#dbeafe]",
+  },
+  minimalism: {
+    page: "relative min-h-screen w-full bg-white text-[#111111]",
+    ambience: "pointer-events-none absolute inset-0",
+    contentWrap: "relative px-8 pb-16 pt-10 sm:px-16 sm:pt-14",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 border-b border-[#e5e5e5] pb-10",
+    headingKicker: "text-[0.6rem] uppercase tracking-[0.22em] text-[#9ca3af]",
+    headingName:
+      "mt-2 text-3xl font-bold tracking-[-0.04em] text-[#111111] [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "border border-[#e5e5e5] px-4 py-2 text-xs text-[#6b7280]",
+    section: "border-b border-[#e5e5e5] py-10",
+    sectionDropTarget: "border-b-2 border-[#111111] bg-[#fafafa]",
+    sectionHandle:
+      "mb-6 inline-flex cursor-grab items-center gap-2 border border-[#e5e5e5] bg-white px-3 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.18em] text-[#9ca3af]",
+    sectionLabel: "text-[0.58rem] uppercase tracking-[0.2em] text-[#9ca3af]",
+    sectionTitle:
+      "mt-1 text-xl font-semibold tracking-[-0.03em] text-[#111111] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#6b7280]",
+    bodyText: "text-sm leading-relaxed text-[#374151]",
+    mutedText: "text-xs text-[#9ca3af]",
+    link: "text-[#111111] underline decoration-[#d1d5db] underline-offset-4",
+    input:
+      "w-full border-b border-[#d1d5db] bg-transparent px-0 py-2 text-sm text-[#111111] outline-none transition focus:border-[#111111] placeholder:text-[#9ca3af]",
+    controlPanel:
+      "mt-8 border border-[#e5e5e5] bg-[#fafafa] p-6",
+    controlPanelTitle:
+      "mt-2 text-lg font-semibold tracking-[-0.02em] text-[#111111] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[#6b7280]",
+    heroSummary:
+      "mt-5 max-w-2xl text-sm leading-[1.85] text-[#4b5563]",
+    contactCard: "border border-[#e5e5e5] p-5",
+    skillChip:
+      "inline-flex items-center gap-1 border border-[#e5e5e5] pl-3 pr-1 text-[0.62rem] uppercase tracking-[0.1em] text-[#6b7280]",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center border border-[#e5e5e5] bg-[#f9fafb] text-[#6b7280] hover:bg-[#f3f4f6]",
+    addChipButton:
+      "inline-flex items-center gap-1 border border-[#e5e5e5] px-3 py-1 text-[0.61rem] font-medium uppercase tracking-[0.13em] text-[#6b7280] hover:border-[#9ca3af] hover:text-[#374151]",
+    projectCard:
+      "relative border border-[#e5e5e5] bg-white p-5 transition-colors duration-200 hover:border-[#9ca3af]",
+    educationCard:
+      "border border-[#e5e5e5] bg-white p-5 transition-colors duration-200 hover:border-[#9ca3af]",
+    certificationCard:
+      "flex items-start justify-between gap-2 border-b border-[#f3f4f6] px-1 py-3.5 text-sm text-[#374151] last:border-b-0",
+    customCard:
+      "relative border border-[#e5e5e5] bg-white p-5 transition-colors duration-200 hover:border-[#9ca3af]",
+    customTag:
+      "border border-[#e5e5e5] px-3 py-1 text-[0.58rem] uppercase tracking-[0.14em] text-[#9ca3af]",
+    emptyState:
+      "mt-4 border border-[#f3f4f6] bg-[#fafafa] px-4 py-3 text-sm text-[#9ca3af]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 bg-[#111111] px-5 py-2 text-xs font-medium uppercase tracking-[0.14em] text-white transition-opacity duration-150 hover:opacity-75",
+    secondaryButton:
+      "inline-flex items-center gap-1 border border-[#e5e5e5] px-3 py-1.5 text-[0.62rem] font-medium uppercase tracking-[0.13em] text-[#6b7280] hover:border-[#9ca3af] hover:text-[#374151]",
+    iconButton:
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center border border-[#e5e5e5] text-[#6b7280] hover:border-[#9ca3af] hover:text-[#374151]",
+  },
 };
 
 const themeTypography: Record<PortfolioTheme, { body: string; heading: string }> = {
@@ -283,6 +401,14 @@ const themeTypography: Record<PortfolioTheme, { body: string; heading: string }>
   glassmorphism: {
     body: '"Sora", "Plus Jakarta Sans", sans-serif',
     heading: '"Space Grotesk", "Sora", sans-serif',
+  },
+  claymorphism: {
+    body: '"Nunito", sans-serif',
+    heading: '"Nunito", sans-serif',
+  },
+  minimalism: {
+    body: '"Inter", "DM Sans", sans-serif',
+    heading: '"Inter", "DM Sans", sans-serif',
   },
 };
 

@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Check, Copy, Expand, Loader2, Minimize } from "lucide-react";
 import { Link } from "react-router-dom";
 import { type TemplateName } from "@/components/TemplateSelector";
+import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
+import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { publishPortfolio } from "@/lib/portfolioPublishing";
 
@@ -12,12 +14,16 @@ const templateMap = {
   neumorphism: NeumorphismTemplate,
   neobrutalism: NeobrutalismTemplate,
   glassmorphism: GlassmorphismTemplate,
+  claymorphism: ClaymorphismTemplate,
+  minimalism: MinimalismTemplate,
 } as const;
 
 const templateOptions: { key: TemplateName; label: string }[] = [
   { key: "neumorphism", label: "Neumorphism" },
   { key: "neobrutalism", label: "Neobrutalism" },
   { key: "glassmorphism", label: "Glassmorphism" },
+  { key: "claymorphism", label: "Claymorphism" },
+  { key: "minimalism", label: "Minimalism" },
 ];
 
 /* ── Floating toolbar button helpers ── */

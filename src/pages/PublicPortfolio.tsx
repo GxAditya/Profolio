@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import type { TemplateName } from "@/components/TemplateSelector";
+import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
+import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import {
@@ -14,10 +16,12 @@ const templateMap = {
   neumorphism: NeumorphismTemplate,
   neobrutalism: NeobrutalismTemplate,
   glassmorphism: GlassmorphismTemplate,
+  claymorphism: ClaymorphismTemplate,
+  minimalism: MinimalismTemplate,
 } as const;
 
 const isTemplateName = (value: string): value is TemplateName =>
-  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism";
+  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism";
 
 const PublicPortfolio = () => {
   const { id } = useParams<{ id: string }>();
