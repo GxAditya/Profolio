@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Expand, Minimize, PenLine, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Copy, Expand, Loader2, Minimize, PenLine, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
 import { useResume } from "@/context/ResumeContext";
+import { publishPortfolio } from "@/lib/portfolioPublishing";
 
 const templateMap = {
   neumorphism: NeumorphismTemplate,
@@ -25,8 +26,42 @@ const Preview = () => {
   const [fullscreen, setFullscreen] = useState(false);
   const [hideAddSectionControlsInFullscreen, setHideAddSectionControlsInFullscreen] =
     useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
+  const [publishError, setPublishError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const ActiveComponent = templateMap[activeTemplate];
+
+  const handlePublish = async () => {
+    if (!profile) return;
+    setPublishing(true);
+    setPublishError(null);
+
+    try {
+      const record = await publishPortfolio({
+        data: profile,
+        templateId: activeTemplate,
+      });
+      setPublishedUrl(`${window.location.origin}/p/${record.id}`);
+      setCopied(false);
+    } catch (error) {
+      setPublishError(error instanceof Error ? error.message : "Unable to publish portfolio.");
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const handleCopyPublishedUrl = async () => {
+    if (!publishedUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(publishedUrl);
+      setCopied(true);
+    } catch {
+      setPublishError("Couldn't copy the link. Please copy it manually.");
+    }
+  };
 
   useEffect(() => {
     if (!fullscreen) return;
@@ -41,6 +76,12 @@ const Preview = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [fullscreen]);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timeoutId = window.setTimeout(() => setCopied(false), 1800);
+    return () => window.clearTimeout(timeoutId);
+  }, [copied]);
 
   if (!profile) {
     return (
@@ -85,6 +126,15 @@ const Preview = () => {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
+                onClick={handlePublish}
+                disabled={publishing}
+                className="spring-hover inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {publishing ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {publishing ? "Publishing..." : publishedUrl ? "Republish" : "Publish"}
+              </button>
+              <button
+                type="button"
                 onClick={() => setFullscreen(true)}
                 className="spring-hover inline-flex items-center gap-2 rounded-lg border border-foreground/20 bg-card/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75 hover:border-primary/55"
               >
@@ -100,6 +150,34 @@ const Preview = () => {
               </Link>
             </div>
           </header>
+
+          {(publishedUrl || publishError) && (
+            <div className="mb-4 rounded-xl border border-foreground/12 bg-card/70 p-3 sm:p-4">
+              {publishedUrl && (
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <a
+                    href={publishedUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="break-all text-sm text-primary underline decoration-primary/40 underline-offset-4"
+                  >
+                    {publishedUrl}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyPublishedUrl}
+                    className="inline-flex items-center gap-1 rounded-lg border border-foreground/15 bg-card px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-foreground/75"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? "Copied" : "Copy Link"}
+                  </button>
+                </div>
+              )}
+              {publishError && (
+                <p className="mt-2 text-xs text-destructive">{publishError}</p>
+              )}
+            </div>
+          )}
 
           <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
             <aside className="page-panel rounded-[1rem] p-5 sm:p-6 lg:sticky lg:top-6 lg:h-fit">

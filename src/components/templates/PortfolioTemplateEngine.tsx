@@ -13,12 +13,14 @@ import type {
 } from "@/types/linkedin";
 
 export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism";
+export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
   profile: LinkedInProfile;
   editable?: boolean;
   showAddSectionControls?: boolean;
   onProfileChange?: (updater: (prev: LinkedInProfile) => LinkedInProfile) => void;
+  sectionStyle?: PortfolioSectionStyle;
   theme: PortfolioTheme;
 }
 
@@ -410,6 +412,7 @@ const PortfolioTemplateEngine = ({
   editable = false,
   showAddSectionControls = true,
   onProfileChange,
+  sectionStyle = "framed",
   theme,
 }: Props) => {
   const palette = palettes[theme];
@@ -930,6 +933,8 @@ const PortfolioTemplateEngine = ({
       : theme === "neobrutalism"
         ? "border-black bg-[#ffef72] text-black"
         : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
+  const sectionStackClassName =
+    sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 
   return (
     <div className={palette.page} style={{ fontFamily: themeFonts[theme] }}>
@@ -1172,13 +1177,13 @@ const PortfolioTemplateEngine = ({
           </section>
         )}
 
-        <div className="mt-7 space-y-6">
+        <div className={sectionStackClassName}>
           {visibleSectionIds.map((sectionId) => {
             const isDropTarget =
               canEdit && dropTargetId === sectionId && draggingSectionId !== sectionId;
             const wrapperClassName = cn(
-              palette.section,
-              isDropTarget && palette.sectionDropTarget
+              sectionStyle === "framed" ? palette.section : "px-1 py-1",
+              sectionStyle === "framed" && isDropTarget && palette.sectionDropTarget
             );
 
             if (sectionId === "hero") {

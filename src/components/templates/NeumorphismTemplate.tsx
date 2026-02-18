@@ -6,6 +6,7 @@ interface Props {
   editable?: boolean;
   showAddSectionControls?: boolean;
   onProfileChange?: (updater: (prev: LinkedInProfile) => LinkedInProfile) => void;
+  sectionStyle?: "framed" | "plain";
 }
 
 const NeumorphismTemplate = ({
@@ -13,12 +14,14 @@ const NeumorphismTemplate = ({
   editable = false,
   showAddSectionControls = true,
   onProfileChange,
+  sectionStyle = "framed",
 }: Props) => (
   <PortfolioTemplateEngine
     profile={profile}
     editable={editable}
     showAddSectionControls={showAddSectionControls}
     onProfileChange={onProfileChange}
+    sectionStyle={sectionStyle}
     theme="neumorphism"
   />
 );

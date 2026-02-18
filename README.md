@@ -60,6 +60,22 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Supabase setup for publish/share
+
+1. Create a Supabase project.
+2. Run the SQL in `supabase/portfolios.sql` in the Supabase SQL Editor.
+3. Add env vars (copy from `.env.example`):
+
+```sh
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
+
+After setup:
+
+- The `Publish` button in `/preview` saves `data` + `template_id` into `public.portfolios`.
+- Shared links are available at `/p/:id`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

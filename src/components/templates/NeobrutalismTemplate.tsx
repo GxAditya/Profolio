@@ -6,6 +6,7 @@ interface Props {
   editable?: boolean;
   showAddSectionControls?: boolean;
   onProfileChange?: (updater: (prev: LinkedInProfile) => LinkedInProfile) => void;
+  sectionStyle?: "framed" | "plain";
 }
 
 const NeobrutalismTemplate = ({
@@ -13,12 +14,14 @@ const NeobrutalismTemplate = ({
   editable = false,
   showAddSectionControls = true,
   onProfileChange,
+  sectionStyle = "framed",
 }: Props) => (
   <PortfolioTemplateEngine
     profile={profile}
     editable={editable}
     showAddSectionControls={showAddSectionControls}
     onProfileChange={onProfileChange}
+    sectionStyle={sectionStyle}
     theme="neobrutalism"
   />
 );
