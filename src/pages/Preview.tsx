@@ -50,10 +50,9 @@ const tbSecondary =
   "inline-flex items-center gap-2 rounded-lg border border-white/[0.15] bg-white/[0.07] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/80 transition-all duration-200 hover:border-white/25 hover:bg-white/[0.12]";
 
 const Preview = () => {
-  const { profile, updateProfile } = useResume();
+  const { profile } = useResume();
   const portfolioRef = useRef<HTMLDivElement>(null);
   const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
-  const [hideAddSectionControls, setHideAddSectionControls] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -177,14 +176,6 @@ const Preview = () => {
             Export Code
           </button>
 
-          <button
-            type="button"
-            onClick={() => setHideAddSectionControls((prev) => !prev)}
-            className={tbSecondary}
-          >
-            {hideAddSectionControls ? "Show Sections" : "Hide Sections"}
-          </button>
-
           <Link to="/linkedin" className={tbSecondary}>
             <ArrowLeft className="h-3.5 w-3.5" />
             Back
@@ -235,9 +226,8 @@ const Preview = () => {
       <div ref={portfolioRef} className="relative min-h-screen pt-20">
         <ActiveComponent
           profile={profile}
-          editable
-          showAddSectionControls={!hideAddSectionControls}
-          onProfileChange={updateProfile}
+          editable={false}
+          showAddSectionControls={false}
           sectionStyle="plain"
         />
       </div>
