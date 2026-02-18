@@ -8,6 +8,7 @@ import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
 import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
+import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { publishPortfolio } from "@/lib/portfolioPublishing";
 
@@ -18,6 +19,7 @@ const templateMap = {
   claymorphism: ClaymorphismTemplate,
   minimalism: MinimalismTemplate,
   material: MaterialTemplate,
+  flatdesign: FlatDesignTemplate,
 } as const;
 
 const templateOptions: { key: TemplateName; label: string }[] = [
@@ -27,6 +29,7 @@ const templateOptions: { key: TemplateName; label: string }[] = [
   { key: "claymorphism", label: "Claymorphism" },
   { key: "minimalism", label: "Minimalism" },
   { key: "material", label: "Material" },
+  { key: "flatdesign", label: "Flat Design" },
 ];
 
 /* ── Floating toolbar button helpers ── */

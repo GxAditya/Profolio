@@ -8,6 +8,7 @@ import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
+import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import {
   fetchPublishedPortfolio,
   type PublishedPortfolioRecord,
@@ -20,10 +21,11 @@ const templateMap = {
   claymorphism: ClaymorphismTemplate,
   minimalism: MinimalismTemplate,
   material: MaterialTemplate,
+  flatdesign: FlatDesignTemplate,
 } as const;
 
 const isTemplateName = (value: string): value is TemplateName =>
-  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism" || value === "material";
+  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism" || value === "material" || value === "flatdesign";
 
 const PublicPortfolio = () => {
   const { id } = useParams<{ id: string }>();

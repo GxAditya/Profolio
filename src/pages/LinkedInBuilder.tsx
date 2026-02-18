@@ -9,6 +9,7 @@ import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
 import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
+import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import { useResume } from "@/context/ResumeContext";
 
 const templateMap = {
@@ -18,6 +19,7 @@ const templateMap = {
   claymorphism: ClaymorphismTemplate,
   minimalism: MinimalismTemplate,
   material: MaterialTemplate,
+  flatdesign: FlatDesignTemplate,
 } as const;
 
 const LinkedInBuilder = () => {

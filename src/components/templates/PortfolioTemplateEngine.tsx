@@ -12,7 +12,7 @@ import type {
   ProjectLink,
 } from "@/types/linkedin";
 
-export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material";
+export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign";
 export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
@@ -390,6 +390,63 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     iconButton:
       "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E3F2FD] text-[#1565C0] shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:bg-[#BBDEFB]",
   },
+  flatdesign: {
+    page: "relative min-h-screen w-full bg-[#F0F0F0] text-[#2C3E50]",
+    ambience: "pointer-events-none absolute inset-0",
+    contentWrap: "relative px-6 pb-10 pt-6 sm:px-10 sm:pt-8",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 bg-[#E74C3C] px-6 py-6",
+    headingKicker: "text-[0.62rem] uppercase tracking-[0.2em] text-white/70",
+    headingName:
+      "mt-2 text-3xl font-black tracking-[-0.02em] text-white [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "bg-white/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-white",
+    section: "bg-white border-l-4 border-[#E74C3C] p-5",
+    sectionDropTarget: "bg-[#FFF3F2] border-l-4 border-[#C0392B]",
+    sectionHandle:
+      "mb-5 inline-flex cursor-grab items-center gap-2 bg-[#E74C3C] px-3 py-1.5 text-[0.63rem] font-black uppercase tracking-[0.14em] text-white",
+    sectionLabel: "text-[0.6rem] uppercase tracking-[0.2em] text-[#E74C3C]",
+    sectionTitle:
+      "mt-1 text-xl font-black uppercase tracking-[-0.01em] text-[#2C3E50] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#7F8C8D]",
+    bodyText: "text-sm leading-relaxed text-[#2C3E50]",
+    mutedText: "text-xs text-[#95A5A6]",
+    link: "font-bold text-[#3498DB] underline decoration-[#3498DB]/30 underline-offset-4",
+    input:
+      "w-full border-b-2 border-[#BDC3C7] bg-transparent px-0 py-2 text-sm text-[#2C3E50] outline-none transition focus:border-[#E74C3C] placeholder:text-[#BDC3C7]",
+    controlPanel:
+      "mt-6 bg-white border-l-4 border-[#3498DB] p-5",
+    controlPanelTitle:
+      "mt-1.5 text-lg font-black uppercase tracking-[-0.01em] text-[#2C3E50] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-[0.65rem] font-bold uppercase tracking-[0.12em] text-[#7F8C8D]",
+    heroSummary:
+      "mt-4 max-w-2xl bg-[#ECF0F1] p-4 text-sm leading-relaxed text-[#2C3E50]",
+    contactCard: "bg-[#ECF0F1] p-4",
+    skillChip:
+      "inline-flex items-center gap-1 bg-[#3498DB] pl-3 pr-1 text-[0.63rem] font-black uppercase tracking-[0.1em] text-white",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center bg-white/25 text-white hover:bg-white/40",
+    addChipButton:
+      "inline-flex items-center gap-1 bg-[#2ECC71] px-3 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-white hover:bg-[#27AE60]",
+    projectCard:
+      "relative bg-white border-t-4 border-[#E74C3C] p-4 transition-colors duration-150 hover:border-[#C0392B]",
+    educationCard:
+      "bg-white border-t-4 border-[#3498DB] p-4 transition-colors duration-150 hover:border-[#2980B9]",
+    certificationCard:
+      "flex items-start justify-between gap-2 bg-white border-l-4 border-[#2ECC71] px-4 py-3 text-sm text-[#2C3E50]",
+    customCard:
+      "relative bg-white border-t-4 border-[#9B59B6] p-4 transition-colors duration-150 hover:border-[#8E44AD]",
+    customTag:
+      "bg-[#ECF0F1] px-3 py-1 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[#7F8C8D]",
+    emptyState:
+      "mt-4 bg-[#ECF0F1] px-4 py-3 text-sm text-[#95A5A6]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 bg-[#E74C3C] px-5 py-2 text-xs font-black uppercase tracking-[0.14em] text-white transition-opacity duration-150 hover:opacity-85",
+    secondaryButton:
+      "inline-flex items-center gap-1 bg-[#ECF0F1] px-3 py-1.5 text-[0.63rem] font-black uppercase tracking-[0.13em] text-[#7F8C8D] hover:bg-[#D5D8DC]",
+    iconButton:
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#ECF0F1] text-[#7F8C8D] hover:bg-[#D5D8DC] hover:text-[#2C3E50]",
+  },
   minimalism: {
     page: "relative min-h-screen w-full bg-white text-[#111111]",
     ambience: "pointer-events-none absolute inset-0",
@@ -473,6 +530,10 @@ const themeTypography: Record<PortfolioTheme, { body: string; heading: string }>
   material: {
     body: '"Roboto", "Google Sans", sans-serif',
     heading: '"Google Sans", "Roboto", sans-serif',
+  },
+  flatdesign: {
+    body: '"Work Sans", "DM Sans", sans-serif',
+    heading: '"Barlow Condensed", "Work Sans", sans-serif',
   },
 };
 
@@ -1126,7 +1187,9 @@ const PortfolioTemplateEngine = ({
         ? "bg-black/35"
         : theme === "material"
           ? "bg-[#BBDEFB]"
-          : "bg-[#60738f]/35";
+          : theme === "flatdesign"
+            ? "bg-[#BDC3C7]"
+            : "bg-[#60738f]/35";
 
   const timelineMarkerClass =
     theme === "glassmorphism"
@@ -1135,7 +1198,9 @@ const PortfolioTemplateEngine = ({
         ? "border-black bg-[#ffef72] text-black"
         : theme === "material"
           ? "border-[#1976D2]/40 bg-[#E3F2FD] text-[#1565C0]"
-          : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
+          : theme === "flatdesign"
+            ? "border-[#E74C3C] bg-[#E74C3C] text-white"
+            : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
   const sectionStackClassName =
     sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 
