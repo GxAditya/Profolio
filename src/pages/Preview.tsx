@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Copy, Loader2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, Check, Copy, Download, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { type TemplateName } from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
@@ -13,6 +13,7 @@ import RetroTemplate from "@/components/templates/RetroTemplate";
 import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { publishPortfolio } from "@/lib/portfolioPublishing";
+import { exportPortfolioAsHtml } from "@/lib/exportPortfolio";
 
 const templateMap = {
   neumorphism: NeumorphismTemplate,
@@ -50,6 +51,7 @@ const tbSecondary =
 
 const Preview = () => {
   const { profile, updateProfile } = useResume();
+  const portfolioRef = useRef<HTMLDivElement>(null);
   const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
   const [hideAddSectionControls, setHideAddSectionControls] = useState(false);
   const [publishing, setPublishing] = useState(false);
@@ -76,6 +78,12 @@ const Preview = () => {
     } finally {
       setPublishing(false);
     }
+  };
+
+  const handleExport = () => {
+    if (!portfolioRef.current) return;
+    const name = profile?.fullName || "my";
+    exportPortfolioAsHtml(portfolioRef.current, name);
   };
 
   const handleCopyPublishedUrl = async () => {
@@ -162,6 +170,15 @@ const Preview = () => {
 
           <button
             type="button"
+            onClick={handleExport}
+            className={tbSecondary}
+          >
+            <Download className="h-3.5 w-3.5" />
+            Export Code
+          </button>
+
+          <button
+            type="button"
             onClick={() => setHideAddSectionControls((prev) => !prev)}
             className={tbSecondary}
           >
@@ -215,7 +232,7 @@ const Preview = () => {
     <>
       {renderToolbar()}
       {renderPublishBar()}
-      <div className="relative min-h-screen pt-20">
+      <div ref={portfolioRef} className="relative min-h-screen pt-20">
         <ActiveComponent
           profile={profile}
           editable
