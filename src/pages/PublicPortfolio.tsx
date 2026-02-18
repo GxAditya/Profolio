@@ -10,6 +10,7 @@ import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import RetroTemplate from "@/components/templates/RetroTemplate";
+import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import {
   fetchPublishedPortfolio,
   type PublishedPortfolioRecord,
@@ -24,10 +25,11 @@ const templateMap = {
   material: MaterialTemplate,
   flatdesign: FlatDesignTemplate,
   retro: RetroTemplate,
+  cyberpunk: CyberpunkTemplate,
 } as const;
 
 const isTemplateName = (value: string): value is TemplateName =>
-  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism" || value === "material" || value === "flatdesign" || value === "retro";
+  value === "neumorphism" || value === "neobrutalism" || value === "glassmorphism" || value === "claymorphism" || value === "minimalism" || value === "material" || value === "flatdesign" || value === "retro" || value === "cyberpunk";
 
 const PublicPortfolio = () => {
   const { id } = useParams<{ id: string }>();

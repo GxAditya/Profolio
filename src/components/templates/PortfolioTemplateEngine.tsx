@@ -12,7 +12,7 @@ import type {
   ProjectLink,
 } from "@/types/linkedin";
 
-export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro";
+export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro" | "cyberpunk";
 export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
@@ -447,6 +447,67 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     iconButton:
       "inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#ECF0F1] text-[#7F8C8D] hover:bg-[#D5D8DC] hover:text-[#2C3E50]",
   },
+  cyberpunk: {
+    page: "relative min-h-screen w-full overflow-hidden bg-[#020212] text-[#B8FFE8]",
+    ambience:
+      "pointer-events-none absolute inset-0 [background-image:linear-gradient(rgba(0,255,65,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,65,0.03)_1px,transparent_1px),radial-gradient(ellipse_at_15%_20%,rgba(0,255,65,0.10),transparent_50%),radial-gradient(ellipse_at_85%_75%,rgba(0,229,255,0.09),transparent_50%),radial-gradient(ellipse_at_50%_50%,rgba(255,45,120,0.04),transparent_60%)] [background-size:28px_28px,28px_28px,100%_100%,100%_100%,100%_100%]",
+    contentWrap: "relative px-6 pb-10 pt-6 sm:px-10 sm:pt-8",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 bg-[#03031A] border-b-2 border-[#00FF41] px-6 py-6 shadow-[0_0_0_1px_rgba(0,255,65,0.08),0_4px_24px_rgba(0,255,65,0.10)] before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:bg-[linear-gradient(90deg,transparent,#00FF41,#00E5FF,#00FF41,transparent)] before:opacity-70 relative overflow-hidden",
+    headingKicker: "text-[0.6rem] uppercase tracking-[0.28em] text-[#00FF41]/70 font-bold",
+    headingName:
+      "mt-2 text-3xl font-black uppercase tracking-[0.06em] text-[#00FF41] [text-shadow:0_0_20px_rgba(0,255,65,0.8),0_0_60px_rgba(0,255,65,0.3)] [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "border border-[#00E5FF]/40 bg-[#00E5FF]/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#00E5FF] shadow-[0_0_12px_rgba(0,229,255,0.15),inset_0_0_8px_rgba(0,229,255,0.04)]",
+    section:
+      "relative bg-[#04041E] border border-[#00FF41]/20 border-l-2 border-l-[#00FF41] p-5 shadow-[0_0_0_1px_rgba(0,255,65,0.04),inset_0_0_20px_rgba(0,255,65,0.02)] before:absolute before:top-0 before:right-0 before:w-6 before:h-6 before:border-t-2 before:border-r-2 before:border-[#00FF41]/50 before:content-[''] after:absolute after:bottom-0 after:left-0 after:w-6 after:h-6 after:border-b-2 after:border-l-2 after:border-[#00FF41]/50 after:content-['']",
+    sectionDropTarget:
+      "border-[#00E5FF]/60 border-l-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.15)]",
+    sectionHandle:
+      "mb-5 inline-flex cursor-grab items-center gap-2 border border-[#00FF41]/50 bg-[#00FF41]/8 px-3 py-1.5 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-[#00FF41] shadow-[0_0_8px_rgba(0,255,65,0.15)]",
+    sectionLabel: "text-[0.58rem] uppercase tracking-[0.28em] text-[#00FF41]/55 font-bold",
+    sectionTitle:
+      "mt-1 text-xl font-black uppercase tracking-[0.08em] text-[#00FF41] [text-shadow:0_0_14px_rgba(0,255,65,0.7),0_0_40px_rgba(0,255,65,0.2)] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#6BCCAA]",
+    bodyText: "text-sm leading-relaxed text-[#89CCAA]",
+    mutedText: "text-xs text-[#2A7A55]",
+    link: "font-bold text-[#00E5FF] underline decoration-[#00E5FF]/35 underline-offset-4 [text-shadow:0_0_10px_rgba(0,229,255,0.5)] hover:decoration-[#00E5FF]/70",
+    input:
+      "w-full border border-[#00FF41]/30 bg-[#03031A] px-3 py-2 text-sm text-[#00FF41] outline-none transition placeholder:text-[#1A5533] focus:border-[#00FF41]/80 focus:shadow-[0_0_14px_rgba(0,255,65,0.25)] focus:bg-[#020218]",
+    controlPanel:
+      "mt-6 relative bg-[#04041E] border border-[#00E5FF]/20 border-l-2 border-l-[#00E5FF] p-5 shadow-[inset_0_0_20px_rgba(0,229,255,0.03)]",
+    controlPanelTitle:
+      "mt-1.5 text-lg font-black uppercase tracking-[0.08em] text-[#00E5FF] [text-shadow:0_0_14px_rgba(0,229,255,0.7)] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#00FF41]/65",
+    heroSummary:
+      "mt-4 max-w-2xl border border-[#00FF41]/15 bg-[#03031A] p-4 text-sm leading-relaxed text-[#89CCAA] shadow-[inset_0_0_16px_rgba(0,255,65,0.03)]",
+    contactCard:
+      "border border-[#00E5FF]/20 bg-[#03031A] p-4 shadow-[inset_0_0_12px_rgba(0,229,255,0.03)]",
+    skillChip:
+      "inline-flex items-center gap-1 border border-[#00FF41]/60 bg-[#00FF41]/8 pl-3 pr-1 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-[#00FF41] shadow-[0_0_8px_rgba(0,255,65,0.18)]",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center bg-[#00FF41]/10 text-[#00FF41]/80 hover:bg-[#00FF41]/25 hover:text-[#00FF41]",
+    addChipButton:
+      "inline-flex items-center gap-1 border border-[#FF2D78]/50 bg-[#FF2D78]/8 px-3 py-1 text-[0.61rem] font-bold uppercase tracking-[0.14em] text-[#FF2D78] shadow-[0_0_8px_rgba(255,45,120,0.15)] hover:bg-[#FF2D78]/15",
+    projectCard:
+      "relative bg-[#04041E] border border-[#00FF41]/15 border-l-2 border-l-[#00E5FF] p-4 shadow-[0_0_0_1px_rgba(0,255,65,0.03)] transition-all duration-200 hover:border-[#00E5FF]/40 hover:shadow-[0_0_18px_rgba(0,229,255,0.12)]",
+    educationCard:
+      "relative bg-[#04041E] border border-[#00FF41]/15 border-l-2 border-l-[#00FF41] p-4 transition-all duration-200 hover:border-[#00FF41]/40 hover:shadow-[0_0_18px_rgba(0,255,65,0.12)]",
+    certificationCard:
+      "flex items-start justify-between gap-2 bg-[#04041E] border border-[#00FF41]/15 border-l-2 border-l-[#FF2D78] px-4 py-3 text-sm text-[#89CCAA]",
+    customCard:
+      "relative bg-[#04041E] border border-[#00FF41]/15 border-l-2 border-l-[#FF2D78] p-4 transition-all duration-200 hover:border-[#FF2D78]/40 hover:shadow-[0_0_18px_rgba(255,45,120,0.10)]",
+    customTag:
+      "border border-[#00FF41]/25 bg-[#00FF41]/5 px-3 py-1 text-[0.6rem] font-bold uppercase tracking-[0.16em] text-[#00FF41]/80",
+    emptyState:
+      "mt-4 border border-dashed border-[#00FF41]/15 bg-[#03031A] px-4 py-3 text-sm text-[#2A5540]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 border border-[#00FF41] bg-[#00FF41]/10 px-5 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#00FF41] shadow-[0_0_16px_rgba(0,255,65,0.3),inset_0_0_8px_rgba(0,255,65,0.05)] transition-all duration-200 hover:bg-[#00FF41]/20 hover:shadow-[0_0_24px_rgba(0,255,65,0.45)]",
+    secondaryButton:
+      "inline-flex items-center gap-1 border border-[#00E5FF]/40 bg-[#00E5FF]/5 px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#00E5FF]/80 hover:border-[#00E5FF]/70 hover:text-[#00E5FF]",
+    iconButton:
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center border border-[#00FF41]/30 bg-[#00FF41]/5 text-[#00FF41]/70 hover:border-[#00FF41]/70 hover:bg-[#00FF41]/15 hover:text-[#00FF41]",
+  },
   retro: {
     page: "relative min-h-screen w-full overflow-hidden bg-[#0A0A1E] text-[#C8D8FF]",
     ambience:
@@ -594,6 +655,10 @@ const themeTypography: Record<PortfolioTheme, { body: string; heading: string }>
   retro: {
     body: '"Tahoma", "Verdana", sans-serif',
     heading: '"Orbitron", "Tahoma", sans-serif',
+  },
+  cyberpunk: {
+    body: '"Share Tech Mono", "Courier New", monospace',
+    heading: '"Rajdhani", "Share Tech Mono", sans-serif',
   },
   flatdesign: {
     body: '"Work Sans", "DM Sans", sans-serif',
@@ -1255,7 +1320,9 @@ const PortfolioTemplateEngine = ({
             ? "bg-[#BDC3C7]"
             : theme === "retro"
               ? "bg-[#1A2E88]/60"
-              : "bg-[#60738f]/35";
+              : theme === "cyberpunk"
+                ? "bg-[#00FF41]/20"
+                : "bg-[#60738f]/35";
 
   const timelineMarkerClass =
     theme === "glassmorphism"
@@ -1268,7 +1335,9 @@ const PortfolioTemplateEngine = ({
             ? "border-[#E74C3C] bg-[#E74C3C] text-white"
             : theme === "retro"
               ? "border-[#00FFFF] bg-[#0A0A1E] text-[#00FFFF] shadow-[0_0_8px_rgba(0,255,255,0.5)]"
-              : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
+              : theme === "cyberpunk"
+                ? "border-[#00FF41] bg-[#020212] text-[#00FF41] shadow-[0_0_12px_rgba(0,255,65,0.7)]"
+                : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
   const sectionStackClassName =
     sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 

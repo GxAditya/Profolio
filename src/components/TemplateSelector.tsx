@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro";
+export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro" | "cyberpunk";
 
 interface Props {
   active: TemplateName;
@@ -72,6 +72,13 @@ const templates: {
     mood: "Y2K",
     moodColor: "#00FFFF",
     swatches: ["#0A0A1E", "#00FFFF", "#FF44CC"],
+  },
+  {
+    name: "cyberpunk",
+    label: "Cyberpunk",
+    mood: "Neon Noir",
+    moodColor: "#00FF41",
+    swatches: ["#020212", "#00FF41", "#00E5FF"],
   },
 ];
 

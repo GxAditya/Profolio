@@ -10,6 +10,7 @@ import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
 import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import RetroTemplate from "@/components/templates/RetroTemplate";
+import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { publishPortfolio } from "@/lib/portfolioPublishing";
 
@@ -22,6 +23,7 @@ const templateMap = {
   material: MaterialTemplate,
   flatdesign: FlatDesignTemplate,
   retro: RetroTemplate,
+  cyberpunk: CyberpunkTemplate,
 } as const;
 
 const templateOptions: { key: TemplateName; label: string }[] = [
@@ -33,6 +35,7 @@ const templateOptions: { key: TemplateName; label: string }[] = [
   { key: "material", label: "Material" },
   { key: "flatdesign", label: "Flat Design" },
   { key: "retro", label: "Retro" },
+  { key: "cyberpunk", label: "Cyberpunk" },
 ];
 
 /* ── Floating toolbar button helpers ── */
