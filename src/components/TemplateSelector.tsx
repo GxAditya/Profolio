@@ -1,7 +1,7 @@
 import { Columns2, LayoutTemplate, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type TemplateName = "minimal" | "professional" | "creative";
+export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism";
 
 interface Props {
   active: TemplateName;
@@ -18,25 +18,25 @@ const templates: {
   mood: string;
 }[] = [
   {
-    name: "minimal",
-    label: "Editorial",
+    name: "neumorphism",
+    label: "Neumorphism",
     icon: LayoutTemplate,
-    desc: "Story-first layout with warm paper tones",
-    mood: "Calm",
+    desc: "Soft depth, tactile cards, and futuristic pastel surfaces",
+    mood: "Soft 3D",
   },
   {
-    name: "professional",
-    label: "Studio",
+    name: "neobrutalism",
+    label: "Neobrutalism",
     icon: Columns2,
-    desc: "Structured dark case-study presentation",
-    mood: "Strategic",
+    desc: "Bold hard edges, punchy color blocks, and poster energy",
+    mood: "Raw",
   },
   {
-    name: "creative",
-    label: "Signal",
+    name: "glassmorphism",
+    label: "Glassmorphism",
     icon: Palette,
-    desc: "Bold high-contrast system with expressive blocks",
-    mood: "Energetic",
+    desc: "Layered translucent panels with cinematic depth and blur",
+    mood: "Luminous",
   },
 ];
 

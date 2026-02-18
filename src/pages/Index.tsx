@@ -3,20 +3,20 @@ import HeroSection from "@/components/HeroSection";
 import StepsSection from "@/components/StepsSection";
 import UploadSection from "@/components/UploadSection";
 import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
-import MinimalTemplate from "@/components/templates/MinimalTemplate";
-import ProfessionalTemplate from "@/components/templates/ProfessionalTemplate";
-import CreativeTemplate from "@/components/templates/CreativeTemplate";
+import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
+import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
+import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
 import { useResume } from "@/context/ResumeContext";
 
 const templateMap = {
-  minimal: MinimalTemplate,
-  professional: ProfessionalTemplate,
-  creative: CreativeTemplate,
+  neumorphism: NeumorphismTemplate,
+  neobrutalism: NeobrutalismTemplate,
+  glassmorphism: GlassmorphismTemplate,
 } as const;
 
 const Index = () => {
   const { profile } = useResume();
-  const [activeTemplate, setActiveTemplate] = useState<TemplateName>("minimal");
+  const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
   const ActiveComponent = templateMap[activeTemplate];
 
   return (

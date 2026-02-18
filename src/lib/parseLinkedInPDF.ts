@@ -26,6 +26,8 @@ const DEFAULT_PROFILE: LinkedInProfile = {
   skills: ["Add your skills here"],
   certifications: [],
   education: [],
+  customSections: [],
+  sectionOrder: ["hero", "skills", "experience", "education", "certifications"],
 };
 
 const MONTH_PATTERN =
@@ -233,6 +235,66 @@ const isLikelyCertificationLine = (line: string): boolean => {
   if (titleCaseStarts / normalizedWords.length < 0.6) return false;
 
   return true;
+};
+
+const escapeRegExp = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const extractCertificationPrefixFromMixedLine = (line: string): string => {
+  const hyphenMatch = line.match(/^(.{2,90}?)\s+[–—-]\s+(.+)$/);
+  if (hyphenMatch) {
+    const prefix = normalizeWhitespace(hyphenMatch[1]);
+    return isLikelyCertificationLine(prefix) ? prefix : "";
+  }
+
+  const words = line.split(" ").filter(Boolean);
+  if (words.length < 4) return "";
+
+  let splitIndex = 0;
+  for (let i = 0; i < words.length; i += 1) {
+    const token = words[i].replace(/[^A-Za-z0-9.'+-]/g, "");
+    if (!token) continue;
+    if (/^[A-Z0-9]/.test(token)) {
+      splitIndex = i + 1;
+      continue;
+    }
+    break;
+  }
+
+  if (splitIndex < 3 || splitIndex >= words.length) return "";
+
+  const prefix = normalizeWhitespace(words.slice(0, splitIndex).join(" "));
+  return isLikelyCertificationLine(prefix) ? prefix : "";
+};
+
+const stripLeadingLabels = (line: string, labels: string[]): string => {
+  let cleaned = line;
+
+  for (const label of labels) {
+    if (!label) continue;
+
+    const escapedLabel = escapeRegExp(label);
+    const delimiterPattern = new RegExp(
+      `^${escapedLabel}\\s*[–—\\-:|]\\s*(.+)$`,
+      "i"
+    );
+    const delimiterMatch = cleaned.match(delimiterPattern);
+    if (delimiterMatch) {
+      cleaned = normalizeWhitespace(delimiterMatch[1]);
+      continue;
+    }
+
+    const spacedPattern = new RegExp(`^${escapedLabel}\\s+(.+)$`, "i");
+    const spacedMatch = cleaned.match(spacedPattern);
+    if (!spacedMatch) continue;
+
+    const remainder = normalizeWhitespace(spacedMatch[1]);
+    if (remainder.length >= 10) {
+      cleaned = remainder;
+    }
+  }
+
+  return normalizeWhitespace(cleaned);
 };
 
 const stripLinkedInFragments = (line: string): string =>
@@ -472,12 +534,16 @@ function extractCertifications(lines: string[], sections: SectionIndexes): strin
     lines.length
   );
 
-  const candidates = mergeWrappedLines(
+  const rawLines = mergeWrappedLines(
     lines
       .slice(sections.certifications + 1, windowEnd)
       .filter((line) => !isSectionHeading(line))
-  )
-    .filter((line) => isLikelyCertificationLine(line));
+  );
+  const candidates = rawLines.flatMap((line) => {
+    const mixedPrefix = extractCertificationPrefixFromMixedLine(line);
+    if (mixedPrefix) return [mixedPrefix];
+    return isLikelyCertificationLine(line) ? [line] : [];
+  });
 
   return dedupeCaseInsensitive(candidates).slice(0, 20);
 }
@@ -501,8 +567,16 @@ function extractSummary(
   const blockedLines = new Set(
     [...certifications, ...skills].map((item) => item.toLowerCase())
   );
+  const labelsToStrip = dedupeCaseInsensitive([...certifications, ...skills]).sort(
+    (a, b) => b.length - a.length
+  );
+  const summaryWindow = lines
+    .slice(windowStart, windowEnd)
+    .map((line) => stripLeadingLabels(line, labelsToStrip))
+    .filter((line) => line.length > 0)
+    .filter((line) => !looksLikeSkillLine(line));
 
-  const candidates = stitchSentenceLines(lines.slice(windowStart, windowEnd))
+  const candidates = stitchSentenceLines(summaryWindow)
     .filter((line) => !isSectionHeading(line))
     .filter((line) => !isContactLine(line))
     .filter((line) => !isDateRangeLine(line))
@@ -817,6 +891,8 @@ function parseLinkedInText(text: string): LinkedInProfile {
     skills: skills.length > 0 ? skills : DEFAULT_PROFILE.skills,
     certifications,
     education,
+    customSections: [],
+    sectionOrder: [...(DEFAULT_PROFILE.sectionOrder ?? [])],
   };
 }
 
