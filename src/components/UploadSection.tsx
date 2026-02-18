@@ -7,7 +7,6 @@ import {
   FileText,
   Loader2,
   ShieldCheck,
-  Sparkles,
   Upload,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -64,51 +63,41 @@ const UploadSection = () => {
   });
 
   const dropzoneStateClass = parsing
-    ? "pointer-events-none border-foreground/15 bg-foreground/5"
+    ? "pointer-events-none border-foreground/[0.08] bg-foreground/[0.02]"
     : isDragActive
-      ? "border-primary/75 bg-primary/10 shadow-[0_18px_36px_rgba(161,64,37,0.18)]"
-      : "border-foreground/20 bg-card/75 hover:border-primary/65 hover:bg-card";
+      ? "app-dropzone-active border-2"
+      : "app-dropzone-idle border-2 hover:border-primary/40 hover:bg-primary/[0.02]";
 
   return (
-    <section id="upload" className="mx-auto max-w-5xl px-6 pb-20 pt-8">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="kicker text-foreground/55">Upload</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
-            Drop your LinkedIn PDF
-          </h2>
-        </div>
-        <p className="max-w-sm text-sm leading-relaxed text-foreground/70">
-          We parse your file in-session and immediately open an editable portfolio preview.
-        </p>
-      </div>
-
+    <section id="upload" className="mx-auto max-w-5xl px-6 pb-16 pt-8 sm:px-10">
       <div
         {...getRootProps()}
-        className={`group page-panel spring-hover relative min-h-[300px] cursor-pointer rounded-[1.15rem] border-2 border-dashed p-6 sm:p-9 ${dropzoneStateClass}`}
+        className={`group relative min-h-[280px] cursor-pointer rounded-2xl border-dashed p-6 transition-all duration-300 sm:p-9 ${dropzoneStateClass}`}
       >
         <input {...getInputProps()} />
 
-        <div className="pointer-events-none absolute right-4 top-4 hidden items-center gap-2 rounded-lg border border-foreground/15 bg-card/80 px-3 py-1.5 text-[0.64rem] uppercase tracking-[0.16em] text-foreground/60 sm:inline-flex">
-          <ShieldCheck className="h-3.5 w-3.5 text-accent" />
+        <div className="pointer-events-none absolute right-4 top-4 hidden items-center gap-2 rounded-full border border-foreground/[0.08] bg-foreground/[0.04] px-3 py-1.5 text-[0.62rem] uppercase tracking-[0.16em] text-foreground/25 sm:inline-flex">
+          <ShieldCheck className="h-3.5 w-3.5 text-primary/60" />
           Session-only parse
         </div>
 
         {parsing ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-3 text-center">
+          <div className="flex min-h-[230px] flex-col items-center justify-center gap-3 text-center">
             <Loader2 className="h-10 w-10 animate-spin text-primary" />
-            <p className="text-sm font-medium text-foreground/85">
+            <p className="text-sm font-medium text-foreground/70">
               Parsing <span className="font-semibold text-foreground">{fileName}</span>
             </p>
-            <p className="text-xs text-foreground/60">Extracting sections and normalizing fields...</p>
+            <p className="text-xs text-foreground/30">Extracting sections and normalizing fields...</p>
           </div>
         ) : parsed && fileName ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-4 text-center">
-            <CheckCircle2 className="h-11 w-11 text-accent" />
+          <div className="flex min-h-[230px] flex-col items-center justify-center gap-4 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/[0.1]">
+              <CheckCircle2 className="h-7 w-7 text-primary" />
+            </div>
             <div>
-              <p className="text-sm font-semibold text-foreground">{fileName}</p>
-              <p className="mt-1 text-xs text-foreground/65">
-                Parsed successfully. Drop another file anytime to replace it.
+              <p className="text-sm font-bold text-foreground">{fileName}</p>
+              <p className="mt-1 text-xs text-foreground/35">
+                Parsed successfully. Your editable preview is ready below.
               </p>
             </div>
             <Link
@@ -117,41 +106,47 @@ const UploadSection = () => {
               onPointerDown={stopDropzoneClick}
               onMouseDown={stopDropzoneClick}
               onKeyDown={stopDropzoneClick}
-              className="lift-ring spring-hover inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground"
+              className="group/btn inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-[0_0_24px_hsl(72_100%_50%_/_0.2)]"
             >
-              Open Live Preview
-              <ArrowRight className="h-4 w-4" />
+              Open Full Preview
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
             </Link>
           </div>
         ) : parseError && fileName ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-3 text-center">
-            <AlertCircle className="h-10 w-10 text-destructive" />
-            <p className="text-sm font-medium text-foreground">{fileName}</p>
-            <p className="max-w-xl text-xs leading-relaxed text-destructive/90">{parseError}</p>
-            <p className="text-xs text-foreground/65">
+          <div className="flex min-h-[230px] flex-col items-center justify-center gap-3 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-destructive/[0.1]">
+              <AlertCircle className="h-7 w-7 text-destructive" />
+            </div>
+            <p className="text-sm font-bold text-foreground">{fileName}</p>
+            <p className="max-w-xl text-xs leading-relaxed text-destructive/80">{parseError}</p>
+            <p className="text-xs text-foreground/30">
               Export a fresh PDF from LinkedIn and upload again.
             </p>
           </div>
         ) : fileName ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-3 text-center">
-            <FileText className="h-10 w-10 text-primary" />
-            <p className="text-sm font-semibold text-foreground">{fileName}</p>
-            <p className="text-xs text-foreground/65">Drop another file to replace</p>
+          <div className="flex min-h-[230px] flex-col items-center justify-center gap-3 text-center">
+            <FileText className="h-10 w-10 text-primary/60" />
+            <p className="text-sm font-bold text-foreground">{fileName}</p>
+            <p className="text-xs text-foreground/30">Drop another file to replace</p>
           </div>
         ) : (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-4 text-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-xl border border-foreground/15 bg-card text-primary transition-transform group-hover:scale-110">
+          <div className="flex min-h-[230px] flex-col items-center justify-center gap-4 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-foreground/[0.08] bg-foreground/[0.04] text-primary transition-transform duration-300 group-hover:scale-105">
               <Upload className="h-7 w-7" />
-            </span>
+            </div>
             <div>
-              <p className="text-base font-semibold text-foreground sm:text-lg">
+              <p className="text-base font-bold sm:text-lg">
                 Click to upload or drag and drop
               </p>
-              <p className="mt-1 text-sm text-foreground/65">Accepts PDF only. 1 file per run.</p>
+              <p className="mt-1 text-sm text-foreground/30">Accepts PDF only. 1 file per run.</p>
             </div>
-            <p className="mono inline-flex items-center gap-1 text-[0.68rem] uppercase tracking-[0.16em] text-foreground/55">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              Fast parse • editable output • template switching
+            <p className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-foreground/20">
+              <span className="h-1 w-1 rounded-full bg-primary/60" />
+              Fast parse
+              <span className="h-1 w-1 rounded-full bg-primary/60" />
+              Editable output
+              <span className="h-1 w-1 rounded-full bg-primary/60" />
+              Template switching
             </p>
           </div>
         )}

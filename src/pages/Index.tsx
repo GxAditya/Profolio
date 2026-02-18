@@ -1,62 +1,114 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import HeroSection from "@/components/HeroSection";
 import StepsSection from "@/components/StepsSection";
-import UploadSection from "@/components/UploadSection";
-import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
-import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
-import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
-import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
-import { useResume } from "@/context/ResumeContext";
 
-const templateMap = {
-  neumorphism: NeumorphismTemplate,
-  neobrutalism: NeobrutalismTemplate,
-  glassmorphism: GlassmorphismTemplate,
-} as const;
+const upsertMeta = (attr: "name" | "property", key: string, content: string) => {
+  let tag = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attr, key);
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+};
+
+const upsertLink = (rel: string, href: string) => {
+  let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = rel;
+    document.head.appendChild(link);
+  }
+  link.href = href;
+};
+
+const upsertJsonLd = (id: string, data: Record<string, unknown>) => {
+  let script = document.querySelector(`script#${id}`) as HTMLScriptElement | null;
+  if (!script) {
+    script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = id;
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(data);
+};
 
 const Index = () => {
-  const { profile } = useResume();
-  const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
-  const ActiveComponent = templateMap[activeTemplate];
+  useEffect(() => {
+    const title = "Profolio | Developer Portfolio Builder from LinkedIn PDF";
+    const description =
+      "Create, edit, and publish a developer portfolio from your LinkedIn PDF in minutes. Compare templates, refine content inline, and share a public portfolio URL.";
+    const canonicalUrl = `${window.location.origin}/`;
+
+    document.title = title;
+    upsertMeta("name", "description", description);
+    upsertMeta(
+      "name",
+      "keywords",
+      "developer portfolio builder, LinkedIn PDF portfolio, portfolio website generator, online portfolio creator"
+    );
+    upsertMeta("name", "robots", "index, follow");
+    upsertMeta("property", "og:title", title);
+    upsertMeta("property", "og:description", description);
+    upsertMeta("property", "og:type", "website");
+    upsertMeta("property", "og:url", canonicalUrl);
+    upsertMeta("name", "twitter:card", "summary_large_image");
+    upsertMeta("name", "twitter:title", title);
+    upsertMeta("name", "twitter:description", description);
+    upsertLink("canonical", canonicalUrl);
+
+    upsertJsonLd("profolio-software-jsonld", {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "Profolio",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      description,
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "LinkedIn PDF import",
+        "Inline portfolio editing",
+        "Template switching",
+        "Public portfolio URL publishing",
+      ],
+      url: canonicalUrl,
+    });
+
+    upsertJsonLd("profolio-faq-jsonld", {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What can I build today in Profolio?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You can upload your LinkedIn PDF, edit your content, preview templates, and publish a shareable portfolio URL.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is GitHub import already available?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "GitHub import is planned as the next release and is currently marked as coming soon.",
+          },
+        },
+      ],
+    });
+  }, []);
 
   return (
-    <div className="paper-grain relative min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="relative mx-auto max-w-7xl pb-20">
-        <HeroSection hasProfile={Boolean(profile)} />
+    <main className="landing-dark landing-noise relative min-h-screen overflow-hidden bg-background text-foreground">
+      <div className="relative pb-20">
+        <HeroSection />
         <StepsSection />
-        <UploadSection />
       </div>
-
-      {profile && (
-        <section className="pb-10">
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="kicker text-foreground/55">Template Lab</p>
-                <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
-                  Choose your portfolio direction
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-relaxed text-foreground/70">
-                Template selector sits above your rendered page preview.
-              </p>
-            </div>
-
-            <div className="page-panel rounded-[1rem] p-5 sm:p-6">
-              <TemplateSelector
-                active={activeTemplate}
-                onChange={setActiveTemplate}
-                label="Portfolio template"
-              />
-            </div>
-          </div>
-
-          <div className="mt-6 w-full">
-            <ActiveComponent profile={profile} sectionStyle="plain" />
-          </div>
-        </section>
-      )}
-    </div>
+    </main>
   );
 };
 

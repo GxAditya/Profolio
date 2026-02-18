@@ -16,6 +16,7 @@ const templates: {
   icon: typeof LayoutTemplate;
   desc: string;
   mood: string;
+  moodColor: string;
 }[] = [
   {
     name: "neumorphism",
@@ -23,6 +24,7 @@ const templates: {
     icon: LayoutTemplate,
     desc: "Soft depth, tactile cards, and futuristic pastel surfaces",
     mood: "Soft 3D",
+    moodColor: "text-blue-400",
   },
   {
     name: "neobrutalism",
@@ -30,6 +32,7 @@ const templates: {
     icon: Columns2,
     desc: "Bold hard edges, punchy color blocks, and poster energy",
     mood: "Raw",
+    moodColor: "text-orange-400",
   },
   {
     name: "glassmorphism",
@@ -37,6 +40,7 @@ const templates: {
     icon: Palette,
     desc: "Layered translucent panels with cinematic depth and blur",
     mood: "Luminous",
+    moodColor: "text-cyan-400",
   },
 ];
 
@@ -48,7 +52,7 @@ const TemplateSelector = ({
 }: Props) => {
   return (
     <div className={cn("w-full", className)}>
-      <p className="kicker mb-3 text-foreground/55">{label}</p>
+      <p className="app-kicker mb-3 text-foreground/30">{label}</p>
       <div className="grid gap-3">
         {templates.map((template) => {
           const Icon = template.icon;
@@ -60,28 +64,28 @@ const TemplateSelector = ({
               type="button"
               onClick={() => onChange(template.name)}
               className={cn(
-                "spring-hover rounded-xl border bg-card px-4 py-3 text-left transition-colors",
+                "rounded-xl border px-4 py-3.5 text-left transition-all duration-200",
                 selected
-                  ? "border-primary/70 bg-primary/10 shadow-[0_10px_24px_rgba(153,64,35,0.16)]"
-                  : "border-foreground/12 hover:border-primary/45"
+                  ? "border-primary/30 bg-primary/[0.06] shadow-[0_0_20px_hsl(72_100%_50%_/_0.06)]"
+                  : "border-foreground/[0.07] bg-foreground/[0.02] hover:border-foreground/[0.12] hover:bg-foreground/[0.04]"
               )}
             >
               <div className="flex items-start gap-3">
                 <span
                   className={cn(
-                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
+                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
                     selected
-                      ? "border-primary/30 bg-primary text-primary-foreground"
-                      : "border-foreground/15 bg-card text-foreground/70"
+                      ? "border-primary/25 bg-primary text-primary-foreground"
+                      : "border-foreground/[0.08] bg-foreground/[0.04] text-foreground/35"
                   )}
                 >
                   <Icon className="h-4 w-4" />
                 </span>
 
                 <span className="block">
-                  <span className="block text-sm font-semibold text-foreground">{template.label}</span>
-                  <span className="mt-1 block text-xs text-foreground/70">{template.desc}</span>
-                  <span className="mono mt-2 inline-block text-[0.64rem] uppercase tracking-[0.16em] text-primary">
+                  <span className="block text-sm font-bold text-foreground">{template.label}</span>
+                  <span className="mt-1 block text-xs text-foreground/35">{template.desc}</span>
+                  <span className={cn("mt-2 inline-block font-mono text-[0.62rem] uppercase tracking-[0.16em]", template.moodColor)}>
                     {template.mood}
                   </span>
                 </span>

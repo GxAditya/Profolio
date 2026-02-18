@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2, Zap } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import type { TemplateName } from "@/components/TemplateSelector";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
@@ -89,29 +89,49 @@ const PublicPortfolio = () => {
     };
   }, [portfolio]);
 
+  /* ── Loading state ── */
   if (loading) {
     return (
-      <div className="paper-grain relative min-h-screen overflow-hidden bg-background text-foreground">
-        <div className="mx-auto flex min-h-screen max-w-3xl items-center justify-center px-6">
-          <p className="text-sm text-foreground/70">Loading portfolio...</p>
+      <div className="app-dark relative flex min-h-screen items-center justify-center overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(72_100%_50%_/_0.04),transparent_60%)] blur-[90px]" />
+        </div>
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-6 w-6 animate-spin text-primary/60" />
+          <p className="text-sm text-foreground/40">Loading portfolio...</p>
         </div>
       </div>
     );
   }
 
+  /* ── Error / not-found state ── */
   if (error || !portfolio) {
     return (
-      <div className="paper-grain relative min-h-screen overflow-hidden bg-background text-foreground">
-        <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 text-center">
-          <p className="kicker text-foreground/55">Public Portfolio</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
+      <div className="app-dark relative flex min-h-screen items-center justify-center overflow-hidden px-6">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(72_100%_50%_/_0.04),transparent_60%)] blur-[100px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(hsl(0_0%_100%_/_0.02)_1px,transparent_1px),linear-gradient(90deg,hsl(0_0%_100%_/_0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-md text-center">
+          <Link to="/" className="mb-8 inline-flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <Zap className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
+          </Link>
+          <p className="app-kicker text-primary/60">Public Portfolio</p>
+          <h1 className="mt-3 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
             {error ?? "Portfolio unavailable"}
           </h1>
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-foreground/35">
+            The portfolio you're looking for doesn't exist or has been removed.
+          </p>
           <Link
             to="/"
-            className="mt-7 inline-flex items-center gap-2 rounded-lg border border-foreground/20 bg-card/80 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/80"
+            className="group mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-[0_0_28px_hsl(72_100%_50%_/_0.25)]"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
             Go Home
           </Link>
         </div>
