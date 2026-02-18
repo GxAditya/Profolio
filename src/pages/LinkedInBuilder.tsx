@@ -10,6 +10,7 @@ import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate"
 import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
 import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
+import RetroTemplate from "@/components/templates/RetroTemplate";
 import { useResume } from "@/context/ResumeContext";
 
 const templateMap = {
@@ -20,6 +21,7 @@ const templateMap = {
   minimalism: MinimalismTemplate,
   material: MaterialTemplate,
   flatdesign: FlatDesignTemplate,
+  retro: RetroTemplate,
 } as const;
 
 const LinkedInBuilder = () => {

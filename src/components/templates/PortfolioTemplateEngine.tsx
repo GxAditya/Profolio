@@ -12,7 +12,7 @@ import type {
   ProjectLink,
 } from "@/types/linkedin";
 
-export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign";
+export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro";
 export type PortfolioSectionStyle = "framed" | "plain";
 
 interface Props {
@@ -447,6 +447,66 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     iconButton:
       "inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[#ECF0F1] text-[#7F8C8D] hover:bg-[#D5D8DC] hover:text-[#2C3E50]",
   },
+  retro: {
+    page: "relative min-h-screen w-full overflow-hidden bg-[#0A0A1E] text-[#C8D8FF]",
+    ambience:
+      "pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,80,220,0.22),transparent_55%),radial-gradient(ellipse_at_90%_95%,rgba(255,0,180,0.14),transparent_50%),radial-gradient(ellipse_at_5%_80%,rgba(0,220,100,0.08),transparent_45%)]",
+    contentWrap: "relative px-6 pb-10 pt-6 sm:px-10 sm:pt-8",
+    header:
+      "flex flex-wrap items-end justify-between gap-4 bg-[linear-gradient(180deg,#C8D8F0_0%,#889AAE_38%,#B8CCE0_55%,#9AACC0_100%)] px-6 py-6 border-b-4 border-[#3366FF] shadow-[0_5px_0_#001AAA,inset_0_1px_0_rgba(255,255,255,0.85)]",
+    headingKicker: "text-[0.62rem] uppercase tracking-[0.22em] text-[#002277] font-black",
+    headingName:
+      "mt-2 text-3xl font-black uppercase tracking-[0.03em] text-[#00115E] [text-shadow:1px_1px_0_rgba(255,255,255,0.75),0_2px_0_rgba(0,0,100,0.3)] [font-family:var(--heading-font)] sm:text-4xl",
+    headingMeta:
+      "bg-[linear-gradient(180deg,#1A44BB,#001277)] border-2 border-[#66AAFF] px-4 py-2 text-xs font-black uppercase tracking-[0.1em] text-[#00FFFF] shadow-[0_3px_0_#000A55,inset_0_1px_0_rgba(150,200,255,0.3)]",
+    section:
+      "bg-[linear-gradient(180deg,#10102A,#0A0A1E)] border border-[#1A2E99]/60 p-5 shadow-[inset_0_1px_0_rgba(80,130,255,0.18),0_3px_10px_rgba(0,0,80,0.6)]",
+    sectionDropTarget:
+      "border-[#00FFFF]/70 bg-[#08082A] shadow-[0_0_16px_rgba(0,255,255,0.2)]",
+    sectionHandle:
+      "mb-5 inline-flex cursor-grab items-center gap-2 bg-[linear-gradient(180deg,#2255CC,#0D33AA)] border-2 border-[#4488FF] px-3 py-1.5 text-[0.63rem] font-black uppercase tracking-[0.14em] text-[#00FFFF] shadow-[0_3px_0_#001188,inset_0_1px_0_rgba(150,200,255,0.25)]",
+    sectionLabel: "text-[0.6rem] uppercase tracking-[0.22em] text-[#4477EE] font-black",
+    sectionTitle:
+      "mt-1 text-xl font-black uppercase tracking-[0.04em] text-[#00FFFF] [text-shadow:0_0_12px_rgba(0,255,255,0.55),0_0_2px_rgba(0,255,255,0.9)] [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#7799CC]",
+    bodyText: "text-sm leading-relaxed text-[#99BBDD]",
+    mutedText: "text-xs text-[#445588]",
+    link: "font-black text-[#FF44CC] underline decoration-[#FF44CC]/40 underline-offset-4 [text-shadow:0_0_10px_rgba(255,68,204,0.55)]",
+    input:
+      "w-full border-2 border-[#1A2E88] bg-[#06061A] px-3 py-2 text-sm text-[#00FFFF] outline-none transition placeholder:text-[#223366] focus:border-[#00FFFF] focus:shadow-[0_0_10px_rgba(0,255,255,0.3)] focus:bg-[#0A0A22]",
+    controlPanel:
+      "mt-6 bg-[linear-gradient(180deg,#10102A,#0A0A1E)] border border-[#1A2E99]/60 p-5 shadow-[inset_0_1px_0_rgba(80,130,255,0.18)]",
+    controlPanelTitle:
+      "mt-1.5 text-lg font-black uppercase tracking-[0.04em] text-[#00FFFF] [text-shadow:0_0_12px_rgba(0,255,255,0.55)] [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-[0.65rem] font-black uppercase tracking-[0.14em] text-[#4477EE]",
+    heroSummary:
+      "mt-4 max-w-2xl bg-[#06061A] border border-[#1A2E88]/60 p-4 text-sm leading-relaxed text-[#99BBDD] shadow-[inset_0_1px_0_rgba(80,130,255,0.15)]",
+    contactCard: "bg-[#06061A] border border-[#1A2E88]/60 p-4 shadow-[inset_0_1px_0_rgba(80,130,255,0.12)]",
+    skillChip:
+      "inline-flex items-center gap-1 bg-[linear-gradient(180deg,#00BB44,#007722)] border-2 border-[#00FF77] pl-3 pr-1 text-[0.63rem] font-black uppercase tracking-[0.1em] text-black shadow-[0_2px_0_#003311,inset_0_1px_0_rgba(200,255,220,0.3)]",
+    chipAction:
+      "inline-flex h-5 w-5 items-center justify-center bg-[#005518] text-[#00FF77] hover:bg-[#007722]",
+    addChipButton:
+      "inline-flex items-center gap-1 bg-[linear-gradient(180deg,#FFCC00,#FF8800)] border-2 border-[#FFE840] px-3 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-black shadow-[0_2px_0_#884400,inset_0_1px_0_rgba(255,255,200,0.4)] hover:brightness-110",
+    projectCard:
+      "relative bg-[#06061A] border border-[#1A2E88]/60 p-4 shadow-[inset_0_1px_0_rgba(80,130,255,0.14)] transition-all duration-150 hover:border-[#00FFFF]/40 hover:shadow-[0_0_14px_rgba(0,255,255,0.12),inset_0_1px_0_rgba(80,130,255,0.2)]",
+    educationCard:
+      "bg-[#06061A] border border-[#1A2E88]/60 p-4 shadow-[inset_0_1px_0_rgba(80,130,255,0.14)] transition-all duration-150 hover:border-[#FF44CC]/40 hover:shadow-[0_0_14px_rgba(255,68,204,0.1)]",
+    certificationCard:
+      "flex items-start justify-between gap-2 bg-[#06061A] border border-[#1A2E88]/60 px-4 py-3 text-sm text-[#99BBDD] shadow-[inset_0_1px_0_rgba(80,130,255,0.12)]",
+    customCard:
+      "relative bg-[#06061A] border border-[#1A2E88]/60 p-4 shadow-[inset_0_1px_0_rgba(80,130,255,0.14)] transition-all duration-150 hover:border-[#FF44CC]/40 hover:shadow-[0_0_14px_rgba(255,68,204,0.1)]",
+    customTag:
+      "bg-[#0C0C28] border border-[#1A2E88]/60 px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.14em] text-[#4466BB]",
+    emptyState:
+      "mt-4 bg-[#06061A] border border-dashed border-[#1A2E88]/40 px-4 py-3 text-sm text-[#334466]",
+    primaryButton:
+      "inline-flex items-center justify-center gap-2 bg-[linear-gradient(180deg,#5599FF_0%,#2255CC_45%,#4488FF_100%)] border-2 border-[#77BBFF] px-5 py-2 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_4px_0_#001199,inset_0_1px_0_rgba(255,255,255,0.28)] transition-all duration-150 hover:brightness-110 active:shadow-none active:translate-y-[3px]",
+    secondaryButton:
+      "inline-flex items-center gap-1 bg-[linear-gradient(180deg,#141A44,#0A1033)] border-2 border-[#2244AA] px-3 py-1.5 text-[0.63rem] font-black uppercase tracking-[0.13em] text-[#4488FF] hover:border-[#5599FF] hover:text-[#77AAFF]",
+    iconButton:
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center bg-[linear-gradient(180deg,#141A44,#0A1033)] border-2 border-[#2244AA] text-[#4488FF] hover:border-[#00FFFF] hover:text-[#00FFFF]",
+  },
   minimalism: {
     page: "relative min-h-screen w-full bg-white text-[#111111]",
     ambience: "pointer-events-none absolute inset-0",
@@ -530,6 +590,10 @@ const themeTypography: Record<PortfolioTheme, { body: string; heading: string }>
   material: {
     body: '"Roboto", "Google Sans", sans-serif',
     heading: '"Google Sans", "Roboto", sans-serif',
+  },
+  retro: {
+    body: '"Tahoma", "Verdana", sans-serif',
+    heading: '"Orbitron", "Tahoma", sans-serif',
   },
   flatdesign: {
     body: '"Work Sans", "DM Sans", sans-serif',
@@ -1189,7 +1253,9 @@ const PortfolioTemplateEngine = ({
           ? "bg-[#BBDEFB]"
           : theme === "flatdesign"
             ? "bg-[#BDC3C7]"
-            : "bg-[#60738f]/35";
+            : theme === "retro"
+              ? "bg-[#1A2E88]/60"
+              : "bg-[#60738f]/35";
 
   const timelineMarkerClass =
     theme === "glassmorphism"
@@ -1200,7 +1266,9 @@ const PortfolioTemplateEngine = ({
           ? "border-[#1976D2]/40 bg-[#E3F2FD] text-[#1565C0]"
           : theme === "flatdesign"
             ? "border-[#E74C3C] bg-[#E74C3C] text-white"
-            : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
+            : theme === "retro"
+              ? "border-[#00FFFF] bg-[#0A0A1E] text-[#00FFFF] shadow-[0_0_8px_rgba(0,255,255,0.5)]"
+              : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
   const sectionStackClassName =
     sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 

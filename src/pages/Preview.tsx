@@ -9,6 +9,7 @@ import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate"
 import MinimalismTemplate from "@/components/templates/MinimalismTemplate";
 import MaterialTemplate from "@/components/templates/MaterialTemplate";
 import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
+import RetroTemplate from "@/components/templates/RetroTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { publishPortfolio } from "@/lib/portfolioPublishing";
 
@@ -20,6 +21,7 @@ const templateMap = {
   minimalism: MinimalismTemplate,
   material: MaterialTemplate,
   flatdesign: FlatDesignTemplate,
+  retro: RetroTemplate,
 } as const;
 
 const templateOptions: { key: TemplateName; label: string }[] = [
@@ -30,6 +32,7 @@ const templateOptions: { key: TemplateName; label: string }[] = [
   { key: "minimalism", label: "Minimalism" },
   { key: "material", label: "Material" },
   { key: "flatdesign", label: "Flat Design" },
+  { key: "retro", label: "Retro" },
 ];
 
 /* ── Floating toolbar button helpers ── */
