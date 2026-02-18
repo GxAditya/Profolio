@@ -8,7 +8,6 @@ import Index from "./pages/Index";
 import BuildOptions from "./pages/BuildOptions";
 import LinkedInBuilder from "./pages/LinkedInBuilder";
 import Preview from "./pages/Preview";
-import PublicPortfolio from "./pages/PublicPortfolio";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +24,6 @@ const App = () => (
             <Route path="/build" element={<BuildOptions />} />
             <Route path="/linkedin" element={<LinkedInBuilder />} />
             <Route path="/preview" element={<Preview />} />
-            <Route path="/p/:id" element={<PublicPortfolio />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

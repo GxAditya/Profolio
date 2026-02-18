@@ -80,13 +80,9 @@ const BuildOptions = () => {
               <p className="mt-3 text-sm leading-relaxed text-foreground/40">
                 Import repositories, starred projects, and contribution data. This feature is planned as the next release.
               </p>
-              <Link
-                to="/github"
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-foreground/[0.1] bg-foreground/[0.04] px-6 py-3 text-sm font-medium text-foreground/40 transition-colors hover:border-foreground/20 hover:text-foreground/60"
-              >
-                Open Placeholder
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-foreground/[0.07] bg-foreground/[0.03] px-6 py-3 text-sm font-medium text-foreground/25 cursor-not-allowed select-none">
+                Coming Soon
+              </div>
             </div>
           </article>
         </div>

@@ -1,9 +1,9 @@
 import {
   ArrowRight,
   Code2,
+  Download,
   FileStack,
   Palette,
-  Share2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -17,14 +17,14 @@ const outcomes = [
   {
     stat: "Instant comparison",
     label:
-      "Switch between three template styles and see changes reflected live.",
+      "Switch between nine template styles and see changes reflected live.",
     icon: "⚡",
   },
   {
-    stat: "Shareable in minutes",
+    stat: "Export-ready HTML",
     label:
-      "Publish a public portfolio URL you can drop in any application.",
-    icon: "🔗",
+      "Download a fully self-contained HTML file and host it anywhere you like.",
+    icon: "💾",
   },
 ];
 
@@ -46,19 +46,19 @@ const features = [
     accent: false,
   },
   {
-    title: "Three distinct templates",
+    title: "Nine distinct templates",
     description:
-      "Neumorphism, Neobrutalism, Glassmorphism — each designed for a different personality.",
+      "Neumorphism, Neobrutalism, Glassmorphism, Claymorphism, Minimalism, Material, Flat Design, Retro, Cyberpunk — pick the one that fits your style.",
     cue: "Design",
     icon: Palette,
     accent: false,
   },
   {
-    title: "One-click publish",
+    title: "One-click code export",
     description:
-      "Generate a public portfolio URL and share it in resumes, LinkedIn bios, and job applications.",
-    cue: "Launch",
-    icon: Share2,
+      "Download your portfolio as a clean, self-contained HTML file with all styles inlined — host it on GitHub Pages, Netlify, Vercel, or anywhere.",
+    cue: "Export",
+    icon: Download,
     accent: true,
   },
 ];
@@ -78,9 +78,9 @@ const workflowSteps = [
   },
   {
     num: "03",
-    title: "Publish & share",
+    title: "Export & deploy",
     description:
-      "Hit publish to generate your hosted portfolio URL. Share it everywhere — it's yours.",
+      "Download your portfolio as a standalone HTML file. Drop it on GitHub Pages, Netlify, or any host — no build step needed.",
   },
 ];
 
@@ -88,7 +88,7 @@ const faqs = [
   {
     question: "What can I build today?",
     answer:
-      "The LinkedIn PDF flow is fully available: upload, edit, preview templates, and publish a shareable portfolio link.",
+      "The LinkedIn PDF flow is fully available: upload, edit, switch templates, and export your portfolio as a clean standalone HTML file.",
   },
   {
     question: "Is GitHub import available?",
@@ -96,9 +96,9 @@ const faqs = [
       "GitHub import is the next planned feature and is currently marked as coming soon in the build options.",
   },
   {
-    question: "Can I update my portfolio after publishing?",
+    question: "Can I update my portfolio after exporting?",
     answer:
-      "Yes. Continue editing in the workspace and republish to keep your portfolio current with your latest experience.",
+      "Yes. Come back to Profolio, continue editing, pick a new template if you like, and export a fresh copy anytime.",
   },
   {
     question: "Who is this for?",
@@ -251,12 +251,12 @@ const StepsSection = () => {
             Build your portfolio today.
             <span className="font-display italic text-primary">
               {" "}
-              Publish tonight.
+              Export tonight.
             </span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-foreground/40">
-            Start with your LinkedIn PDF, refine your story, and share a polished
-            portfolio URL in every opportunity.
+            Start with your LinkedIn PDF, refine your story, and download a
+            polished portfolio you can host anywhere.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -277,7 +277,7 @@ const StepsSection = () => {
           <span className="text-sm font-bold tracking-tight">profolio</span>
         </div>
         <p className="text-xs text-foreground/25">
-          Developer portfolio builder. From PDF to published.
+          Developer portfolio builder. From PDF to deployed.
         </p>
       </footer>
     </div>

@@ -37,7 +37,7 @@ const Index = () => {
   useEffect(() => {
     const title = "Profolio | Developer Portfolio Builder from LinkedIn PDF";
     const description =
-      "Create, edit, and publish a developer portfolio from your LinkedIn PDF in minutes. Compare templates, refine content inline, and share a public portfolio URL.";
+      "Create and export a developer portfolio from your LinkedIn PDF in minutes. Compare 9 templates, edit inline, and download clean self-contained HTML ready to host anywhere.";
     const canonicalUrl = `${window.location.origin}/`;
 
     document.title = title;
@@ -73,7 +73,7 @@ const Index = () => {
         "LinkedIn PDF import",
         "Inline portfolio editing",
         "Template switching",
-        "Public portfolio URL publishing",
+        "One-click HTML code export",
       ],
       url: canonicalUrl,
     });
@@ -87,7 +87,7 @@ const Index = () => {
           name: "What can I build today in Profolio?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "You can upload your LinkedIn PDF, edit your content, preview templates, and publish a shareable portfolio URL.",
+            text: "You can upload your LinkedIn PDF, edit your content, preview templates, and export your portfolio as a clean standalone HTML file ready to host anywhere.",
           },
         },
         {

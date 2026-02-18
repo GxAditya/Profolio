@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Check, Copy, Download, Loader2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { type TemplateName } from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
@@ -12,7 +12,6 @@ import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import RetroTemplate from "@/components/templates/RetroTemplate";
 import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
-import { publishPortfolio } from "@/lib/portfolioPublishing";
 import { exportPortfolioAsHtml } from "@/lib/exportPortfolio";
 
 const templateMap = {
@@ -53,54 +52,14 @@ const Preview = () => {
   const { profile } = useResume();
   const portfolioRef = useRef<HTMLDivElement>(null);
   const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
-  const [publishing, setPublishing] = useState(false);
-  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
-  const [publishError, setPublishError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
 
   const ActiveComponent = templateMap[activeTemplate];
-
-  const handlePublish = async () => {
-    if (!profile) return;
-    setPublishing(true);
-    setPublishError(null);
-
-    try {
-      const record = await publishPortfolio({
-        data: profile,
-        templateId: activeTemplate,
-      });
-      setPublishedUrl(`${window.location.origin}/p/${record.id}`);
-      setCopied(false);
-    } catch (error) {
-      setPublishError(error instanceof Error ? error.message : "Unable to publish portfolio.");
-    } finally {
-      setPublishing(false);
-    }
-  };
 
   const handleExport = () => {
     if (!portfolioRef.current) return;
     const name = profile?.fullName || "my";
     exportPortfolioAsHtml(portfolioRef.current, name);
   };
-
-  const handleCopyPublishedUrl = async () => {
-    if (!publishedUrl) return;
-
-    try {
-      await navigator.clipboard.writeText(publishedUrl);
-      setCopied(true);
-    } catch {
-      setPublishError("Couldn't copy the link. Please copy it manually.");
-    }
-  };
-
-  useEffect(() => {
-    if (!copied) return;
-    const timeoutId = window.setTimeout(() => setCopied(false), 1800);
-    return () => window.clearTimeout(timeoutId);
-  }, [copied]);
 
   /* ── Empty state ── */
   if (!profile) {
@@ -159,18 +118,8 @@ const Preview = () => {
         <div className="flex shrink-0 items-center gap-1.5">
           <button
             type="button"
-            onClick={handlePublish}
-            disabled={publishing}
-            className={`inline-flex items-center gap-2 ${tbBase} ${tbActive} disabled:cursor-not-allowed disabled:opacity-60`}
-          >
-            {publishing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-            {publishing ? "Publishing..." : publishedUrl ? "Republish" : "Publish"}
-          </button>
-
-          <button
-            type="button"
             onClick={handleExport}
-            className={tbSecondary}
+            className={`inline-flex items-center gap-2 ${tbBase} ${tbActive}`}
           >
             <Download className="h-3.5 w-3.5" />
             Export Code
@@ -185,44 +134,9 @@ const Preview = () => {
     </div>
   );
 
-  /* ── Published URL bar ── */
-  const renderPublishBar = () => {
-    if (!publishedUrl && !publishError) return null;
-    return (
-      <div className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-[60] flex justify-center px-4">
-        <div className="pointer-events-auto w-full max-w-4xl rounded-xl border border-white/[0.1] bg-black/60 p-3 shadow-[0_12px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-          {publishedUrl && (
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <a
-                href={publishedUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="break-all text-sm text-[hsl(72_100%_65%)] underline decoration-[hsl(72_100%_50%_/_0.3)] underline-offset-4"
-              >
-                {publishedUrl}
-              </a>
-              <button
-                type="button"
-                onClick={handleCopyPublishedUrl}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.15] bg-white/[0.07] px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-white/85 transition-colors hover:bg-white/[0.12]"
-              >
-                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? "Copied" : "Copy Link"}
-              </button>
-            </div>
-          )}
-          {publishError && (
-            <p className="mt-2 text-xs text-red-400">{publishError}</p>
-          )}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       {renderToolbar()}
-      {renderPublishBar()}
       <div ref={portfolioRef} className="relative min-h-screen pt-20">
         <ActiveComponent
           profile={profile}

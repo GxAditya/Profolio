@@ -1,10 +1,10 @@
-import { ArrowRight, ArrowUpRight, Globe2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const stats = [
-  { value: "<10 min", label: "to first publish" },
-  { value: "3", label: "templates included" },
-  { value: "1-click", label: "publish & share" },
+  { value: "<10 min", label: "upload to export" },
+  { value: "9", label: "templates included" },
+  { value: "1-click", label: "code export" },
 ];
 
 const HeroSection = () => {
@@ -88,8 +88,8 @@ const HeroSection = () => {
           className="landing-reveal mt-7 max-w-lg text-center text-[1.05rem] leading-relaxed text-foreground/40"
           style={{ animationDelay: "0.16s" }}
         >
-          Upload your LinkedIn export, pick a template, edit inline, and publish
-          a portfolio URL — all in under ten minutes.
+          Upload your LinkedIn export, pick a template, edit inline, and download
+          your portfolio as clean, self-contained HTML — ready to host anywhere.
         </p>
 
         {/* CTAs */}
@@ -127,8 +127,8 @@ const HeroSection = () => {
               </div>
               <div className="flex-1 text-center">
                 <div className="mx-auto inline-flex items-center gap-2 rounded-lg bg-foreground/[0.04] px-4 py-1 text-xs text-foreground/25">
-                  <Globe2 className="h-3 w-3" />
-                  profolio.dev/p/yourname
+                  <Download className="h-3 w-3" />
+                  yourname-portfolio.html
                 </div>
               </div>
             </div>
