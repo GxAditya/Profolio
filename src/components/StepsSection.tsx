@@ -91,11 +91,6 @@ const faqs = [
       "The LinkedIn PDF flow is fully available: upload, edit, switch templates, and export your portfolio as a clean standalone HTML file.",
   },
   {
-    question: "Is GitHub import available?",
-    answer:
-      "GitHub import is the next planned feature and is currently marked as coming soon in the build options.",
-  },
-  {
     question: "Can I update my portfolio after exporting?",
     answer:
       "Yes. Come back to Profolio, continue editing, pick a new template if you like, and export a fresh copy anytime.",

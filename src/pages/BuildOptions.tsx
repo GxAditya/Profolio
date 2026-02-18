@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, FileText, Github } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const BuildOptions = () => {
@@ -34,12 +34,12 @@ const BuildOptions = () => {
             How do you want to build your portfolio?
           </h1>
           <p className="mt-3 max-w-lg text-sm leading-relaxed text-foreground/35">
-            Choose your data source. LinkedIn PDF is fully available now. GitHub import is on the roadmap.
+            Upload your LinkedIn PDF export and build a beautiful portfolio in minutes.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 max-w-md">
           {/* LinkedIn — primary */}
           <article className="app-panel-accent group relative overflow-hidden p-7 transition-all duration-300 hover:border-primary/20">
             <div className="pointer-events-none absolute -right-8 -top-8 h-[150px] w-[150px] rounded-full bg-primary/[0.06] blur-[60px] transition-all duration-500 group-hover:bg-primary/[0.1]" aria-hidden="true" />
@@ -63,28 +63,7 @@ const BuildOptions = () => {
             </div>
           </article>
 
-          {/* GitHub — coming soon */}
-          <article className="app-panel group relative overflow-hidden p-7 transition-all duration-300 hover:border-foreground/[0.12]">
-            <div className="relative">
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-foreground/[0.1] bg-foreground/[0.04] text-foreground/40">
-                <Github className="h-5 w-5" />
-              </div>
-              <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-bold tracking-[-0.02em]">
-                  Build from GitHub
-                </h2>
-                <span className="rounded-full border border-foreground/[0.1] bg-foreground/[0.04] px-2.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-foreground/30">
-                  Soon
-                </span>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/40">
-                Import repositories, starred projects, and contribution data. This feature is planned as the next release.
-              </p>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-foreground/[0.07] bg-foreground/[0.03] px-6 py-3 text-sm font-medium text-foreground/25 cursor-not-allowed select-none">
-                Coming Soon
-              </div>
-            </div>
-          </article>
+
         </div>
       </div>
     </div>
