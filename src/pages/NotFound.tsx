@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ArrowLeft, Zap } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const NotFound = () => {
@@ -19,9 +19,7 @@ const NotFound = () => {
 
       <div className="relative z-10 w-full max-w-md text-center">
         <Link to="/" className="mb-8 inline-flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Zap className="h-4 w-4 text-primary-foreground" />
-          </div>
+          <img src="/profolio-logo.png" alt="Profolio" className="h-8 w-8 rounded-lg" />
           <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
         </Link>
 

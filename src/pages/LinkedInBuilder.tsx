@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Expand, Zap } from "lucide-react";
+import { ArrowLeft, Expand } from "lucide-react";
 import { Link } from "react-router-dom";
 import UploadSection from "@/components/UploadSection";
 import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
@@ -50,9 +50,7 @@ const LinkedInBuilder = () => {
         <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 sm:px-10">
           <div className="flex items-center gap-6">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <Zap className="h-4 w-4 text-primary-foreground" />
-              </div>
+              <img src="/profolio-logo.png" alt="Profolio" className="h-8 w-8 rounded-lg" />
               <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
             </Link>
             <span className="hidden h-5 w-px bg-foreground/[0.1] sm:block" />

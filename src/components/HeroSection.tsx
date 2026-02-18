@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Globe2, Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Globe2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const stats = [
@@ -22,9 +22,7 @@ const HeroSection = () => {
       {/* ── Navigation ── */}
       <nav className="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 sm:px-10">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Zap className="h-4 w-4 text-primary-foreground" />
-          </div>
+          <img src="/profolio-logo.png" alt="Profolio" className="h-8 w-8 rounded-lg" />
           <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
         </div>
         <div className="flex items-center gap-6">

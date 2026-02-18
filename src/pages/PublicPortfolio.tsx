@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Loader2, Zap } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import type { TemplateName } from "@/components/TemplateSelector";
 import GlassmorphismTemplate from "@/components/templates/GlassmorphismTemplate";
@@ -115,9 +115,7 @@ const PublicPortfolio = () => {
 
         <div className="relative z-10 w-full max-w-md text-center">
           <Link to="/" className="mb-8 inline-flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <img src="/profolio-logo.png" alt="Profolio" className="h-8 w-8 rounded-lg" />
             <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
           </Link>
           <p className="app-kicker text-primary/60">Public Portfolio</p>

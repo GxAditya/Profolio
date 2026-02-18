@@ -4,7 +4,6 @@ import {
   FileStack,
   Palette,
   Share2,
-  Zap,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -274,9 +273,7 @@ const StepsSection = () => {
       {/* ── Footer ── */}
       <footer className="mt-20 flex flex-col items-center gap-3 border-t border-foreground/[0.06] pt-8 text-center">
         <div className="flex items-center gap-2">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
-            <Zap className="h-3 w-3 text-primary-foreground" />
-          </div>
+          <img src="/profolio-logo.png" alt="Profolio" className="h-6 w-6 rounded-md" />
           <span className="text-sm font-bold tracking-tight">profolio</span>
         </div>
         <p className="text-xs text-foreground/25">

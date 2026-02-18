@@ -38,9 +38,9 @@ const templates: {
     name: "glassmorphism",
     label: "Glassmorphism",
     icon: Palette,
-    desc: "Layered translucent panels with cinematic depth and blur",
-    mood: "Luminous",
-    moodColor: "text-cyan-400",
+    desc: "Layered translucent panels with aurora glow and depth",
+    mood: "Aurora",
+    moodColor: "text-rose-400",
   },
 ];
 

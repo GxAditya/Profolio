@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, FileText, Github, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileText, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const BuildOptions = () => {
@@ -15,9 +15,7 @@ const BuildOptions = () => {
         {/* Nav */}
         <nav className="mb-12 flex flex-wrap items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <img src="/profolio-logo.png" alt="Profolio" className="h-8 w-8 rounded-lg" />
             <span className="text-lg font-bold tracking-[-0.02em]">profolio</span>
           </Link>
           <Link

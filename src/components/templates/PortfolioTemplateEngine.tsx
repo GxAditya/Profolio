@@ -107,7 +107,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     header:
       "flex flex-wrap items-end justify-between gap-4 rounded-[1rem] border border-[#dde5f2] bg-[#e8edf4] px-5 py-5 shadow-[-10px_-10px_22px_#f8fbff,12px_12px_24px_#c4cedb]",
     headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-[#6d7d96]",
-    headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#223144] sm:text-4xl",
+    headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#223144] [font-family:var(--heading-font)] sm:text-4xl",
     headingMeta: "rounded-lg border border-[#d7deea] bg-[#ebf0f6] px-4 py-2 text-xs text-[#4e5e77] shadow-[inset_4px_4px_10px_#cbd5e4,inset_-4px_-4px_10px_#f7fbff]",
     section:
       "rounded-[0.95rem] border border-[#dae2ee] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
@@ -116,7 +116,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     sectionHandle:
       "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border border-[#d4dce8] bg-[#ecf1f7] px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-[#586a84] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
     sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-[#6e7d95]",
-    sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-[#213043]",
+    sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-[#213043] [font-family:var(--heading-font)]",
     sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#4f5f79]",
     bodyText: "text-sm leading-relaxed text-[#3f5069]",
     mutedText: "text-xs text-[#63748f]",
@@ -125,7 +125,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "w-full rounded-xl border border-[#cfdae8] bg-[#ebf0f6] px-3 py-2 text-sm text-[#25354a] outline-none shadow-[inset_4px_4px_10px_#ced8e7,inset_-4px_-4px_10px_#f8fbff] transition focus:border-[#8ca0bf]",
     controlPanel:
       "mt-6 rounded-[1rem] border border-[#d8e1ed] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
-    controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-[#223246]",
+    controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-[#223246] [font-family:var(--heading-font)]",
     controlPanelLabel: "text-xs font-medium text-[#5f7090]",
     heroSummary:
       "mt-4 max-w-3xl rounded-xl border border-[#d6deea] bg-[#edf2f8] p-4 text-sm leading-relaxed text-[#3f5068] shadow-[inset_6px_6px_12px_#cfd8e6,inset_-6px_-6px_12px_#f8fbff]",
@@ -138,23 +138,23 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     addChipButton:
       "inline-flex items-center gap-1 rounded-lg border border-[#c8d4e3] bg-[#edf2f8] px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-[#4b5f7d] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#344964]",
     projectCard:
-      "relative rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "relative rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb] transition-shadow duration-200 hover:shadow-[-4px_-4px_10px_#f8fbff,5px_5px_10px_#c5cfdb]",
     educationCard:
-      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb] transition-shadow duration-200 hover:shadow-[-4px_-4px_10px_#f8fbff,5px_5px_10px_#c5cfdb]",
     certificationCard:
-      "flex items-start justify-between gap-2 rounded-xl border border-[#d2dbe8] bg-[#edf2f8] px-3 py-2.5 text-sm text-[#33455f] shadow-[-5px_-5px_10px_#f8fbff,6px_6px_12px_#c5cfdb]",
+      "flex items-start justify-between gap-2 rounded-xl border border-[#d2dbe8] bg-[#edf2f8] px-3 py-2.5 text-sm text-[#33455f] shadow-[-5px_-5px_10px_#f8fbff,6px_6px_12px_#c5cfdb] transition-shadow duration-200",
     customCard:
-      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb] transition-shadow duration-200 hover:shadow-[-4px_-4px_10px_#f8fbff,5px_5px_10px_#c5cfdb]",
     customTag:
       "rounded-lg border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-[#5f7190] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
     emptyState:
       "mt-4 rounded-xl border border-[#d3dcea] bg-[#edf2f8] px-4 py-3 text-sm text-[#50617b] shadow-[inset_5px_5px_10px_#cfd8e6,inset_-5px_-5px_10px_#f8fbff]",
     primaryButton:
-      "inline-flex items-center justify-center gap-2 rounded-xl border border-[#bac9de] bg-[#dbe5f3] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#30445f] shadow-[-5px_-5px_10px_#f7fbff,6px_6px_12px_#bfcbdb] hover:bg-[#d3deee]",
+      "inline-flex items-center justify-center gap-2 rounded-xl border border-[#bac9de] bg-[#dbe5f3] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#30445f] shadow-[-5px_-5px_10px_#f7fbff,6px_6px_12px_#bfcbdb] transition-shadow duration-200 hover:shadow-[-3px_-3px_8px_#f7fbff,4px_4px_8px_#bfcbdb] active:shadow-[inset_4px_4px_10px_#cdd7e5,inset_-4px_-4px_10px_#f8fbff]",
     secondaryButton:
-      "inline-flex items-center gap-1 rounded-lg border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#445b78] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#30465f]",
+      "inline-flex items-center gap-1 rounded-lg border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#445b78] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] transition-shadow duration-200 hover:text-[#30465f]",
     iconButton:
-      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#c8d4e3] bg-[#edf2f8] text-[#4d617d] shadow-[inset_3px_3px_6px_#ced8e6,inset_-3px_-3px_6px_#f8fbff] hover:text-[#32445d]",
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#c8d4e3] bg-[#edf2f8] text-[#4d617d] shadow-[inset_3px_3px_6px_#ced8e6,inset_-3px_-3px_6px_#f8fbff] transition-shadow duration-200 hover:text-[#32445d]",
   },
   neobrutalism: {
     page: "relative min-h-screen w-full overflow-hidden bg-[#ffe65a] text-black",
@@ -165,7 +165,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "flex flex-wrap items-end justify-between gap-4 border-4 border-black bg-[#ff7a59] px-5 py-5 shadow-[8px_8px_0_#000]",
     headingKicker: "text-[0.67rem] uppercase tracking-[0.19em] text-black/75",
     headingName:
-      "mt-2 text-3xl font-black uppercase tracking-[-0.03em] text-black sm:text-4xl",
+      "mt-2 text-3xl font-black uppercase tracking-[-0.03em] text-black [font-family:var(--heading-font)] sm:text-4xl",
     headingMeta:
       "rounded-lg border-2 border-black bg-[#f8f4ec] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-black",
     section:
@@ -174,7 +174,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     sectionHandle:
       "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border-2 border-black bg-[#b4ff83] px-3 py-1.5 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black",
     sectionLabel: "text-[0.64rem] uppercase tracking-[0.17em] text-black/65",
-    sectionTitle: "mt-1 text-2xl font-black uppercase tracking-[-0.02em] text-black",
+    sectionTitle: "mt-1 text-2xl font-black uppercase tracking-[-0.02em] text-black [font-family:var(--heading-font)]",
     sectionSubtitle: "mt-2 text-sm font-medium leading-relaxed text-black/80",
     bodyText: "text-sm leading-relaxed text-black/85",
     mutedText: "text-xs text-black/70",
@@ -183,11 +183,11 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "w-full rounded-md border-2 border-black bg-white px-3 py-2 text-sm text-black outline-none transition focus:-translate-y-[1px] focus:translate-x-[1px] focus:shadow-[3px_3px_0_#000]",
     controlPanel:
       "mt-6 rounded-[0.6rem] border-4 border-black bg-[#d9f7ff] p-5 shadow-[8px_8px_0_#000]",
-    controlPanelTitle: "mt-2 text-xl font-black uppercase tracking-[-0.01em] text-black",
+    controlPanelTitle: "mt-2 text-xl font-black uppercase tracking-[-0.01em] text-black [font-family:var(--heading-font)]",
     controlPanelLabel: "text-xs font-bold uppercase tracking-[0.06em] text-black/80",
     heroSummary:
-      "mt-4 rounded-xl border-[3px] border-black bg-[#ffffff] p-4 text-sm leading-relaxed text-black",
-    contactCard: "rounded-xl border-[3px] border-black bg-[#ffffff] p-4",
+      "mt-4 rounded-[3px] border-[3px] border-black bg-[#ffffff] p-4 text-sm leading-relaxed text-black",
+    contactCard: "rounded-[3px] border-[3px] border-black bg-[#ffffff] p-4",
     skillChip:
       "inline-flex items-center gap-1 rounded-lg border-2 border-black bg-[#ffc9e8] pl-3 pr-1 text-[0.66rem] font-black uppercase tracking-[0.1em] text-black",
     chipAction:
@@ -195,17 +195,17 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     addChipButton:
       "inline-flex items-center gap-1 rounded-lg border-2 border-black bg-[#9ef7c4] px-3 py-1 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black hover:bg-[#7af0b3]",
     projectCard:
-      "relative rounded-xl border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000]",
+      "relative rounded-[3px] border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000] transition-transform duration-150 hover:-translate-y-[2px] hover:translate-x-[-1px] hover:shadow-[8px_8px_0_#000]",
     educationCard:
-      "rounded-xl border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000]",
+      "rounded-[3px] border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000] transition-transform duration-150 hover:-translate-y-[2px] hover:translate-x-[-1px] hover:shadow-[8px_8px_0_#000]",
     certificationCard:
-      "flex items-start justify-between gap-2 rounded-xl border-[3px] border-black bg-[#fef8ed] px-3 py-2.5 text-sm text-black shadow-[6px_6px_0_#000]",
+      "flex items-start justify-between gap-2 rounded-[3px] border-[3px] border-black bg-[#fef8ed] px-3 py-2.5 text-sm text-black shadow-[6px_6px_0_#000] transition-transform duration-150 hover:-translate-y-[1px] hover:shadow-[7px_7px_0_#000]",
     customCard:
-      "rounded-xl border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000]",
+      "rounded-[3px] border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000] transition-transform duration-150 hover:-translate-y-[2px] hover:translate-x-[-1px] hover:shadow-[8px_8px_0_#000]",
     customTag:
       "rounded-lg border-2 border-black bg-[#ffe39a] px-3 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-black",
     emptyState:
-      "mt-4 rounded-xl border-[3px] border-black bg-[#fff] px-4 py-3 text-sm text-black",
+      "mt-4 rounded-[3px] border-[3px] border-black bg-[#fff] px-4 py-3 text-sm text-black",
     primaryButton:
       "inline-flex items-center justify-center gap-2 rounded-lg border-[3px] border-black bg-[#ff785a] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-black hover:translate-x-[1px] hover:translate-y-[-1px] hover:shadow-[4px_4px_0_#000]",
     secondaryButton:
@@ -214,67 +214,76 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 border-black bg-white text-black hover:bg-[#ffe9a9]",
   },
   glassmorphism: {
-    page: "relative min-h-screen w-full overflow-hidden bg-[linear-gradient(145deg,#0f172d,#111b39,#1b2b4d)] text-[#f3f8ff]",
+    page: "relative min-h-screen w-full overflow-hidden bg-[linear-gradient(145deg,#0a0a12,#0e0b1a,#150f22)] text-[#f0ecf8]",
     ambience:
-      "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(163,211,255,0.42),transparent_38%),radial-gradient(circle_at_86%_14%,rgba(216,142,255,0.3),transparent_40%),radial-gradient(circle_at_52%_100%,rgba(98,238,217,0.22),transparent_36%)]",
+      "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_8%,rgba(244,114,182,0.32),transparent_36%),radial-gradient(circle_at_88%_12%,rgba(168,85,247,0.28),transparent_38%),radial-gradient(circle_at_50%_100%,rgba(251,191,36,0.16),transparent_34%)]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
     header:
-      "flex flex-wrap items-end justify-between gap-4 rounded-[0.95rem] border border-white/25 bg-white/10 px-5 py-5 shadow-[0_14px_40px_rgba(3,8,18,0.42)] backdrop-blur-xl",
-    headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-white/65",
-    headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl",
+      "flex flex-wrap items-end justify-between gap-4 rounded-[0.95rem] border border-white/[0.14] bg-white/[0.07] px-5 py-5 shadow-[0_14px_40px_rgba(6,3,18,0.5)] backdrop-blur-xl",
+    headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-rose-200/60",
+    headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-white [font-family:var(--heading-font)] sm:text-4xl",
     headingMeta:
-      "rounded-lg border border-white/25 bg-white/10 px-4 py-2 text-xs text-white/75 backdrop-blur-md",
+      "rounded-lg border border-white/[0.14] bg-white/[0.07] px-4 py-2 text-xs text-white/70 backdrop-blur-md",
     section:
-      "rounded-[0.9rem] border border-white/22 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
-    sectionDropTarget: "border-cyan-300/70 bg-cyan-200/12 shadow-[0_18px_50px_rgba(66,211,255,0.24)]",
+      "rounded-[0.9rem] border border-white/[0.1] bg-white/[0.05] p-5 shadow-[0_16px_44px_rgba(6,3,18,0.5)] backdrop-blur-xl",
+    sectionDropTarget: "border-rose-300/60 bg-rose-300/10 shadow-[0_18px_50px_rgba(244,114,182,0.2)]",
     sectionHandle:
-      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border border-white/28 bg-white/10 px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-white/78 backdrop-blur-md",
-    sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-white/62",
-    sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-white",
-    sectionSubtitle: "mt-2 text-sm leading-relaxed text-white/72",
-    bodyText: "text-sm leading-relaxed text-[#d9e6f8]",
-    mutedText: "text-xs text-white/62",
-    link: "text-[#99e6ff] underline decoration-[#99e6ff]/40 underline-offset-4",
+      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border border-white/[0.16] bg-white/[0.07] px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-white/70 backdrop-blur-md",
+    sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-rose-200/50",
+    sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-white [font-family:var(--heading-font)]",
+    sectionSubtitle: "mt-2 text-sm leading-relaxed text-white/65",
+    bodyText: "text-sm leading-relaxed text-[#ddd4ec]",
+    mutedText: "text-xs text-white/55",
+    link: "text-rose-300 underline decoration-rose-300/35 underline-offset-4",
     input:
-      "w-full rounded-xl border border-cyan-100/65 bg-white/88 px-3 py-2 text-sm text-[#0f1a2f] outline-none transition placeholder:text-[#405474] focus:border-cyan-400/90",
+      "w-full rounded-xl border border-white/[0.18] bg-white/[0.1] px-3 py-2 text-sm text-white outline-none backdrop-blur-md transition placeholder:text-white/40 focus:border-rose-300/60 focus:bg-white/[0.14]",
     controlPanel:
-      "mt-6 rounded-[0.95rem] border border-white/25 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
-    controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-white",
-    controlPanelLabel: "text-xs font-medium text-white/72",
+      "mt-6 rounded-[0.95rem] border border-white/[0.14] bg-white/[0.07] p-5 shadow-[0_16px_44px_rgba(6,3,18,0.5)] backdrop-blur-xl",
+    controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-white [font-family:var(--heading-font)]",
+    controlPanelLabel: "text-xs font-medium text-white/65",
     heroSummary:
-      "mt-4 rounded-xl border border-white/22 bg-white/12 p-4 text-sm leading-relaxed text-[#d9e6f8] backdrop-blur-lg",
-    contactCard: "rounded-xl border border-white/22 bg-white/12 p-4 backdrop-blur-lg",
+      "mt-4 rounded-xl border border-white/[0.12] bg-white/[0.08] p-4 text-sm leading-relaxed text-[#ddd4ec] backdrop-blur-lg",
+    contactCard: "rounded-xl border border-white/[0.12] bg-white/[0.08] p-4 backdrop-blur-lg",
     skillChip:
-      "inline-flex items-center gap-1 rounded-lg border border-white/28 bg-white/12 pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-[#d6e8ff] backdrop-blur-md",
+      "inline-flex items-center gap-1 rounded-lg border border-white/[0.16] bg-white/[0.08] pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-rose-100/80 backdrop-blur-md",
     chipAction:
-      "inline-flex h-5 w-5 items-center justify-center rounded-lg border border-white/30 bg-white/16 text-white/80 hover:bg-white/24",
+      "inline-flex h-5 w-5 items-center justify-center rounded-lg border border-white/[0.18] bg-white/[0.1] text-white/75 hover:bg-white/[0.18]",
     addChipButton:
-      "inline-flex items-center gap-1 rounded-lg border border-cyan-200/45 bg-cyan-200/12 px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-cyan-100 hover:bg-cyan-200/20",
+      "inline-flex items-center gap-1 rounded-lg border border-rose-300/35 bg-rose-300/10 px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-rose-200 hover:bg-rose-300/18",
     projectCard:
-      "relative rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "relative rounded-xl border border-white/[0.16] bg-white/[0.1] p-4 shadow-[0_10px_28px_rgba(6,3,18,0.44)] backdrop-blur-lg",
     educationCard:
-      "rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "rounded-xl border border-white/[0.16] bg-white/[0.1] p-4 shadow-[0_10px_28px_rgba(6,3,18,0.44)] backdrop-blur-lg",
     certificationCard:
-      "flex items-start justify-between gap-2 rounded-xl border border-white/24 bg-white/12 px-3 py-2.5 text-sm text-[#d9e6f8] shadow-[0_10px_24px_rgba(4,11,25,0.34)] backdrop-blur-lg",
+      "flex items-start justify-between gap-2 rounded-xl border border-white/[0.16] bg-white/[0.1] px-3 py-2.5 text-sm text-[#ddd4ec] shadow-[0_10px_24px_rgba(6,3,18,0.4)] backdrop-blur-lg",
     customCard:
-      "rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "rounded-xl border border-white/[0.16] bg-white/[0.1] p-4 shadow-[0_10px_28px_rgba(6,3,18,0.44)] backdrop-blur-lg",
     customTag:
-      "rounded-lg border border-white/26 bg-white/12 px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-white/72 backdrop-blur-md",
+      "rounded-lg border border-white/[0.14] bg-white/[0.08] px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-white/65 backdrop-blur-md",
     emptyState:
-      "mt-4 rounded-xl border border-white/22 bg-white/10 px-4 py-3 text-sm text-white/72 backdrop-blur-md",
+      "mt-4 rounded-xl border border-white/[0.12] bg-white/[0.07] px-4 py-3 text-sm text-white/65 backdrop-blur-md",
     primaryButton:
-      "inline-flex items-center justify-center gap-2 rounded-xl border border-cyan-200/50 bg-cyan-200/16 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100 hover:bg-cyan-200/24",
+      "inline-flex items-center justify-center gap-2 rounded-xl border border-rose-300/40 bg-rose-400/14 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-rose-100 hover:bg-rose-400/22",
     secondaryButton:
-      "inline-flex items-center gap-1 rounded-lg border border-white/28 bg-white/10 px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-white/82 hover:bg-white/16",
+      "inline-flex items-center gap-1 rounded-lg border border-white/[0.16] bg-white/[0.07] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-white/75 hover:bg-white/[0.12]",
     iconButton:
-      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/28 bg-white/14 text-white/85 hover:bg-white/20",
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.16] bg-white/[0.09] text-white/80 hover:bg-white/[0.16]",
   },
 };
 
-const themeFonts: Record<PortfolioTheme, string> = {
-  neumorphism: '"Manrope", "Nunito Sans", sans-serif',
-  neobrutalism: '"Space Grotesk", "Archivo", sans-serif',
-  glassmorphism: '"Sora", "Plus Jakarta Sans", sans-serif',
+const themeTypography: Record<PortfolioTheme, { body: string; heading: string }> = {
+  neumorphism: {
+    body: '"Manrope", "Nunito Sans", sans-serif',
+    heading: '"Nunito", "Manrope", sans-serif',
+  },
+  neobrutalism: {
+    body: '"Space Grotesk", "Archivo", sans-serif',
+    heading: '"Archivo Black", "Space Grotesk", sans-serif',
+  },
+  glassmorphism: {
+    body: '"Sora", "Plus Jakarta Sans", sans-serif',
+    heading: '"Space Grotesk", "Sora", sans-serif',
+  },
 };
 
 const createSectionId = (): string =>
@@ -937,7 +946,15 @@ const PortfolioTemplateEngine = ({
     sectionStyle === "plain" ? "mt-7 space-y-10" : "mt-7 space-y-6";
 
   return (
-    <div className={palette.page} style={{ fontFamily: themeFonts[theme] }}>
+    <div
+      className={palette.page}
+      style={
+        {
+          fontFamily: themeTypography[theme].body,
+          '--heading-font': themeTypography[theme].heading,
+        } as React.CSSProperties
+      }
+    >
       <div className={palette.ambience} />
 
       <div className={palette.contentWrap}>
