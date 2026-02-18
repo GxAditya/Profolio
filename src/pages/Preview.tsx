@@ -207,7 +207,9 @@ const Preview = () => {
 
   return (
     <>
-      <div className="relative min-h-screen">
+      {renderToolbar()}
+      {renderPublishBar()}
+      <div className="relative min-h-screen pt-20">
         <ActiveComponent
           profile={profile}
           editable
@@ -215,8 +217,6 @@ const Preview = () => {
           onProfileChange={updateProfile}
           sectionStyle="plain"
         />
-        {renderToolbar()}
-        {renderPublishBar()}
       </div>
     </>
   );
