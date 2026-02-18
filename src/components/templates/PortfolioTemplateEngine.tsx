@@ -1373,14 +1373,6 @@ const PortfolioTemplateEngine = ({
               placeholder="Location"
               onValueChange={(value) => updateField("location", value)}
             />
-            {Boolean(profile.location?.trim()) && <span aria-hidden>·</span>}
-            <EditableText
-              as="span"
-              value={profile.email}
-              editable={canEdit}
-              multiline={false}
-              onValueChange={(value) => updateField("email", value)}
-            />
           </div>
         </header>
 
@@ -1633,14 +1625,6 @@ const PortfolioTemplateEngine = ({
                         editable={canEdit}
                         multiline={false}
                         onValueChange={(value) => updateField("email", value)}
-                      />
-                      <EditableText
-                        className={cn("mt-1", palette.bodyText)}
-                        value={profile.location ?? ""}
-                        editable={canEdit}
-                        multiline={false}
-                        placeholder="Location"
-                        onValueChange={(value) => updateField("location", value)}
                       />
 
                       {canEdit ? (
