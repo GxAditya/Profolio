@@ -70,7 +70,7 @@ const LinkedInBuilder = () => {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Link
-              to="/build"
+              to="/"
               className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.1] bg-foreground/[0.04] px-4 py-2 text-sm font-medium text-foreground/40 transition-colors hover:border-foreground/20 hover:text-foreground/60"
             >
               <ArrowLeft className="h-3.5 w-3.5" />

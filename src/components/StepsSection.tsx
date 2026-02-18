@@ -255,7 +255,7 @@ const StepsSection = () => {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/build"
+              to="/linkedin"
               className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold tracking-[-0.01em] text-primary-foreground transition-all duration-300 hover:shadow-[0_0_40px_hsl(72_100%_50%_/_0.25)]"
             >
               Start Building

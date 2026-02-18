@@ -45,7 +45,7 @@ const HeroSection = () => {
             FAQ
           </a>
           <Link
-            to="/build"
+            to="/linkedin"
             className="inline-flex items-center gap-1.5 rounded-full border border-foreground/[0.1] bg-foreground/[0.05] px-4 py-2 text-[0.84rem] font-medium backdrop-blur-sm transition-all duration-200 hover:border-foreground/20 hover:bg-foreground/[0.09]"
           >
             Get Started
@@ -98,7 +98,7 @@ const HeroSection = () => {
           style={{ animationDelay: "0.24s" }}
         >
           <Link
-            to="/build"
+            to="/linkedin"
             className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-bold tracking-[-0.01em] text-primary-foreground transition-all duration-300 hover:shadow-[0_0_32px_hsl(72_100%_50%_/_0.3)]"
           >
             Build My Portfolio
