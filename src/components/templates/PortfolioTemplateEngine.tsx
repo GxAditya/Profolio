@@ -1,5 +1,5 @@
 import { useMemo, useState, type DragEvent, type FormEvent, type ReactNode } from "react";
-import { GripVertical, Plus, Trash2 } from "lucide-react";
+import { ExternalLink, GripVertical, Plus, Trash2 } from "lucide-react";
 import EditableText from "@/components/EditableText";
 import { createProfileEditor } from "@/components/templates/profileEditUtils";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,8 @@ import type {
   CustomSectionCard,
   CustomSectionLayout,
   LinkedInProfile,
+  PortfolioSectionTitles,
+  ProjectLink,
 } from "@/types/linkedin";
 
 export type PortfolioTheme = "neumorphism" | "neobrutalism" | "glassmorphism";
@@ -20,19 +22,33 @@ interface Props {
   theme: PortfolioTheme;
 }
 
+type SectionBuilderType = "custom" | "projects";
+
 interface SectionFormState {
+  type: SectionBuilderType;
   title: string;
   description: string;
   layout: CustomSectionLayout;
   cardTitle: string;
   cardSubtitle: string;
   cardDescription: string;
+  cardImageUrl: string;
+  cardLinkLabel: string;
+  cardLinkUrl: string;
 }
 
 interface CardDraft {
   title: string;
   subtitle: string;
   description: string;
+  imageUrl: string;
+  linkLabel: string;
+  linkUrl: string;
+}
+
+interface ConnectLinkDraft {
+  label: string;
+  url: string;
 }
 
 interface ThemePalette {
@@ -82,21 +98,21 @@ const BASE_SECTION_ORDER = [
 
 const palettes: Record<PortfolioTheme, ThemePalette> = {
   neumorphism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[2.1rem] border border-[#d8dfeb] bg-[#e8edf4] text-[#273447] shadow-[26px_26px_56px_#c4cedb,-20px_-20px_44px_#f8fbff]",
+    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[1.2rem] border border-[#d8dfeb] bg-[#e8edf4] text-[#273447] shadow-[26px_26px_56px_#c4cedb,-20px_-20px_44px_#f8fbff]",
     ambience:
       "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_8%,rgba(255,255,255,0.9),transparent_38%),radial-gradient(circle_at_86%_0%,rgba(206,217,235,0.62),transparent_36%),linear-gradient(180deg,rgba(237,242,249,0.88),rgba(228,236,246,0.88))]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
     header:
-      "flex flex-wrap items-end justify-between gap-4 rounded-[1.6rem] border border-[#dde5f2] bg-[#e8edf4] px-5 py-5 shadow-[-10px_-10px_22px_#f8fbff,12px_12px_24px_#c4cedb]",
+      "flex flex-wrap items-end justify-between gap-4 rounded-[1rem] border border-[#dde5f2] bg-[#e8edf4] px-5 py-5 shadow-[-10px_-10px_22px_#f8fbff,12px_12px_24px_#c4cedb]",
     headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-[#6d7d96]",
     headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#223144] sm:text-4xl",
-    headingMeta: "rounded-full border border-[#d7deea] bg-[#ebf0f6] px-4 py-2 text-xs text-[#4e5e77] shadow-[inset_4px_4px_10px_#cbd5e4,inset_-4px_-4px_10px_#f7fbff]",
+    headingMeta: "rounded-lg border border-[#d7deea] bg-[#ebf0f6] px-4 py-2 text-xs text-[#4e5e77] shadow-[inset_4px_4px_10px_#cbd5e4,inset_-4px_-4px_10px_#f7fbff]",
     section:
-      "rounded-[1.5rem] border border-[#dae2ee] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
+      "rounded-[0.95rem] border border-[#dae2ee] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
     sectionDropTarget:
       "border-[#8d9fc0] shadow-[-8px_-8px_18px_#f9fcff,0_0_0_3px_rgba(141,159,192,0.24),10px_10px_20px_#c4cedb]",
     sectionHandle:
-      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-full border border-[#d4dce8] bg-[#ecf1f7] px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-[#586a84] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
+      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border border-[#d4dce8] bg-[#ecf1f7] px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-[#586a84] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
     sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-[#6e7d95]",
     sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-[#213043]",
     sectionSubtitle: "mt-2 text-sm leading-relaxed text-[#4f5f79]",
@@ -106,40 +122,40 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     input:
       "w-full rounded-xl border border-[#cfdae8] bg-[#ebf0f6] px-3 py-2 text-sm text-[#25354a] outline-none shadow-[inset_4px_4px_10px_#ced8e7,inset_-4px_-4px_10px_#f8fbff] transition focus:border-[#8ca0bf]",
     controlPanel:
-      "mt-6 rounded-[1.55rem] border border-[#d8e1ed] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
+      "mt-6 rounded-[1rem] border border-[#d8e1ed] bg-[#e8edf4] p-5 shadow-[-8px_-8px_18px_#f9fcff,10px_10px_20px_#c4cedb]",
     controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-[#223246]",
     controlPanelLabel: "text-xs font-medium text-[#5f7090]",
     heroSummary:
-      "mt-4 max-w-3xl rounded-2xl border border-[#d6deea] bg-[#edf2f8] p-4 text-sm leading-relaxed text-[#3f5068] shadow-[inset_6px_6px_12px_#cfd8e6,inset_-6px_-6px_12px_#f8fbff]",
+      "mt-4 max-w-3xl rounded-xl border border-[#d6deea] bg-[#edf2f8] p-4 text-sm leading-relaxed text-[#3f5068] shadow-[inset_6px_6px_12px_#cfd8e6,inset_-6px_-6px_12px_#f8fbff]",
     contactCard:
-      "rounded-2xl border border-[#d6deea] bg-[#edf2f8] p-4 shadow-[inset_6px_6px_12px_#cfd8e6,inset_-6px_-6px_12px_#f8fbff]",
+      "rounded-xl border border-[#d6deea] bg-[#edf2f8] p-4 shadow-[inset_6px_6px_12px_#cfd8e6,inset_-6px_-6px_12px_#f8fbff]",
     skillChip:
-      "inline-flex items-center gap-1 rounded-full border border-[#cfd8e6] bg-[#edf2f8] pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-[#445873] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
+      "inline-flex items-center gap-1 rounded-lg border border-[#cfd8e6] bg-[#edf2f8] pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-[#445873] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
     chipAction:
-      "inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#c6d2e2] bg-[#eff4fa] text-[#5b6f8b] hover:bg-[#e7edf5]",
+      "inline-flex h-5 w-5 items-center justify-center rounded-lg border border-[#c6d2e2] bg-[#eff4fa] text-[#5b6f8b] hover:bg-[#e7edf5]",
     addChipButton:
-      "inline-flex items-center gap-1 rounded-full border border-[#c8d4e3] bg-[#edf2f8] px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-[#4b5f7d] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#344964]",
+      "inline-flex items-center gap-1 rounded-lg border border-[#c8d4e3] bg-[#edf2f8] px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-[#4b5f7d] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#344964]",
     projectCard:
-      "relative rounded-2xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "relative rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
     educationCard:
-      "rounded-2xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
     certificationCard:
       "flex items-start justify-between gap-2 rounded-xl border border-[#d2dbe8] bg-[#edf2f8] px-3 py-2.5 text-sm text-[#33455f] shadow-[-5px_-5px_10px_#f8fbff,6px_6px_12px_#c5cfdb]",
     customCard:
-      "rounded-2xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
+      "rounded-xl border border-[#d2dbe8] bg-[#edf2f8] p-4 shadow-[-6px_-6px_14px_#f8fbff,8px_8px_16px_#c5cfdb]",
     customTag:
-      "rounded-full border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-[#5f7190] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
+      "rounded-lg border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-[#5f7190] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff]",
     emptyState:
       "mt-4 rounded-xl border border-[#d3dcea] bg-[#edf2f8] px-4 py-3 text-sm text-[#50617b] shadow-[inset_5px_5px_10px_#cfd8e6,inset_-5px_-5px_10px_#f8fbff]",
     primaryButton:
       "inline-flex items-center justify-center gap-2 rounded-xl border border-[#bac9de] bg-[#dbe5f3] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#30445f] shadow-[-5px_-5px_10px_#f7fbff,6px_6px_12px_#bfcbdb] hover:bg-[#d3deee]",
     secondaryButton:
-      "inline-flex items-center gap-1 rounded-full border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#445b78] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#30465f]",
+      "inline-flex items-center gap-1 rounded-lg border border-[#ccd7e6] bg-[#edf2f8] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#445b78] shadow-[inset_4px_4px_8px_#cfd8e6,inset_-4px_-4px_8px_#f8fbff] hover:text-[#30465f]",
     iconButton:
-      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#c8d4e3] bg-[#edf2f8] text-[#4d617d] shadow-[inset_3px_3px_6px_#ced8e6,inset_-3px_-3px_6px_#f8fbff] hover:text-[#32445d]",
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#c8d4e3] bg-[#edf2f8] text-[#4d617d] shadow-[inset_3px_3px_6px_#ced8e6,inset_-3px_-3px_6px_#f8fbff] hover:text-[#32445d]",
   },
   neobrutalism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[0.9rem] border-4 border-black bg-[#ffe65a] text-black shadow-[14px_14px_0_#000]",
+    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[0.7rem] border-4 border-black bg-[#ffe65a] text-black shadow-[14px_14px_0_#000]",
     ambience:
       "pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.3)_0%,transparent_45%),repeating-linear-gradient(45deg,rgba(0,0,0,0.04)_0,rgba(0,0,0,0.04)_8px,transparent_8px,transparent_16px)]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
@@ -149,12 +165,12 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     headingName:
       "mt-2 text-3xl font-black uppercase tracking-[-0.03em] text-black sm:text-4xl",
     headingMeta:
-      "rounded-full border-2 border-black bg-[#f8f4ec] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-black",
+      "rounded-lg border-2 border-black bg-[#f8f4ec] px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-black",
     section:
-      "rounded-[0.7rem] border-4 border-black bg-[#f8f4ec] p-5 shadow-[8px_8px_0_#000]",
+      "rounded-[0.55rem] border-4 border-black bg-[#f8f4ec] p-5 shadow-[8px_8px_0_#000]",
     sectionDropTarget: "bg-[#d5fff2] shadow-[10px_10px_0_#000]",
     sectionHandle:
-      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-full border-2 border-black bg-[#b4ff83] px-3 py-1.5 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black",
+      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border-2 border-black bg-[#b4ff83] px-3 py-1.5 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black",
     sectionLabel: "text-[0.64rem] uppercase tracking-[0.17em] text-black/65",
     sectionTitle: "mt-1 text-2xl font-black uppercase tracking-[-0.02em] text-black",
     sectionSubtitle: "mt-2 text-sm font-medium leading-relaxed text-black/80",
@@ -164,18 +180,18 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     input:
       "w-full rounded-md border-2 border-black bg-white px-3 py-2 text-sm text-black outline-none transition focus:-translate-y-[1px] focus:translate-x-[1px] focus:shadow-[3px_3px_0_#000]",
     controlPanel:
-      "mt-6 rounded-[0.8rem] border-4 border-black bg-[#d9f7ff] p-5 shadow-[8px_8px_0_#000]",
+      "mt-6 rounded-[0.6rem] border-4 border-black bg-[#d9f7ff] p-5 shadow-[8px_8px_0_#000]",
     controlPanelTitle: "mt-2 text-xl font-black uppercase tracking-[-0.01em] text-black",
     controlPanelLabel: "text-xs font-bold uppercase tracking-[0.06em] text-black/80",
     heroSummary:
       "mt-4 rounded-xl border-[3px] border-black bg-[#ffffff] p-4 text-sm leading-relaxed text-black",
     contactCard: "rounded-xl border-[3px] border-black bg-[#ffffff] p-4",
     skillChip:
-      "inline-flex items-center gap-1 rounded-full border-2 border-black bg-[#ffc9e8] pl-3 pr-1 text-[0.66rem] font-black uppercase tracking-[0.1em] text-black",
+      "inline-flex items-center gap-1 rounded-lg border-2 border-black bg-[#ffc9e8] pl-3 pr-1 text-[0.66rem] font-black uppercase tracking-[0.1em] text-black",
     chipAction:
-      "inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-[#fff] text-black hover:bg-[#ffef72]",
+      "inline-flex h-5 w-5 items-center justify-center rounded-lg border-2 border-black bg-[#fff] text-black hover:bg-[#ffef72]",
     addChipButton:
-      "inline-flex items-center gap-1 rounded-full border-2 border-black bg-[#9ef7c4] px-3 py-1 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black hover:bg-[#7af0b3]",
+      "inline-flex items-center gap-1 rounded-lg border-2 border-black bg-[#9ef7c4] px-3 py-1 text-[0.64rem] font-black uppercase tracking-[0.12em] text-black hover:bg-[#7af0b3]",
     projectCard:
       "relative rounded-xl border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000]",
     educationCard:
@@ -185,32 +201,32 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     customCard:
       "rounded-xl border-[3px] border-black bg-[#fef8ed] p-4 shadow-[6px_6px_0_#000]",
     customTag:
-      "rounded-full border-2 border-black bg-[#ffe39a] px-3 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-black",
+      "rounded-lg border-2 border-black bg-[#ffe39a] px-3 py-1 text-[0.62rem] font-black uppercase tracking-[0.12em] text-black",
     emptyState:
       "mt-4 rounded-xl border-[3px] border-black bg-[#fff] px-4 py-3 text-sm text-black",
     primaryButton:
       "inline-flex items-center justify-center gap-2 rounded-lg border-[3px] border-black bg-[#ff785a] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-black hover:translate-x-[1px] hover:translate-y-[-1px] hover:shadow-[4px_4px_0_#000]",
     secondaryButton:
-      "inline-flex items-center gap-1 rounded-full border-2 border-black bg-[#ffe39a] px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.12em] text-black hover:bg-[#ffd77a]",
+      "inline-flex items-center gap-1 rounded-lg border-2 border-black bg-[#ffe39a] px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.12em] text-black hover:bg-[#ffd77a]",
     iconButton:
-      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-black bg-white text-black hover:bg-[#ffe9a9]",
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 border-black bg-white text-black hover:bg-[#ffe9a9]",
   },
   glassmorphism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[2.1rem] border border-white/20 bg-[linear-gradient(145deg,#0f172d,#111b39,#1b2b4d)] text-[#f3f8ff] shadow-[0_35px_90px_rgba(7,13,29,0.72)]",
+    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[1.2rem] border border-white/20 bg-[linear-gradient(145deg,#0f172d,#111b39,#1b2b4d)] text-[#f3f8ff] shadow-[0_35px_90px_rgba(7,13,29,0.72)]",
     ambience:
       "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(163,211,255,0.42),transparent_38%),radial-gradient(circle_at_86%_14%,rgba(216,142,255,0.3),transparent_40%),radial-gradient(circle_at_52%_100%,rgba(98,238,217,0.22),transparent_36%)]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
     header:
-      "flex flex-wrap items-end justify-between gap-4 rounded-[1.5rem] border border-white/25 bg-white/10 px-5 py-5 shadow-[0_14px_40px_rgba(3,8,18,0.42)] backdrop-blur-xl",
+      "flex flex-wrap items-end justify-between gap-4 rounded-[0.95rem] border border-white/25 bg-white/10 px-5 py-5 shadow-[0_14px_40px_rgba(3,8,18,0.42)] backdrop-blur-xl",
     headingKicker: "text-[0.65rem] uppercase tracking-[0.18em] text-white/65",
     headingName: "mt-2 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl",
     headingMeta:
-      "rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs text-white/75 backdrop-blur-md",
+      "rounded-lg border border-white/25 bg-white/10 px-4 py-2 text-xs text-white/75 backdrop-blur-md",
     section:
-      "rounded-[1.45rem] border border-white/22 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
+      "rounded-[0.9rem] border border-white/22 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
     sectionDropTarget: "border-cyan-300/70 bg-cyan-200/12 shadow-[0_18px_50px_rgba(66,211,255,0.24)]",
     sectionHandle:
-      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-full border border-white/28 bg-white/10 px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-white/78 backdrop-blur-md",
+      "mb-5 inline-flex cursor-grab items-center gap-2 rounded-lg border border-white/28 bg-white/10 px-3 py-1.5 text-[0.63rem] font-semibold uppercase tracking-[0.14em] text-white/78 backdrop-blur-md",
     sectionLabel: "text-[0.62rem] uppercase tracking-[0.16em] text-white/62",
     sectionTitle: "mt-1 text-2xl font-semibold tracking-[-0.03em] text-white",
     sectionSubtitle: "mt-2 text-sm leading-relaxed text-white/72",
@@ -218,38 +234,38 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
     mutedText: "text-xs text-white/62",
     link: "text-[#99e6ff] underline decoration-[#99e6ff]/40 underline-offset-4",
     input:
-      "w-full rounded-xl border border-white/30 bg-white/14 px-3 py-2 text-sm text-white outline-none backdrop-blur-md transition placeholder:text-white/50 focus:border-cyan-300/70",
+      "w-full rounded-xl border border-cyan-100/65 bg-white/88 px-3 py-2 text-sm text-[#0f1a2f] outline-none transition placeholder:text-[#405474] focus:border-cyan-400/90",
     controlPanel:
-      "mt-6 rounded-[1.5rem] border border-white/25 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
+      "mt-6 rounded-[0.95rem] border border-white/25 bg-white/10 p-5 shadow-[0_16px_44px_rgba(3,8,18,0.44)] backdrop-blur-xl",
     controlPanelTitle: "mt-2 text-xl font-semibold tracking-[-0.02em] text-white",
     controlPanelLabel: "text-xs font-medium text-white/72",
     heroSummary:
-      "mt-4 rounded-2xl border border-white/22 bg-white/12 p-4 text-sm leading-relaxed text-[#d9e6f8] backdrop-blur-lg",
-    contactCard: "rounded-2xl border border-white/22 bg-white/12 p-4 backdrop-blur-lg",
+      "mt-4 rounded-xl border border-white/22 bg-white/12 p-4 text-sm leading-relaxed text-[#d9e6f8] backdrop-blur-lg",
+    contactCard: "rounded-xl border border-white/22 bg-white/12 p-4 backdrop-blur-lg",
     skillChip:
-      "inline-flex items-center gap-1 rounded-full border border-white/28 bg-white/12 pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-[#d6e8ff] backdrop-blur-md",
+      "inline-flex items-center gap-1 rounded-lg border border-white/28 bg-white/12 pl-3 pr-1 text-[0.66rem] uppercase tracking-[0.11em] text-[#d6e8ff] backdrop-blur-md",
     chipAction:
-      "inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/30 bg-white/16 text-white/80 hover:bg-white/24",
+      "inline-flex h-5 w-5 items-center justify-center rounded-lg border border-white/30 bg-white/16 text-white/80 hover:bg-white/24",
     addChipButton:
-      "inline-flex items-center gap-1 rounded-full border border-cyan-200/45 bg-cyan-200/12 px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-cyan-100 hover:bg-cyan-200/20",
+      "inline-flex items-center gap-1 rounded-lg border border-cyan-200/45 bg-cyan-200/12 px-3 py-1 text-[0.64rem] font-semibold uppercase tracking-[0.13em] text-cyan-100 hover:bg-cyan-200/20",
     projectCard:
-      "relative rounded-2xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "relative rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
     educationCard:
-      "rounded-2xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
     certificationCard:
       "flex items-start justify-between gap-2 rounded-xl border border-white/24 bg-white/12 px-3 py-2.5 text-sm text-[#d9e6f8] shadow-[0_10px_24px_rgba(4,11,25,0.34)] backdrop-blur-lg",
     customCard:
-      "rounded-2xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
+      "rounded-xl border border-white/24 bg-white/12 p-4 shadow-[0_10px_28px_rgba(4,11,25,0.38)] backdrop-blur-lg",
     customTag:
-      "rounded-full border border-white/26 bg-white/12 px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-white/72 backdrop-blur-md",
+      "rounded-lg border border-white/26 bg-white/12 px-3 py-1 text-[0.62rem] uppercase tracking-[0.14em] text-white/72 backdrop-blur-md",
     emptyState:
       "mt-4 rounded-xl border border-white/22 bg-white/10 px-4 py-3 text-sm text-white/72 backdrop-blur-md",
     primaryButton:
       "inline-flex items-center justify-center gap-2 rounded-xl border border-cyan-200/50 bg-cyan-200/16 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-cyan-100 hover:bg-cyan-200/24",
     secondaryButton:
-      "inline-flex items-center gap-1 rounded-full border border-white/28 bg-white/10 px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-white/82 hover:bg-white/16",
+      "inline-flex items-center gap-1 rounded-lg border border-white/28 bg-white/10 px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-white/82 hover:bg-white/16",
     iconButton:
-      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/28 bg-white/14 text-white/85 hover:bg-white/20",
+      "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/28 bg-white/14 text-white/85 hover:bg-white/20",
   },
 };
 
@@ -265,20 +281,42 @@ const createSectionId = (): string =>
 const createCardId = (): string =>
   `card-${Math.random().toString(36).slice(2, 8)}-${Date.now().toString(36)}`;
 
+const createLinkId = (): string =>
+  `link-${Math.random().toString(36).slice(2, 8)}-${Date.now().toString(36)}`;
+
 const createSectionFormState = (): SectionFormState => ({
+  type: "custom",
   title: "",
   description: "",
   layout: "vertical",
   cardTitle: "",
   cardSubtitle: "",
   cardDescription: "",
+  cardImageUrl: "",
+  cardLinkLabel: "",
+  cardLinkUrl: "",
 });
 
 const createCardDraft = (): CardDraft => ({
   title: "",
   subtitle: "",
   description: "",
+  imageUrl: "",
+  linkLabel: "",
+  linkUrl: "",
 });
+
+const createConnectLinkDraft = (): ConnectLinkDraft => ({
+  label: "",
+  url: "",
+});
+
+const DEFAULT_SECTION_TITLES: Required<PortfolioSectionTitles> = {
+  skills: "Skills",
+  experience: "Experience",
+  education: "Education",
+  certifications: "Certifications",
+};
 
 const normalizeSectionOrder = (
   sectionOrder: string[] | undefined,
@@ -327,6 +365,35 @@ const normalizeSectionOrder = (
   return normalized;
 };
 
+const LEGACY_LINKEDIN_LINK_ID = "connect-legacy-linkedin";
+
+const getNormalizedConnectLinks = (profile: LinkedInProfile): ProjectLink[] => {
+  if ((profile.connectLinks?.length ?? 0) > 0) {
+    return profile.connectLinks ?? [];
+  }
+
+  const legacyLinkedInUrl = profile.linkedinUrl?.trim();
+  if (!legacyLinkedInUrl) return [];
+
+  return [
+    {
+      id: LEGACY_LINKEDIN_LINK_ID,
+      label: "LinkedIn",
+      url: legacyLinkedInUrl,
+    },
+  ];
+};
+
+const getLinkedInUrlFromConnectLinks = (
+  links: ProjectLink[]
+): string | undefined => {
+  const linkedInLink = links.find(
+    (link) => /linkedin\.com/i.test(link.url) || /linkedin/i.test(link.label)
+  );
+  const linkedInUrl = linkedInLink?.url.trim();
+  return linkedInUrl ? linkedInUrl : undefined;
+};
+
 const PortfolioTemplateEngine = ({
   profile,
   editable = false,
@@ -351,8 +418,16 @@ const PortfolioTemplateEngine = ({
   } = createProfileEditor(editable, onProfileChange);
 
   const customSections = profile.customSections ?? [];
+  const connectLinks = useMemo(
+    () => getNormalizedConnectLinks(profile),
+    [profile.connectLinks, profile.linkedinUrl]
+  );
   const [sectionForm, setSectionForm] = useState<SectionFormState>(createSectionFormState);
   const [cardDrafts, setCardDrafts] = useState<Record<string, CardDraft>>({});
+  const [connectLinkDraft, setConnectLinkDraft] = useState<ConnectLinkDraft>(
+    createConnectLinkDraft
+  );
+  const [showConnectLinkForm, setShowConnectLinkForm] = useState(false);
   const [draggingSectionId, setDraggingSectionId] = useState<string | null>(null);
   const [dropTargetId, setDropTargetId] = useState<string | null>(null);
 
@@ -383,6 +458,54 @@ const PortfolioTemplateEngine = ({
   const applyProfileMutation = (updater: (prev: LinkedInProfile) => LinkedInProfile) => {
     if (!canEdit || !onProfileChange) return;
     onProfileChange(updater);
+  };
+
+  const setConnectLinks = (updater: (links: ProjectLink[]) => ProjectLink[]) => {
+    applyProfileMutation((prev) => {
+      const nextLinks = updater(getNormalizedConnectLinks(prev));
+      return {
+        ...prev,
+        connectLinks: nextLinks,
+        linkedinUrl: getLinkedInUrlFromConnectLinks(nextLinks),
+      };
+    });
+  };
+
+  const removeConnectLink = (linkId: string) => {
+    setConnectLinks((links) => links.filter((link) => link.id !== linkId));
+  };
+
+  const addConnectLink = (label: string, url: string): boolean => {
+    const nextUrl = url.trim();
+    if (!nextUrl) return false;
+
+    const nextLabel = label.trim();
+    setConnectLinks((links) => [
+      ...links,
+      {
+        id: createLinkId(),
+        label: nextLabel || "Visit",
+        url: nextUrl,
+      },
+    ]);
+    return true;
+  };
+
+  const openConnectLinkForm = () => {
+    setConnectLinkDraft(createConnectLinkDraft());
+    setShowConnectLinkForm(true);
+  };
+
+  const cancelConnectLinkForm = () => {
+    setShowConnectLinkForm(false);
+    setConnectLinkDraft(createConnectLinkDraft());
+  };
+
+  const saveConnectLinkFromForm = () => {
+    const saved = addConnectLink(connectLinkDraft.label, connectLinkDraft.url);
+    if (saved) {
+      cancelConnectLinkForm();
+    }
   };
 
   const moveSection = (sourceSectionId: string, targetSectionId: string) => {
@@ -446,12 +569,38 @@ const PortfolioTemplateEngine = ({
     clearDragState();
   };
 
+  const getBaseSectionTitle = (sectionId: keyof PortfolioSectionTitles): string =>
+    profile.sectionTitles?.[sectionId] ?? DEFAULT_SECTION_TITLES[sectionId];
+
+  const updateBaseSectionTitle = (
+    sectionId: keyof PortfolioSectionTitles,
+    value: string
+  ) => {
+    applyProfileMutation((prev) => ({
+      ...prev,
+      sectionTitles: {
+        ...(prev.sectionTitles ?? {}),
+        [sectionId]: value,
+      },
+    }));
+  };
+
   const updateSectionFormField = <K extends keyof SectionFormState>(
     key: K,
     value: SectionFormState[K]
   ) => {
     setSectionForm((prev) => ({ ...prev, [key]: value }));
   };
+
+  const buildProjectLinks = (label: string, url: string): ProjectLink[] => {
+    const nextLabel = label.trim();
+    const nextUrl = url.trim();
+    if (!nextUrl) return [];
+    return [{ id: createLinkId(), label: nextLabel || "Visit", url: nextUrl }];
+  };
+
+  const isProjectSection = (section?: CustomSection): boolean =>
+    (section?.type ?? "custom") === "projects";
 
   const handleAddCustomSection = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -461,10 +610,16 @@ const PortfolioTemplateEngine = ({
     const cardTitle = sectionForm.cardTitle.trim();
     const cardDescription = sectionForm.cardDescription.trim();
     if (!title || !cardTitle || !cardDescription) return;
+    const projectLinks = buildProjectLinks(
+      sectionForm.cardLinkLabel,
+      sectionForm.cardLinkUrl
+    );
+    const projectsMode = sectionForm.type === "projects";
 
     const sectionId = createSectionId();
     const newSection: CustomSection = {
       id: sectionId,
+      type: projectsMode ? "projects" : "custom",
       title,
       description: sectionForm.description.trim() || undefined,
       layout: sectionForm.layout,
@@ -472,8 +627,10 @@ const PortfolioTemplateEngine = ({
         {
           id: createCardId(),
           title: cardTitle,
-          subtitle: sectionForm.cardSubtitle.trim() || undefined,
+          subtitle: projectsMode ? undefined : sectionForm.cardSubtitle.trim() || undefined,
           description: cardDescription,
+          imageUrl: projectsMode ? sectionForm.cardImageUrl.trim() || undefined : undefined,
+          links: projectLinks.length > 0 ? projectLinks : undefined,
         },
       ],
     };
@@ -554,7 +711,7 @@ const PortfolioTemplateEngine = ({
   const updateCustomCardField = (
     sectionId: string,
     cardId: string,
-    key: "title" | "subtitle" | "description",
+    key: "title" | "subtitle" | "description" | "imageUrl",
     value: string
   ) => {
     applyProfileMutation((prev) => ({
@@ -566,15 +723,87 @@ const PortfolioTemplateEngine = ({
           ...section,
           cards: section.cards.map((card) => {
             if (card.id !== cardId) return card;
-            if (key === "subtitle") {
+            if (key === "subtitle" || key === "imageUrl") {
               return {
                 ...card,
-                subtitle: value.trim() ? value : undefined,
+                [key]: value.trim() ? value : undefined,
               };
             }
             return {
               ...card,
               [key]: value,
+            };
+          }),
+        };
+      }),
+    }));
+  };
+
+  const updateProjectLinkField = (
+    sectionId: string,
+    cardId: string,
+    linkId: string,
+    key: "label" | "url",
+    value: string
+  ) => {
+    applyProfileMutation((prev) => ({
+      ...prev,
+      customSections: (prev.customSections ?? []).map((section) => {
+        if (section.id !== sectionId) return section;
+        return {
+          ...section,
+          cards: section.cards.map((card) => {
+            if (card.id !== cardId) return card;
+            return {
+              ...card,
+              links: (card.links ?? []).map((link) =>
+                link.id === linkId ? { ...link, [key]: value } : link
+              ),
+            };
+          }),
+        };
+      }),
+    }));
+  };
+
+  const removeProjectLink = (sectionId: string, cardId: string, linkId: string) => {
+    applyProfileMutation((prev) => ({
+      ...prev,
+      customSections: (prev.customSections ?? []).map((section) => {
+        if (section.id !== sectionId) return section;
+        return {
+          ...section,
+          cards: section.cards.map((card) => {
+            if (card.id !== cardId) return card;
+            return {
+              ...card,
+              links: (card.links ?? []).filter((link) => link.id !== linkId),
+            };
+          }),
+        };
+      }),
+    }));
+  };
+
+  const addProjectLinkToCard = (sectionId: string, cardId: string) => {
+    applyProfileMutation((prev) => ({
+      ...prev,
+      customSections: (prev.customSections ?? []).map((section) => {
+        if (section.id !== sectionId) return section;
+        return {
+          ...section,
+          cards: section.cards.map((card) => {
+            if (card.id !== cardId) return card;
+            return {
+              ...card,
+              links: [
+                ...(card.links ?? []),
+                {
+                  id: createLinkId(),
+                  label: "Visit",
+                  url: "https://",
+                },
+              ],
             };
           }),
         };
@@ -611,16 +840,21 @@ const PortfolioTemplateEngine = ({
 
   const addCardToSection = (sectionId: string) => {
     if (!canEdit) return;
+    const section = customSectionsById.get(sectionId);
     const draft = cardDrafts[sectionId] ?? createCardDraft();
     const title = draft.title.trim();
     const description = draft.description.trim();
     if (!title || !description) return;
 
+    const projectLinks = buildProjectLinks(draft.linkLabel, draft.linkUrl);
+    const projectsMode = isProjectSection(section);
     const newCard: CustomSectionCard = {
       id: createCardId(),
       title,
-      subtitle: draft.subtitle.trim() || undefined,
+      subtitle: projectsMode ? undefined : draft.subtitle.trim() || undefined,
       description,
+      imageUrl: projectsMode ? draft.imageUrl.trim() || undefined : undefined,
+      links: projectLinks.length > 0 ? projectLinks : undefined,
     };
 
     applyProfileMutation((prev) => ({
@@ -656,18 +890,35 @@ const PortfolioTemplateEngine = ({
 
   const renderSectionHeader = (
     title: string,
-    subtitle: string,
+    onTitleChange: (value: string) => void,
     action?: ReactNode
   ) => (
-    <div className="flex items-center justify-between gap-3">
-      <div>
-        <p className={palette.sectionLabel}>Portfolio Section</p>
-        <h2 className={palette.sectionTitle}>{title}</h2>
-        <p className={palette.sectionSubtitle}>{subtitle}</p>
-      </div>
+    <div className="flex flex-wrap items-start justify-between gap-3">
+      <EditableText
+        as="h2"
+        className={palette.sectionTitle}
+        value={title}
+        editable={canEdit}
+        multiline={false}
+        onValueChange={onTitleChange}
+      />
       {action}
     </div>
   );
+
+  const timelineLineClass =
+    theme === "glassmorphism"
+      ? "bg-white/30"
+      : theme === "neobrutalism"
+        ? "bg-black/35"
+        : "bg-[#60738f]/35";
+
+  const timelineMarkerClass =
+    theme === "glassmorphism"
+      ? "border-white/45 bg-cyan-200/25 text-white"
+      : theme === "neobrutalism"
+        ? "border-black bg-[#ffef72] text-black"
+        : "border-[#9bacbf] bg-[#e2e9f4] text-[#30445f]";
 
   return (
     <div className={palette.page} style={{ fontFamily: themeFonts[theme] }}>
@@ -675,35 +926,74 @@ const PortfolioTemplateEngine = ({
 
       <div className={palette.contentWrap}>
         <header className={palette.header}>
-          <div>
-            <p className={palette.headingKicker}>
-              {theme.charAt(0).toUpperCase() + theme.slice(1)} Portfolio Page
-            </p>
+          <EditableText
+            as="h1"
+            className={palette.headingName}
+            value={profile.fullName}
+            editable={canEdit}
+            multiline={false}
+            onValueChange={(value) => updateField("fullName", value)}
+          />
+
+          <div className={cn("flex flex-wrap items-center gap-1", palette.headingMeta)}>
             <EditableText
-              as="h1"
-              className={palette.headingName}
-              value={profile.fullName}
+              as="span"
+              value={profile.location ?? ""}
               editable={canEdit}
               multiline={false}
-              onValueChange={(value) => updateField("fullName", value)}
+              placeholder="Location"
+              onValueChange={(value) => updateField("location", value)}
             />
-          </div>
-
-          <div className={palette.headingMeta}>
-            {profile.location || "Global"} · {profile.email}
+            {Boolean(profile.location?.trim()) && <span aria-hidden>·</span>}
+            <EditableText
+              as="span"
+              value={profile.email}
+              editable={canEdit}
+              multiline={false}
+              onValueChange={(value) => updateField("email", value)}
+            />
           </div>
         </header>
 
         {canEdit && showAddSectionControls && (
           <section className={palette.controlPanel}>
-            <div className="flex flex-wrap items-end justify-between gap-3">
-              <div>
-                <p className={palette.sectionLabel}>Content Builder</p>
-                <h2 className={palette.controlPanelTitle}>Add Custom Portfolio Sections</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className={palette.controlPanelTitle}>Add Section</h2>
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSectionForm((prev) => ({
+                      ...prev,
+                      type: "custom",
+                    }))
+                  }
+                  className={cn(
+                    sectionForm.type === "custom"
+                      ? palette.primaryButton
+                      : palette.secondaryButton
+                  )}
+                >
+                  Custom
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSectionForm((prev) => ({
+                      ...prev,
+                      type: "projects",
+                      title: prev.title || "Projects",
+                    }))
+                  }
+                  className={cn(
+                    sectionForm.type === "projects"
+                      ? palette.primaryButton
+                      : palette.secondaryButton
+                  )}
+                >
+                  Projects
+                </button>
               </div>
-              <p className={palette.sectionSubtitle}>
-                Build unique content blocks like showcases, awards, side projects, or talks.
-              </p>
             </div>
 
             <form className="mt-5 grid gap-3 sm:grid-cols-2" onSubmit={handleAddCustomSection}>
@@ -714,7 +1004,11 @@ const PortfolioTemplateEngine = ({
                   className={palette.input}
                   value={sectionForm.title}
                   onChange={(event) => updateSectionFormField("title", event.target.value)}
-                  placeholder="Open Source Work, Talks, Awards..."
+                  placeholder={
+                    sectionForm.type === "projects"
+                      ? "Projects"
+                      : "Open Source Work, Talks, Awards..."
+                  }
                 />
               </label>
 
@@ -743,53 +1037,125 @@ const PortfolioTemplateEngine = ({
                   onChange={(event) =>
                     updateSectionFormField("description", event.target.value)
                   }
-                  placeholder="Short context for this custom section"
+                  placeholder="Short section intro"
                 />
               </label>
 
-              <label className="block">
-                <span className={cn("mb-1 block", palette.controlPanelLabel)}>First card title</span>
-                <input
-                  required
-                  className={palette.input}
-                  value={sectionForm.cardTitle}
-                  onChange={(event) => updateSectionFormField("cardTitle", event.target.value)}
-                  placeholder="Card heading"
-                />
-              </label>
+              {sectionForm.type === "projects" ? (
+                <>
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>Project name</span>
+                    <input
+                      required
+                      className={palette.input}
+                      value={sectionForm.cardTitle}
+                      onChange={(event) => updateSectionFormField("cardTitle", event.target.value)}
+                      placeholder="Portfolio Builder"
+                    />
+                  </label>
 
-              <label className="block">
-                <span className={cn("mb-1 block", palette.controlPanelLabel)}>
-                  First card subtitle
-                </span>
-                <input
-                  className={palette.input}
-                  value={sectionForm.cardSubtitle}
-                  onChange={(event) =>
-                    updateSectionFormField("cardSubtitle", event.target.value)
-                  }
-                  placeholder="Optional metadata"
-                />
-              </label>
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>
+                      Project image URL (optional)
+                    </span>
+                    <input
+                      className={palette.input}
+                      value={sectionForm.cardImageUrl}
+                      onChange={(event) =>
+                        updateSectionFormField("cardImageUrl", event.target.value)
+                      }
+                      placeholder="https://..."
+                    />
+                  </label>
 
-              <label className="block sm:col-span-2">
-                <span className={cn("mb-1 block", palette.controlPanelLabel)}>
-                  First card description
-                </span>
-                <textarea
-                  required
-                  className={cn(palette.input, "min-h-[82px] resize-y")}
-                  value={sectionForm.cardDescription}
-                  onChange={(event) =>
-                    updateSectionFormField("cardDescription", event.target.value)
-                  }
-                  placeholder="Key details for the first card in this section"
-                />
-              </label>
+                  <label className="block sm:col-span-2">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>
+                      Project description
+                    </span>
+                    <textarea
+                      required
+                      className={cn(palette.input, "min-h-[82px] resize-y")}
+                      value={sectionForm.cardDescription}
+                      onChange={(event) =>
+                        updateSectionFormField("cardDescription", event.target.value)
+                      }
+                      placeholder="What this project does and why it matters."
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>Link label</span>
+                    <input
+                      className={palette.input}
+                      value={sectionForm.cardLinkLabel}
+                      onChange={(event) =>
+                        updateSectionFormField("cardLinkLabel", event.target.value)
+                      }
+                      placeholder="GitHub"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>Link URL</span>
+                    <input
+                      className={palette.input}
+                      value={sectionForm.cardLinkUrl}
+                      onChange={(event) =>
+                        updateSectionFormField("cardLinkUrl", event.target.value)
+                      }
+                      placeholder="https://github.com/..."
+                    />
+                  </label>
+                </>
+              ) : (
+                <>
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>
+                      First card title
+                    </span>
+                    <input
+                      required
+                      className={palette.input}
+                      value={sectionForm.cardTitle}
+                      onChange={(event) => updateSectionFormField("cardTitle", event.target.value)}
+                      placeholder="Card heading"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>
+                      First card subtitle
+                    </span>
+                    <input
+                      className={palette.input}
+                      value={sectionForm.cardSubtitle}
+                      onChange={(event) =>
+                        updateSectionFormField("cardSubtitle", event.target.value)
+                      }
+                      placeholder="Optional metadata"
+                    />
+                  </label>
+
+                  <label className="block sm:col-span-2">
+                    <span className={cn("mb-1 block", palette.controlPanelLabel)}>
+                      First card description
+                    </span>
+                    <textarea
+                      required
+                      className={cn(palette.input, "min-h-[82px] resize-y")}
+                      value={sectionForm.cardDescription}
+                      onChange={(event) =>
+                        updateSectionFormField("cardDescription", event.target.value)
+                      }
+                      placeholder="Key details for the first card in this section"
+                    />
+                  </label>
+                </>
+              )}
 
               <button type="submit" className={palette.primaryButton}>
                 <Plus className="h-4 w-4" />
-                Add Section
+                {sectionForm.type === "projects" ? "Add Projects Section" : "Add Section"}
               </button>
             </form>
           </section>
@@ -813,12 +1179,8 @@ const PortfolioTemplateEngine = ({
                   onDrop={(event) => handleSectionDrop(event, sectionId)}
                 >
                   {renderSectionHandle(sectionId)}
-                  {renderSectionHeader(
-                    "Hero",
-                    "Your personal positioning statement and contact anchors."
-                  )}
 
-                  <div className="mt-4 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+                  <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
                     <div>
                       <EditableText
                         as="h3"
@@ -836,9 +1198,8 @@ const PortfolioTemplateEngine = ({
                     </div>
 
                     <aside className={palette.contactCard}>
-                      <p className={palette.sectionLabel}>Connect</p>
                       <EditableText
-                        className={cn("mt-2 break-all", palette.bodyText)}
+                        className={cn("break-all", palette.bodyText)}
                         value={profile.email}
                         editable={canEdit}
                         multiline={false}
@@ -852,24 +1213,114 @@ const PortfolioTemplateEngine = ({
                         placeholder="Location"
                         onValueChange={(value) => updateField("location", value)}
                       />
+
                       {canEdit ? (
-                        <EditableText
-                          className={cn("mt-2 break-all", palette.link)}
-                          value={profile.linkedinUrl ?? ""}
-                          editable
-                          multiline={false}
-                          onValueChange={(value) => updateField("linkedinUrl", value)}
-                        />
+                        <div className="mt-3 space-y-2">
+                          {connectLinks.map((link) => (
+                            <div key={link.id} className="flex flex-wrap items-center gap-2">
+                              {link.url ? (
+                                <a
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={palette.secondaryButton}
+                                >
+                                  {link.label || "Visit"}
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                </a>
+                              ) : (
+                                <span className={palette.secondaryButton}>
+                                  {link.label || "Visit"}
+                                </span>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => removeConnectLink(link.id)}
+                                className={palette.iconButton}
+                                title="Remove link"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </button>
+                            </div>
+                          ))}
+
+                          {showConnectLinkForm ? (
+                            <form
+                              className="mt-2 space-y-2"
+                              onSubmit={(event) => {
+                                event.preventDefault();
+                                saveConnectLinkFromForm();
+                              }}
+                            >
+                              <input
+                                className={palette.input}
+                                value={connectLinkDraft.label}
+                                onChange={(event) =>
+                                  setConnectLinkDraft((prev) => ({
+                                    ...prev,
+                                    label: event.target.value,
+                                  }))
+                                }
+                                placeholder="Link label (e.g. GitHub)"
+                              />
+                              <input
+                                required
+                                className={palette.input}
+                                value={connectLinkDraft.url}
+                                onChange={(event) =>
+                                  setConnectLinkDraft((prev) => ({
+                                    ...prev,
+                                    url: event.target.value,
+                                  }))
+                                }
+                                placeholder="https://example.com"
+                              />
+                              <div className="flex flex-wrap items-center gap-2">
+                                <button type="submit" className={palette.primaryButton}>
+                                  Save Link
+                                </button>
+                                <button
+                                  type="button"
+                                  className={palette.secondaryButton}
+                                  onClick={cancelConnectLinkForm}
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </form>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={openConnectLinkForm}
+                              className={palette.secondaryButton}
+                            >
+                              <Plus className="h-3.5 w-3.5" />
+                              Add Link
+                            </button>
+                          )}
+                        </div>
                       ) : (
-                        profile.linkedinUrl && (
-                          <a
-                            href={profile.linkedinUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={cn("mt-2 inline-block break-all", palette.link)}
-                          >
-                            {profile.linkedinUrl}
-                          </a>
+                        connectLinks.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {connectLinks.map((link) =>
+                              link.url ? (
+                                <a
+                                  key={link.id}
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={palette.secondaryButton}
+                                >
+                                  {link.label || "Visit"}
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                </a>
+                              ) : (
+                                <span key={link.id} className={palette.secondaryButton}>
+                                  {link.label || "Visit"}
+                                </span>
+                              )
+                            )}
+                          </div>
                         )
                       )}
                     </aside>
@@ -888,8 +1339,8 @@ const PortfolioTemplateEngine = ({
                 >
                   {renderSectionHandle(sectionId)}
                   {renderSectionHeader(
-                    "Skills",
-                    "Stack, tooling, and capabilities presented as your portfolio toolkit.",
+                    getBaseSectionTitle("skills"),
+                    (value) => updateBaseSectionTitle("skills", value),
                     canEdit ? (
                       <button
                         type="button"
@@ -926,9 +1377,7 @@ const PortfolioTemplateEngine = ({
                         </div>
                       ))
                     ) : (
-                      <p className={palette.emptyState}>
-                        Add skills to show your technical and creative strengths.
-                      </p>
+                      null
                     )}
                   </div>
                 </section>
@@ -945,8 +1394,8 @@ const PortfolioTemplateEngine = ({
                 >
                   {renderSectionHandle(sectionId)}
                   {renderSectionHeader(
-                    "Experience",
-                    "Portfolio projects, collaborations, and impact narratives.",
+                    getBaseSectionTitle("experience"),
+                    (value) => updateBaseSectionTitle("experience", value),
                     canEdit ? (
                       <button
                         type="button"
@@ -954,88 +1403,106 @@ const PortfolioTemplateEngine = ({
                         className={palette.secondaryButton}
                       >
                         <Plus className="h-3.5 w-3.5" />
-                        Add Card
+                        Add Entry
                       </button>
                     ) : null
                   )}
 
                   {profile.experience.length > 0 ? (
-                    <div className="mt-5 grid gap-3 lg:grid-cols-2">
+                    <div className="mt-5 space-y-4">
                       {profile.experience.map((entry, index) => (
-                        <article key={`${entry.title}-${index}`} className={palette.projectCard}>
-                          <div className="flex items-start justify-between gap-3">
+                        <div key={`${entry.title}-${index}`} className="relative pl-9">
+                          {index < profile.experience.length - 1 && (
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                "absolute left-[0.72rem] top-10 bottom-[-1.1rem] w-px",
+                                timelineLineClass
+                              )}
+                            />
+                          )}
+                          <span
+                            aria-hidden="true"
+                            className={cn(
+                              "absolute left-0 top-3 flex h-6 w-6 items-center justify-center rounded-lg border text-[0.6rem] font-semibold",
+                              timelineMarkerClass
+                            )}
+                          >
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <article className={palette.projectCard}>
+                            <div className="flex items-start justify-between gap-3">
+                              <EditableText
+                                as="h3"
+                                className="text-lg font-semibold tracking-[-0.02em]"
+                                value={entry.title}
+                                editable={canEdit}
+                                multiline={false}
+                                onValueChange={(value) =>
+                                  updateExperienceField(index, "title", value)
+                                }
+                              />
+                              {canEdit && (
+                                <button
+                                  type="button"
+                                  onClick={() => removeExperience(index)}
+                                  className={palette.iconButton}
+                                  title="Remove timeline entry"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </div>
+
+                            <div className={cn("mt-1 flex flex-wrap items-center gap-1", palette.mutedText)}>
+                              <EditableText
+                                as="span"
+                                value={entry.company}
+                                editable={canEdit}
+                                multiline={false}
+                                onValueChange={(value) =>
+                                  updateExperienceField(index, "company", value)
+                                }
+                              />
+                              {(entry.location || canEdit) && (
+                                <>
+                                  <span aria-hidden>·</span>
+                                  <EditableText
+                                    as="span"
+                                    value={entry.location ?? ""}
+                                    editable={canEdit}
+                                    multiline={false}
+                                    onValueChange={(value) =>
+                                      updateExperienceField(index, "location", value)
+                                    }
+                                  />
+                                </>
+                              )}
+                            </div>
+
                             <EditableText
-                              as="h3"
-                              className="text-lg font-semibold tracking-[-0.02em]"
-                              value={entry.title}
+                              className={cn("mt-2 text-[0.66rem] uppercase tracking-[0.16em]", palette.mutedText)}
+                              value={entry.duration}
                               editable={canEdit}
                               multiline={false}
                               onValueChange={(value) =>
-                                updateExperienceField(index, "title", value)
+                                updateExperienceField(index, "duration", value)
                               }
                             />
-                            {canEdit && (
-                              <button
-                                type="button"
-                                onClick={() => removeExperience(index)}
-                                className={palette.iconButton}
-                                title="Remove experience card"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            )}
-                          </div>
-
-                          <div className={cn("mt-1 flex flex-wrap items-center gap-1", palette.mutedText)}>
                             <EditableText
-                              as="span"
-                              value={entry.company}
+                              className={cn("mt-3", palette.bodyText)}
+                              value={entry.description}
                               editable={canEdit}
-                              multiline={false}
                               onValueChange={(value) =>
-                                updateExperienceField(index, "company", value)
+                                updateExperienceField(index, "description", value)
                               }
                             />
-                            {(entry.location || canEdit) && (
-                              <>
-                                <span aria-hidden>·</span>
-                                <EditableText
-                                  as="span"
-                                  value={entry.location ?? ""}
-                                  editable={canEdit}
-                                  multiline={false}
-                                  onValueChange={(value) =>
-                                    updateExperienceField(index, "location", value)
-                                  }
-                                />
-                              </>
-                            )}
-                          </div>
-
-                          <EditableText
-                            className={cn("mt-2 text-[0.66rem] uppercase tracking-[0.16em]", palette.mutedText)}
-                            value={entry.duration}
-                            editable={canEdit}
-                            multiline={false}
-                            onValueChange={(value) =>
-                              updateExperienceField(index, "duration", value)
-                            }
-                          />
-                          <EditableText
-                            className={cn("mt-3", palette.bodyText)}
-                            value={entry.description}
-                            editable={canEdit}
-                            onValueChange={(value) =>
-                              updateExperienceField(index, "description", value)
-                            }
-                          />
-                        </article>
+                          </article>
+                        </div>
                       ))}
                     </div>
                   ) : (
-                    <p className={palette.emptyState}>
-                      Add project cards to turn your experience into a portfolio narrative.
-                    </p>
+                    null
                   )}
                 </section>
               );
@@ -1052,8 +1519,8 @@ const PortfolioTemplateEngine = ({
                 >
                   {renderSectionHandle(sectionId)}
                   {renderSectionHeader(
-                    "Education",
-                    "Academic foundations and learning milestones."
+                    getBaseSectionTitle("education"),
+                    (value) => updateBaseSectionTitle("education", value)
                   )}
 
                   {educationEntries.length > 0 ? (
@@ -1090,9 +1557,7 @@ const PortfolioTemplateEngine = ({
                       ))}
                     </div>
                   ) : (
-                    <p className={palette.emptyState}>
-                      Education details will appear here as a dedicated portfolio section.
-                    </p>
+                    null
                   )}
                 </section>
               );
@@ -1109,8 +1574,8 @@ const PortfolioTemplateEngine = ({
                 >
                   {renderSectionHandle(sectionId)}
                   {renderSectionHeader(
-                    "Certifications",
-                    "Credibility and domain proof points.",
+                    getBaseSectionTitle("certifications"),
+                    (value) => updateBaseSectionTitle("certifications", value),
                     canEdit ? (
                       <button
                         type="button"
@@ -1147,9 +1612,7 @@ const PortfolioTemplateEngine = ({
                       ))}
                     </ul>
                   ) : (
-                    <p className={palette.emptyState}>
-                      Add certifications as cards to reinforce trust and depth.
-                    </p>
+                    null
                   )}
                 </section>
               );
@@ -1169,7 +1632,6 @@ const PortfolioTemplateEngine = ({
                 {renderSectionHandle(customSection.id)}
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <p className={palette.sectionLabel}>Custom Section</p>
                     <EditableText
                       as="h2"
                       className={palette.sectionTitle}
@@ -1184,7 +1646,7 @@ const PortfolioTemplateEngine = ({
                       className={cn("mt-2", palette.bodyText)}
                       value={customSection.description ?? ""}
                       editable={canEdit}
-                      placeholder="Add a short intro for this custom section"
+                      placeholder="Add section intro"
                       onValueChange={(value) =>
                         updateCustomSectionField(customSection.id, "description", value)
                       }
@@ -1192,14 +1654,10 @@ const PortfolioTemplateEngine = ({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className={palette.customTag}>
-                      {customSection.layout === "horizontal" ? "Horizontal Cards" : "Vertical Cards"}
-                    </span>
-
                     {canEdit && (
                       <>
                         <select
-                          className={cn(palette.input, "h-9 w-auto rounded-full px-3 py-1 text-[0.68rem]")}
+                          className={cn(palette.input, "h-9 w-auto rounded-lg px-3 py-1 text-[0.68rem]")}
                           value={customSection.layout}
                           onChange={(event) =>
                             updateCustomSectionField(
@@ -1259,16 +1717,43 @@ const PortfolioTemplateEngine = ({
                           )}
                         </div>
 
-                        <EditableText
-                          className={cn("mt-1 text-xs uppercase tracking-[0.13em]", palette.mutedText)}
-                          value={card.subtitle ?? ""}
-                          editable={canEdit}
-                          multiline={false}
-                          placeholder="Optional subtitle"
-                          onValueChange={(value) =>
-                            updateCustomCardField(customSection.id, card.id, "subtitle", value)
-                          }
-                        />
+                        {!isProjectSection(customSection) && (
+                          <EditableText
+                            className={cn(
+                              "mt-1 text-xs uppercase tracking-[0.13em]",
+                              palette.mutedText
+                            )}
+                            value={card.subtitle ?? ""}
+                            editable={canEdit}
+                            multiline={false}
+                            placeholder="Optional subtitle"
+                            onValueChange={(value) =>
+                              updateCustomCardField(customSection.id, card.id, "subtitle", value)
+                            }
+                          />
+                        )}
+
+                        {isProjectSection(customSection) && card.imageUrl && (
+                          <img
+                            src={card.imageUrl}
+                            alt={card.title}
+                            className="mt-3 h-44 w-full rounded-lg object-cover"
+                          />
+                        )}
+
+                        {isProjectSection(customSection) && canEdit && (
+                          <EditableText
+                            className={cn("mt-2 break-all text-xs", palette.mutedText)}
+                            value={card.imageUrl ?? ""}
+                            editable
+                            multiline={false}
+                            placeholder="Project image URL"
+                            onValueChange={(value) =>
+                              updateCustomCardField(customSection.id, card.id, "imageUrl", value)
+                            }
+                          />
+                        )}
+
                         <EditableText
                           className={cn("mt-3", palette.bodyText)}
                           value={card.description}
@@ -1277,17 +1762,107 @@ const PortfolioTemplateEngine = ({
                             updateCustomCardField(customSection.id, card.id, "description", value)
                           }
                         />
+
+                        {isProjectSection(customSection) &&
+                          ((card.links?.length ?? 0) > 0 ? (
+                            canEdit ? (
+                              <div className="mt-3 space-y-2">
+                                {(card.links ?? []).map((link) => (
+                                  <div
+                                    key={link.id}
+                                    className="flex flex-wrap items-center gap-2"
+                                  >
+                                    <a
+                                      href={link.url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className={palette.secondaryButton}
+                                    >
+                                      {link.label}
+                                      <ExternalLink className="h-3.5 w-3.5" />
+                                    </a>
+                                    <EditableText
+                                      as="span"
+                                      className={cn("text-xs font-medium", palette.bodyText)}
+                                      value={link.label}
+                                      editable
+                                      multiline={false}
+                                      onValueChange={(value) =>
+                                        updateProjectLinkField(
+                                          customSection.id,
+                                          card.id,
+                                          link.id,
+                                          "label",
+                                          value
+                                        )
+                                      }
+                                    />
+                                    <EditableText
+                                      as="span"
+                                      className={cn("text-xs break-all", palette.link)}
+                                      value={link.url}
+                                      editable
+                                      multiline={false}
+                                      onValueChange={(value) =>
+                                        updateProjectLinkField(
+                                          customSection.id,
+                                          card.id,
+                                          link.id,
+                                          "url",
+                                          value
+                                        )
+                                      }
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        removeProjectLink(customSection.id, card.id, link.id)
+                                      }
+                                      className={palette.iconButton}
+                                      title="Remove link"
+                                    >
+                                      <Trash2 className="h-3 w-3" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="mt-3 flex flex-wrap gap-2">
+                                {(card.links ?? []).map((link) => (
+                                  <a
+                                    key={link.id}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className={palette.secondaryButton}
+                                  >
+                                    {link.label}
+                                    <ExternalLink className="h-3.5 w-3.5" />
+                                  </a>
+                                ))}
+                              </div>
+                            )
+                          ) : null)}
+
+                        {isProjectSection(customSection) && canEdit && (
+                          <button
+                            type="button"
+                            onClick={() => addProjectLinkToCard(customSection.id, card.id)}
+                            className={cn("mt-3", palette.secondaryButton)}
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                            Add Link
+                          </button>
+                        )}
                       </article>
                     ))}
                   </div>
                 ) : (
-                  <p className={palette.emptyState}>Add cards to populate this custom section.</p>
+                  null
                 )}
 
                 {canEdit && (
-                  <div className={cn("mt-5 rounded-2xl p-4", palette.controlPanel)}>
-                    <p className={palette.sectionLabel}>Add Card</p>
-
+                  <div className={cn("mt-5 rounded-xl p-4", palette.controlPanel)}>
                     <div className="mt-3 grid gap-2 sm:grid-cols-2">
                       <input
                         className={palette.input}
@@ -1297,14 +1872,25 @@ const PortfolioTemplateEngine = ({
                         }
                         placeholder="Card title"
                       />
-                      <input
-                        className={palette.input}
-                        value={cardDraft.subtitle}
-                        onChange={(event) =>
-                          updateCardDraftField(customSection.id, "subtitle", event.target.value)
-                        }
-                        placeholder="Card subtitle"
-                      />
+                      {!isProjectSection(customSection) ? (
+                        <input
+                          className={palette.input}
+                          value={cardDraft.subtitle}
+                          onChange={(event) =>
+                            updateCardDraftField(customSection.id, "subtitle", event.target.value)
+                          }
+                          placeholder="Card subtitle"
+                        />
+                      ) : (
+                        <input
+                          className={palette.input}
+                          value={cardDraft.imageUrl}
+                          onChange={(event) =>
+                            updateCardDraftField(customSection.id, "imageUrl", event.target.value)
+                          }
+                          placeholder="Project image URL (optional)"
+                        />
+                      )}
                       <textarea
                         className={cn(palette.input, "min-h-[78px] resize-y sm:col-span-2")}
                         value={cardDraft.description}
@@ -1313,6 +1899,34 @@ const PortfolioTemplateEngine = ({
                         }
                         placeholder="Card description"
                       />
+                      {isProjectSection(customSection) && (
+                        <>
+                          <input
+                            className={palette.input}
+                            value={cardDraft.linkLabel}
+                            onChange={(event) =>
+                              updateCardDraftField(
+                                customSection.id,
+                                "linkLabel",
+                                event.target.value
+                              )
+                            }
+                            placeholder="Link label (e.g. GitHub)"
+                          />
+                          <input
+                            className={palette.input}
+                            value={cardDraft.linkUrl}
+                            onChange={(event) =>
+                              updateCardDraftField(
+                                customSection.id,
+                                "linkUrl",
+                                event.target.value
+                              )
+                            }
+                            placeholder="Link URL"
+                          />
+                        </>
+                      )}
                       <button
                         type="button"
                         onClick={() => addCardToSection(customSection.id)}

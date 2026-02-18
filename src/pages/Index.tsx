@@ -42,7 +42,7 @@ const Index = () => {
             </div>
 
             <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
-              <aside className="page-panel rounded-[1.8rem] p-5 sm:p-6 lg:sticky lg:top-6 lg:h-fit">
+              <aside className="page-panel rounded-[1rem] p-5 sm:p-6 lg:sticky lg:top-6 lg:h-fit">
                 <TemplateSelector
                   active={activeTemplate}
                   onChange={setActiveTemplate}
@@ -50,7 +50,7 @@ const Index = () => {
                 />
               </aside>
 
-              <div className="page-panel-strong rounded-[2rem] p-4 sm:p-5">
+              <div className="page-panel-strong rounded-[1.15rem] p-4 sm:p-5">
                 <ActiveComponent profile={profile} />
               </div>
             </div>

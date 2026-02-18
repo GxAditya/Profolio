@@ -30,7 +30,7 @@ const HeroSection = ({ hasProfile = false }: HeroSectionProps) => {
 
       <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
         <div className="stagger-fade space-y-6">
-          <p className="kicker inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-card/80 px-3 py-1.5 text-foreground/70">
+          <p className="kicker inline-flex items-center gap-2 rounded-lg border border-foreground/15 bg-card/80 px-3 py-1.5 text-foreground/70">
             <span className="accent-dot inline-block h-2 w-2 rounded-full bg-primary" />
             linkedin pdf {"->"} live portfolio
           </p>
@@ -47,7 +47,7 @@ const HeroSection = ({ hasProfile = false }: HeroSectionProps) => {
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
               href="#upload"
-              className="lift-ring spring-hover inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground"
+              className="lift-ring spring-hover inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground"
             >
               Start With PDF
               <ArrowDownRight className="h-4 w-4" />
@@ -56,7 +56,7 @@ const HeroSection = ({ hasProfile = false }: HeroSectionProps) => {
             {hasProfile ? (
               <Link
                 to="/preview"
-                className="spring-hover inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-card/80 px-5 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/85 hover:border-primary/50"
+                className="spring-hover inline-flex items-center gap-2 rounded-lg border border-foreground/20 bg-card/80 px-5 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/85 hover:border-primary/50"
               >
                 Open Live Preview
                 <Eye className="h-4 w-4" />
@@ -67,22 +67,22 @@ const HeroSection = ({ hasProfile = false }: HeroSectionProps) => {
           </div>
 
           <div className="grid gap-2 pt-3 text-sm text-foreground/70 sm:grid-cols-3">
-            <div className="rounded-2xl border border-foreground/10 bg-card/65 px-3 py-2">
+            <div className="rounded-xl border border-foreground/10 bg-card/65 px-3 py-2">
               <p className="mono text-[0.7rem] uppercase tracking-[0.13em] text-foreground/55">Speed</p>
               <p className="mt-1 font-semibold text-foreground">~30s setup</p>
             </div>
-            <div className="rounded-2xl border border-foreground/10 bg-card/65 px-3 py-2">
+            <div className="rounded-xl border border-foreground/10 bg-card/65 px-3 py-2">
               <p className="mono text-[0.7rem] uppercase tracking-[0.13em] text-foreground/55">Security</p>
               <p className="mt-1 font-semibold text-foreground">No account needed</p>
             </div>
-            <div className="rounded-2xl border border-foreground/10 bg-card/65 px-3 py-2">
+            <div className="rounded-xl border border-foreground/10 bg-card/65 px-3 py-2">
               <p className="mono text-[0.7rem] uppercase tracking-[0.13em] text-foreground/55">Output</p>
               <p className="mt-1 font-semibold text-foreground">Portfolio-ready</p>
             </div>
           </div>
         </div>
 
-        <aside className="page-panel spring-hover rounded-[2rem] p-5 sm:p-6 lg:sticky lg:top-8">
+        <aside className="page-panel spring-hover rounded-[1.15rem] p-5 sm:p-6 lg:sticky lg:top-8">
           <div className="flex items-center justify-between">
             <p className="kicker text-foreground/60">What You Get</p>
             <Sparkles className="h-4 w-4 text-primary" />
@@ -90,7 +90,7 @@ const HeroSection = ({ hasProfile = false }: HeroSectionProps) => {
 
           <div className="section-rail mt-6 space-y-4">
             {highlights.map((item, index) => (
-              <article key={item.title} className="rounded-2xl border border-foreground/10 bg-card/75 p-4 pl-8">
+              <article key={item.title} className="rounded-xl border border-foreground/10 bg-card/75 p-4 pl-8">
                 <p className="mono mb-1 text-[0.66rem] uppercase tracking-[0.16em] text-primary">{`0${index + 1}`}</p>
                 <h2 className="text-sm font-semibold text-foreground">{item.title}</h2>
                 <p className="mt-1 text-sm leading-relaxed text-foreground/70">{item.body}</p>

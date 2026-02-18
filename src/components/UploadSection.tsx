@@ -85,11 +85,11 @@ const UploadSection = () => {
 
       <div
         {...getRootProps()}
-        className={`group page-panel spring-hover relative min-h-[300px] cursor-pointer rounded-[2rem] border-2 border-dashed p-6 sm:p-9 ${dropzoneStateClass}`}
+        className={`group page-panel spring-hover relative min-h-[300px] cursor-pointer rounded-[1.15rem] border-2 border-dashed p-6 sm:p-9 ${dropzoneStateClass}`}
       >
         <input {...getInputProps()} />
 
-        <div className="pointer-events-none absolute right-4 top-4 hidden items-center gap-2 rounded-full border border-foreground/15 bg-card/80 px-3 py-1.5 text-[0.64rem] uppercase tracking-[0.16em] text-foreground/60 sm:inline-flex">
+        <div className="pointer-events-none absolute right-4 top-4 hidden items-center gap-2 rounded-lg border border-foreground/15 bg-card/80 px-3 py-1.5 text-[0.64rem] uppercase tracking-[0.16em] text-foreground/60 sm:inline-flex">
           <ShieldCheck className="h-3.5 w-3.5 text-accent" />
           Session-only parse
         </div>
@@ -117,7 +117,7 @@ const UploadSection = () => {
               onPointerDown={stopDropzoneClick}
               onMouseDown={stopDropzoneClick}
               onKeyDown={stopDropzoneClick}
-              className="lift-ring spring-hover inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground"
+              className="lift-ring spring-hover inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground"
             >
               Open Live Preview
               <ArrowRight className="h-4 w-4" />
@@ -140,7 +140,7 @@ const UploadSection = () => {
           </div>
         ) : (
           <div className="flex min-h-[250px] flex-col items-center justify-center gap-4 text-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-foreground/15 bg-card text-primary transition-transform group-hover:scale-110">
+            <span className="flex h-16 w-16 items-center justify-center rounded-xl border border-foreground/15 bg-card text-primary transition-transform group-hover:scale-110">
               <Upload className="h-7 w-7" />
             </span>
             <div>

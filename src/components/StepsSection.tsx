@@ -41,16 +41,16 @@ const StepsSection = () => {
         {steps.map((step, index) => (
           <article
             key={step.title}
-            className="page-panel spring-hover rounded-[1.6rem] border px-5 py-6"
+            className="page-panel spring-hover rounded-[1rem] border px-5 py-6"
           >
             <div className="mb-5 flex items-center justify-between">
-              <span className="mono rounded-full border border-foreground/15 px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.16em] text-foreground/60">
+              <span className="mono rounded-lg border border-foreground/15 px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.16em] text-foreground/60">
                 {step.cue}
               </span>
               <span className="mono text-xs text-primary">{`0${index + 1}`}</span>
             </div>
 
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-accent-foreground">
               <step.icon className="h-5 w-5" />
             </div>
 

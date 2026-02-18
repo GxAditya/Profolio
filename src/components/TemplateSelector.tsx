@@ -60,7 +60,7 @@ const TemplateSelector = ({
               type="button"
               onClick={() => onChange(template.name)}
               className={cn(
-                "spring-hover rounded-2xl border bg-card px-4 py-3 text-left transition-colors",
+                "spring-hover rounded-xl border bg-card px-4 py-3 text-left transition-colors",
                 selected
                   ? "border-primary/70 bg-primary/10 shadow-[0_10px_24px_rgba(153,64,35,0.16)]"
                   : "border-foreground/12 hover:border-primary/45"
@@ -69,7 +69,7 @@ const TemplateSelector = ({
               <div className="flex items-start gap-3">
                 <span
                   className={cn(
-                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border",
+                    "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
                     selected
                       ? "border-primary/30 bg-primary text-primary-foreground"
                       : "border-foreground/15 bg-card text-foreground/70"

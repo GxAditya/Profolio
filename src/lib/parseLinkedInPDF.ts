@@ -14,6 +14,7 @@ const DEFAULT_PROFILE: LinkedInProfile = {
   email: "email@example.com",
   location: "",
   linkedinUrl: "",
+  connectLinks: [],
   summary: "Add your professional summary here.",
   experience: [
     {
@@ -26,6 +27,12 @@ const DEFAULT_PROFILE: LinkedInProfile = {
   skills: ["Add your skills here"],
   certifications: [],
   education: [],
+  sectionTitles: {
+    skills: "Skills",
+    experience: "Experience",
+    education: "Education",
+    certifications: "Certifications",
+  },
   customSections: [],
   sectionOrder: ["hero", "skills", "experience", "education", "certifications"],
 };
@@ -874,6 +881,9 @@ function parseLinkedInText(text: string): LinkedInProfile {
   );
   const email = extractEmail(text);
   const linkedinUrl = extractLinkedinUrl(text, lines);
+  const connectLinks = linkedinUrl
+    ? [{ id: "connect-linkedin", label: "LinkedIn", url: linkedinUrl }]
+    : [];
   const skills = extractSkills(lines, sections);
   const certifications = extractCertifications(lines, sections);
   const summary = extractSummary(lines, sections, certifications, skills);
@@ -886,11 +896,13 @@ function parseLinkedInText(text: string): LinkedInProfile {
     email,
     location: locationFromHeader || extractLocation(lines, sections),
     linkedinUrl: linkedinUrl || undefined,
+    connectLinks,
     summary,
     experience: experience.length > 0 ? experience : DEFAULT_PROFILE.experience,
     skills: skills.length > 0 ? skills : DEFAULT_PROFILE.skills,
     certifications,
     education,
+    sectionTitles: { ...(DEFAULT_PROFILE.sectionTitles ?? {}) },
     customSections: [],
     sectionOrder: [...(DEFAULT_PROFILE.sectionOrder ?? [])],
   };
