@@ -25,9 +25,11 @@ const Index = () => {
         <HeroSection hasProfile={Boolean(profile)} />
         <StepsSection />
         <UploadSection />
+      </div>
 
-        {profile && (
-          <section className="mx-auto max-w-6xl px-6 pb-10">
+      {profile && (
+        <section className="pb-10">
+          <div className="mx-auto max-w-6xl px-6">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="kicker text-foreground/55">Template Lab</p>
@@ -36,27 +38,24 @@ const Index = () => {
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-relaxed text-foreground/70">
-                This is a direct rendering of your parsed profile. Switch styles and continue in
-                live preview for inline edits.
+                Template selector sits above your rendered page preview.
               </p>
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
-              <aside className="page-panel rounded-[1rem] p-5 sm:p-6 lg:sticky lg:top-6 lg:h-fit">
-                <TemplateSelector
-                  active={activeTemplate}
-                  onChange={setActiveTemplate}
-                  label="Portfolio template"
-                />
-              </aside>
-
-              <div className="page-panel-strong rounded-[1.15rem] p-4 sm:p-5">
-                <ActiveComponent profile={profile} />
-              </div>
+            <div className="page-panel rounded-[1rem] p-5 sm:p-6">
+              <TemplateSelector
+                active={activeTemplate}
+                onChange={setActiveTemplate}
+                label="Portfolio template"
+              />
             </div>
-          </section>
-        )}
-      </div>
+          </div>
+
+          <div className="mt-6 w-full">
+            <ActiveComponent profile={profile} sectionStyle="plain" />
+          </div>
+        </section>
+      )}
     </div>
   );
 };

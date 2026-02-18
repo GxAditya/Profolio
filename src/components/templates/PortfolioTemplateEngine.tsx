@@ -100,7 +100,7 @@ const BASE_SECTION_ORDER = [
 
 const palettes: Record<PortfolioTheme, ThemePalette> = {
   neumorphism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[1.2rem] border border-[#d8dfeb] bg-[#e8edf4] text-[#273447] shadow-[26px_26px_56px_#c4cedb,-20px_-20px_44px_#f8fbff]",
+    page: "relative min-h-screen w-full overflow-hidden bg-[#e8edf4] text-[#273447]",
     ambience:
       "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_8%,rgba(255,255,255,0.9),transparent_38%),radial-gradient(circle_at_86%_0%,rgba(206,217,235,0.62),transparent_36%),linear-gradient(180deg,rgba(237,242,249,0.88),rgba(228,236,246,0.88))]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
@@ -157,7 +157,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#c8d4e3] bg-[#edf2f8] text-[#4d617d] shadow-[inset_3px_3px_6px_#ced8e6,inset_-3px_-3px_6px_#f8fbff] hover:text-[#32445d]",
   },
   neobrutalism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[0.7rem] border-4 border-black bg-[#ffe65a] text-black shadow-[14px_14px_0_#000]",
+    page: "relative min-h-screen w-full overflow-hidden bg-[#ffe65a] text-black",
     ambience:
       "pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.3)_0%,transparent_45%),repeating-linear-gradient(45deg,rgba(0,0,0,0.04)_0,rgba(0,0,0,0.04)_8px,transparent_8px,transparent_16px)]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",
@@ -214,7 +214,7 @@ const palettes: Record<PortfolioTheme, ThemePalette> = {
       "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 border-black bg-white text-black hover:bg-[#ffe9a9]",
   },
   glassmorphism: {
-    page: "relative mx-auto min-h-[980px] w-full overflow-hidden rounded-[1.2rem] border border-white/20 bg-[linear-gradient(145deg,#0f172d,#111b39,#1b2b4d)] text-[#f3f8ff] shadow-[0_35px_90px_rgba(7,13,29,0.72)]",
+    page: "relative min-h-screen w-full overflow-hidden bg-[linear-gradient(145deg,#0f172d,#111b39,#1b2b4d)] text-[#f3f8ff]",
     ambience:
       "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(163,211,255,0.42),transparent_38%),radial-gradient(circle_at_86%_14%,rgba(216,142,255,0.3),transparent_40%),radial-gradient(circle_at_52%_100%,rgba(98,238,217,0.22),transparent_36%)]",
     contentWrap: "relative px-6 pb-9 pt-6 sm:px-9 sm:pt-7",

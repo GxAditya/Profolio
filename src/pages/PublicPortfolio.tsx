@@ -126,17 +126,12 @@ const PublicPortfolio = () => {
   const ActiveTemplate = templateMap[templateName];
 
   return (
-    <div className="paper-grain relative min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="pointer-events-none absolute inset-0 dot-field opacity-[0.2]" aria-hidden="true" />
-      <div className="relative mx-auto max-w-[1320px] px-4 py-8 sm:px-6 sm:py-10">
-        <ActiveTemplate
-          profile={portfolio.data}
-          editable={false}
-          showAddSectionControls={false}
-          sectionStyle="plain"
-        />
-      </div>
-    </div>
+    <ActiveTemplate
+      profile={portfolio.data}
+      editable={false}
+      showAddSectionControls={false}
+      sectionStyle="plain"
+    />
   );
 };
 
