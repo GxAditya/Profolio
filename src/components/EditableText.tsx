@@ -1,4 +1,4 @@
-import type { CSSProperties, ElementType, FormEvent, KeyboardEvent } from "react";
+import { useLayoutEffect, useRef, type CSSProperties, type ElementType, type FormEvent, type KeyboardEvent } from "react";
 import { cn } from "@/lib/utils";
 
 interface EditableTextProps {
@@ -24,10 +24,29 @@ const EditableText = ({
   onValueChange,
   style,
 }: EditableTextProps) => {
+  const editableElementRef = useRef<HTMLElement | null>(null);
   const displayValue = value || (editable ? placeholder ?? "" : "");
+
+  useLayoutEffect(() => {
+    if (!editable) return;
+
+    const element = editableElementRef.current;
+    if (!element) return;
+
+    if ((element.textContent ?? "") !== displayValue) {
+      element.textContent = displayValue;
+    }
+  }, [displayValue, editable]);
 
   return (
     <Component
+      ref={
+        editable
+          ? ((node: HTMLElement | null) => {
+              editableElementRef.current = node;
+            })
+          : undefined
+      }
       className={cn(
         className,
         editable && "rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
@@ -48,7 +67,7 @@ const EditableText = ({
         }
       }}
     >
-      {displayValue}
+      {!editable ? displayValue : null}
     </Component>
   );
 };
