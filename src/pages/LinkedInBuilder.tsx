@@ -102,6 +102,10 @@ const LinkedInBuilder = () => {
                   <h2 className="mt-2 text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
                     Pick a template, edit inline
                   </h2>
+                  <p className="mt-2 text-sm text-foreground/45">
+                    To export code, open <span className="font-semibold text-foreground/75">Full Preview</span> and
+                    click <span className="font-semibold text-foreground/75">Export Code</span>.
+                  </p>
                 </div>
                 <Link
                   to="/preview"
