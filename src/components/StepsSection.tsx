@@ -5,9 +5,9 @@ import {
   FileStack,
   Github,
   Palette,
-  type LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { deploymentGuides } from "@/lib/deploymentGuides";
 
 const outcomes = [
   {
@@ -83,51 +83,6 @@ const workflowSteps = [
     title: "Export & deploy",
     description:
       "Download your portfolio as a standalone HTML file. Drop it on GitHub Pages, Netlify, or any host — no build step needed.",
-  },
-];
-
-const VERCEL_LOGO_SVG =
-  "https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-black.svg";
-const NETLIFY_LOGO_SVG =
-  "https://www.netlify.com/assets/logos/monogram/lightmode/logo-netlify-monogram-fullcolor-lightmode.svg";
-
-interface DeployGuide {
-  platform: string;
-  icon?: LucideIcon;
-  logoSrc?: string;
-  logoAlt?: string;
-  steps: string[];
-}
-
-const deployGuides: DeployGuide[] = [
-  {
-    platform: "GitHub Pages",
-    icon: Github,
-    steps: [
-      "From Profolio export, rename the downloaded file to index.html.",
-      "Create a GitHub repository and upload index.html to the main branch root.",
-      "Go to Settings -> Pages, choose Deploy from branch, then publish from main / (root).",
-    ],
-  },
-  {
-    platform: "Vercel",
-    logoSrc: VERCEL_LOGO_SVG,
-    logoAlt: "Vercel logo",
-    steps: [
-      "Push your exported index.html to a GitHub repository.",
-      "In Vercel, click New Project and import that repository.",
-      "Deploy with no build command, then connect your custom domain in Project Settings.",
-    ],
-  },
-  {
-    platform: "Netlify",
-    logoSrc: NETLIFY_LOGO_SVG,
-    logoAlt: "Netlify logo",
-    steps: [
-      "Create a repo with index.html and connect it via Add new site -> Import from Git.",
-      "Set the publish directory to / (root) and deploy.",
-      "Add your custom domain in Domain management and enable HTTPS.",
-    ],
   },
 ];
 
@@ -275,7 +230,7 @@ const StepsSection = () => {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
-          {deployGuides.map((guide) => (
+          {deploymentGuides.map((guide) => (
             <article
               key={guide.platform}
               className="group rounded-2xl border border-foreground/[0.08] bg-card/35 p-6 transition-all duration-300 hover:border-foreground/[0.14] hover:bg-card/55"
@@ -291,8 +246,8 @@ const StepsSection = () => {
                       loading="lazy"
                     />
                   </span>
-                ) : guide.icon ? (
-                  <guide.icon className="h-5 w-5 text-primary/60" />
+                ) : guide.id === "github-pages" ? (
+                  <Github className="h-5 w-5 text-primary/60" />
                 ) : null}
               </div>
 
@@ -378,7 +333,7 @@ const StepsSection = () => {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="mt-20 flex flex-col items-center gap-3 border-t border-foreground/[0.06] pt-8 text-center">
+      <footer className="mt-14 flex flex-col items-center gap-2 border-t border-foreground/[0.06] pt-5 text-center">
         <div className="flex items-center gap-2">
           <img src="/profolio-logo.png" alt="Profolio" className="h-6 w-6 rounded-md" />
           <span className="text-sm font-bold tracking-tight">profolio</span>

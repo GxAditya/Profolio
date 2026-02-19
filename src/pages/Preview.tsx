@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { ArrowLeft, Download } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowLeft, Download, Github, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
@@ -11,6 +11,7 @@ import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import RetroTemplate from "@/components/templates/RetroTemplate";
 import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
+import { deploymentGuides } from "@/lib/deploymentGuides";
 import { exportPortfolioAsHtml } from "@/lib/exportPortfolio";
 import type { TemplateName } from "@/types/template";
 
@@ -51,6 +52,7 @@ const tbSecondary =
 const Preview = () => {
   const { profile, activeTemplate, setActiveTemplate } = useResume();
   const portfolioRef = useRef<HTMLDivElement>(null);
+  const [showDeployGuide, setShowDeployGuide] = useState(false);
 
   const ActiveComponent = templateMap[activeTemplate];
 
@@ -58,6 +60,7 @@ const Preview = () => {
     if (!portfolioRef.current) return;
     const name = profile?.fullName || "my";
     exportPortfolioAsHtml(portfolioRef.current, name);
+    setShowDeployGuide(true);
   };
 
   /* ── Empty state ── */
@@ -133,6 +136,74 @@ const Preview = () => {
     </div>
   );
 
+  const renderDeployGuidePopup = () => {
+    if (!showDeployGuide) return null;
+
+    return (
+      <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[70] flex justify-center px-4 sm:bottom-5">
+        <section className="pointer-events-auto w-full max-w-5xl max-h-[78vh] overflow-y-auto rounded-2xl border border-white/[0.12] bg-[#0c0c12]/95 shadow-[0_24px_64px_rgba(0,0,0,0.55)] backdrop-blur-xl animate-in fade-in slide-in-from-bottom-6 duration-300">
+          <div className="flex items-start justify-between gap-3 border-b border-white/[0.1] px-5 py-4">
+            <div>
+              <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-primary/75">
+                Deployment Guide
+              </p>
+              <h3 className="mt-1 text-base font-bold tracking-tight text-white">
+                Code exported. Publish it now.
+              </h3>
+              <p className="mt-1 text-xs leading-relaxed text-white/60">
+                Follow these quick steps to deploy your exported{" "}
+                <code className="rounded bg-white/[0.08] px-1 py-0.5 text-white/80">index.html</code>.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowDeployGuide(false)}
+              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.14] bg-white/[0.05] text-white/75 transition-colors hover:bg-white/[0.12] hover:text-white"
+              aria-label="Close deployment guide"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="grid gap-3 p-4 md:grid-cols-3">
+            {deploymentGuides.map((guide) => (
+              <article
+                key={guide.platform}
+                className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3.5"
+              >
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-sm font-semibold tracking-tight text-white">{guide.platform}</p>
+                  {guide.logoSrc ? (
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-white p-[3px]">
+                      <img
+                        src={guide.logoSrc}
+                        alt={guide.logoAlt ?? `${guide.platform} logo`}
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                      />
+                    </span>
+                  ) : guide.id === "github-pages" ? (
+                    <Github className="h-4 w-4 text-white/75" />
+                  ) : null}
+                </div>
+                <ol className="space-y-1.5">
+                  {guide.steps.map((step, index) => (
+                    <li key={step} className="flex items-start gap-2 text-[0.76rem] leading-relaxed text-white/65">
+                      <span className="mt-[2px] inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border border-primary/35 bg-primary/[0.15] text-[0.6rem] font-semibold text-primary">
+                        {index + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
+  };
+
   return (
     <>
       {renderToolbar()}
@@ -144,6 +215,7 @@ const Preview = () => {
           sectionStyle="plain"
         />
       </div>
+      {renderDeployGuidePopup()}
     </>
   );
 };
