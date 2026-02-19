@@ -1354,30 +1354,8 @@ const PortfolioTemplateEngine = ({
       <div className={palette.ambience} />
 
       <div className={palette.contentWrap}>
-        <header className={palette.header}>
-          <EditableText
-            as="h1"
-            className={palette.headingName}
-            value={profile.fullName}
-            editable={canEdit}
-            multiline={false}
-            onValueChange={(value) => updateField("fullName", value)}
-          />
-
-          <div className={cn("flex flex-wrap items-center gap-1", palette.headingMeta)}>
-            <EditableText
-              as="span"
-              value={profile.location ?? ""}
-              editable={canEdit}
-              multiline={false}
-              placeholder="Location"
-              onValueChange={(value) => updateField("location", value)}
-            />
-          </div>
-        </header>
-
         {canEdit && showAddSectionControls && (
-          <section className={palette.controlPanel}>
+          <section className={cn(palette.controlPanel, "mb-6 mt-0")}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className={palette.controlPanelTitle}>Add Section</h2>
               <div className="flex flex-wrap items-center gap-2">
@@ -1581,6 +1559,28 @@ const PortfolioTemplateEngine = ({
             </form>
           </section>
         )}
+
+        <header className={palette.header}>
+          <EditableText
+            as="h1"
+            className={palette.headingName}
+            value={profile.fullName}
+            editable={canEdit}
+            multiline={false}
+            onValueChange={(value) => updateField("fullName", value)}
+          />
+
+          <div className={cn("flex flex-wrap items-center gap-1", palette.headingMeta)}>
+            <EditableText
+              as="span"
+              value={profile.location ?? ""}
+              editable={canEdit}
+              multiline={false}
+              placeholder="Location"
+              onValueChange={(value) => updateField("location", value)}
+            />
+          </div>
+        </header>
 
         <div className={sectionStackClassName}>
           {visibleSectionIds.map((sectionId) => {
