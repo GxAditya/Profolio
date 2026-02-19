@@ -98,6 +98,40 @@ const Index = () => {
             text: "GitHub import is planned as the next release and is currently marked as coming soon.",
           },
         },
+        {
+          "@type": "Question",
+          name: "How do I deploy my exported portfolio to GitHub Pages, Vercel, or Netlify?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Export your portfolio as HTML, publish index.html on GitHub Pages, Vercel, or Netlify, and optionally attach a custom domain.",
+          },
+        },
+      ],
+    });
+
+    upsertJsonLd("profolio-deploy-howto-jsonld", {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: "How to deploy a Profolio export",
+      description:
+        "Deploy your exported Profolio HTML on GitHub Pages, Vercel, or Netlify in a few steps.",
+      totalTime: "PT10M",
+      step: [
+        {
+          "@type": "HowToStep",
+          name: "Export your portfolio HTML",
+          text: "Use Profolio full preview and export code, then save the file as index.html.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Deploy on your static host",
+          text: "Publish index.html on GitHub Pages, Vercel, or Netlify.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Connect your custom domain",
+          text: "Optionally connect a custom domain in your hosting provider settings.",
+        },
       ],
     });
   }, []);

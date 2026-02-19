@@ -39,8 +39,14 @@ const HeroSection = () => {
             How it Works
           </a>
           <a
-            href="#faq"
+            href="#deployment"
             className="hidden text-[0.84rem] text-foreground/40 transition-colors duration-200 hover:text-foreground md:block"
+          >
+            Deploy
+          </a>
+          <a
+            href="#faq"
+            className="hidden text-[0.84rem] text-foreground/40 transition-colors duration-200 hover:text-foreground lg:block"
           >
             FAQ
           </a>

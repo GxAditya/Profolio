@@ -3,7 +3,10 @@ import {
   Code2,
   Download,
   FileStack,
+  Github,
+  Globe,
   Palette,
+  Rocket,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -81,6 +84,36 @@ const workflowSteps = [
     title: "Export & deploy",
     description:
       "Download your portfolio as a standalone HTML file. Drop it on GitHub Pages, Netlify, or any host — no build step needed.",
+  },
+];
+
+const deployGuides = [
+  {
+    platform: "GitHub Pages",
+    icon: Github,
+    steps: [
+      "From Profolio export, rename the downloaded file to index.html.",
+      "Create a GitHub repository and upload index.html to the main branch root.",
+      "Go to Settings -> Pages, choose Deploy from branch, then publish from main / (root).",
+    ],
+  },
+  {
+    platform: "Vercel",
+    icon: Rocket,
+    steps: [
+      "Push your exported index.html to a GitHub repository.",
+      "In Vercel, click New Project and import that repository.",
+      "Deploy with no build command, then connect your custom domain in Project Settings.",
+    ],
+  },
+  {
+    platform: "Netlify",
+    icon: Globe,
+    steps: [
+      "Create a repo with index.html and connect it via Add new site -> Import from Git.",
+      "Set the publish directory to / (root) and deploy.",
+      "Add your custom domain in Domain management and enable HTTPS.",
+    ],
   },
 ];
 
@@ -209,6 +242,45 @@ const StepsSection = () => {
               <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-foreground/40">
                 {step.description}
               </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Deployment Guide ── */}
+      <section id="deployment" className="landing-reveal mt-28">
+        <div className="mb-10">
+          <p className="kicker-landing text-primary/60">Deployment Guide</p>
+          <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
+            Deploy your exported HTML in minutes.
+          </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-foreground/40">
+            Profolio exports a standalone HTML file, so you can publish fast on static hosts.
+            Pick your platform and follow the exact steps below.
+          </p>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-3">
+          {deployGuides.map((guide) => (
+            <article
+              key={guide.platform}
+              className="group rounded-2xl border border-foreground/[0.08] bg-card/35 p-6 transition-all duration-300 hover:border-foreground/[0.14] hover:bg-card/55"
+            >
+              <div className="mb-5 flex items-center justify-between">
+                <h3 className="text-lg font-bold tracking-tight">{guide.platform}</h3>
+                <guide.icon className="h-5 w-5 text-primary/60" />
+              </div>
+
+              <ol className="space-y-2.5">
+                {guide.steps.map((step, index) => (
+                  <li key={step} className="flex items-start gap-2.5 text-sm leading-relaxed text-foreground/45">
+                    <span className="mt-[2px] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/[0.08] text-[0.68rem] font-semibold text-primary/85">
+                      {index + 1}
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
             </article>
           ))}
         </div>
