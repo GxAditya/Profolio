@@ -1,16 +1,20 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { LinkedInProfile } from "@/types/linkedin";
+import { DEFAULT_TEMPLATE, type TemplateName } from "@/types/template";
 
 interface ResumeContextType {
   profile: LinkedInProfile | null;
   setProfile: (profile: LinkedInProfile) => void;
   updateProfile: (updater: (prev: LinkedInProfile) => LinkedInProfile) => void;
+  activeTemplate: TemplateName;
+  setActiveTemplate: (template: TemplateName) => void;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export const ResumeProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<LinkedInProfile | null>(null);
+  const [activeTemplate, setActiveTemplate] = useState<TemplateName>(DEFAULT_TEMPLATE);
 
   const updateProfile = (updater: (prev: LinkedInProfile) => LinkedInProfile) => {
     setProfile((prev) => {
@@ -20,7 +24,9 @@ export const ResumeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ResumeContext.Provider value={{ profile, setProfile, updateProfile }}>
+    <ResumeContext.Provider
+      value={{ profile, setProfile, updateProfile, activeTemplate, setActiveTemplate }}
+    >
       {children}
     </ResumeContext.Provider>
   );

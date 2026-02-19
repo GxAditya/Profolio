@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ArrowLeft, Expand } from "lucide-react";
 import { Link } from "react-router-dom";
 import UploadSection from "@/components/UploadSection";
-import TemplateSelector, { type TemplateName } from "@/components/TemplateSelector";
+import TemplateSelector from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
@@ -13,6 +13,7 @@ import FlatDesignTemplate from "@/components/templates/FlatDesignTemplate";
 import RetroTemplate from "@/components/templates/RetroTemplate";
 import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
+import type { TemplateName } from "@/types/template";
 
 const templateMap = {
   neumorphism: NeumorphismTemplate,
@@ -27,8 +28,7 @@ const templateMap = {
 } as const;
 
 const LinkedInBuilder = () => {
-  const { profile, updateProfile } = useResume();
-  const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
+  const { profile, updateProfile, activeTemplate, setActiveTemplate } = useResume();
   const ActiveComponent = templateMap[activeTemplate];
 
   useEffect(() => {

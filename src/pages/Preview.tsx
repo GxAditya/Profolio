@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { ArrowLeft, Download } from "lucide-react";
 import { Link } from "react-router-dom";
-import { type TemplateName } from "@/components/TemplateSelector";
 import ClaymorphismTemplate from "@/components/templates/ClaymorphismTemplate";
 import NeumorphismTemplate from "@/components/templates/NeumorphismTemplate";
 import NeobrutalismTemplate from "@/components/templates/NeobrutalismTemplate";
@@ -13,6 +12,7 @@ import RetroTemplate from "@/components/templates/RetroTemplate";
 import CyberpunkTemplate from "@/components/templates/CyberpunkTemplate";
 import { useResume } from "@/context/ResumeContext";
 import { exportPortfolioAsHtml } from "@/lib/exportPortfolio";
+import type { TemplateName } from "@/types/template";
 
 const templateMap = {
   neumorphism: NeumorphismTemplate,
@@ -49,9 +49,8 @@ const tbSecondary =
   "inline-flex items-center gap-2 rounded-lg border border-white/[0.15] bg-white/[0.07] px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/80 transition-all duration-200 hover:border-white/25 hover:bg-white/[0.12]";
 
 const Preview = () => {
-  const { profile } = useResume();
+  const { profile, activeTemplate, setActiveTemplate } = useResume();
   const portfolioRef = useRef<HTMLDivElement>(null);
-  const [activeTemplate, setActiveTemplate] = useState<TemplateName>("neumorphism");
 
   const ActiveComponent = templateMap[activeTemplate];
 

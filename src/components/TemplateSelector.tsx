@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
+import type { TemplateName } from "@/types/template";
 
-export type TemplateName = "neumorphism" | "neobrutalism" | "glassmorphism" | "claymorphism" | "minimalism" | "material" | "flatdesign" | "retro" | "cyberpunk";
+export type { TemplateName } from "@/types/template";
 
 interface Props {
   active: TemplateName;
