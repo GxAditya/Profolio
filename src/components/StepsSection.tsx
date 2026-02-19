@@ -4,9 +4,8 @@ import {
   Download,
   FileStack,
   Github,
-  Globe,
   Palette,
-  Rocket,
+  type LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -87,7 +86,20 @@ const workflowSteps = [
   },
 ];
 
-const deployGuides = [
+const VERCEL_LOGO_SVG =
+  "https://assets.vercel.com/image/upload/front/assets/design/vercel-triangle-black.svg";
+const NETLIFY_LOGO_SVG =
+  "https://www.netlify.com/assets/logos/monogram/lightmode/logo-netlify-monogram-fullcolor-lightmode.svg";
+
+interface DeployGuide {
+  platform: string;
+  icon?: LucideIcon;
+  logoSrc?: string;
+  logoAlt?: string;
+  steps: string[];
+}
+
+const deployGuides: DeployGuide[] = [
   {
     platform: "GitHub Pages",
     icon: Github,
@@ -99,7 +111,8 @@ const deployGuides = [
   },
   {
     platform: "Vercel",
-    icon: Rocket,
+    logoSrc: VERCEL_LOGO_SVG,
+    logoAlt: "Vercel logo",
     steps: [
       "Push your exported index.html to a GitHub repository.",
       "In Vercel, click New Project and import that repository.",
@@ -108,7 +121,8 @@ const deployGuides = [
   },
   {
     platform: "Netlify",
-    icon: Globe,
+    logoSrc: NETLIFY_LOGO_SVG,
+    logoAlt: "Netlify logo",
     steps: [
       "Create a repo with index.html and connect it via Add new site -> Import from Git.",
       "Set the publish directory to / (root) and deploy.",
@@ -268,7 +282,18 @@ const StepsSection = () => {
             >
               <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-lg font-bold tracking-tight">{guide.platform}</h3>
-                <guide.icon className="h-5 w-5 text-primary/60" />
+                {guide.logoSrc ? (
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-white p-[3px]">
+                    <img
+                      src={guide.logoSrc}
+                      alt={guide.logoAlt ?? `${guide.platform} logo`}
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                    />
+                  </span>
+                ) : guide.icon ? (
+                  <guide.icon className="h-5 w-5 text-primary/60" />
+                ) : null}
               </div>
 
               <ol className="space-y-2.5">
