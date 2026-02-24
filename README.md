@@ -1,4 +1,15 @@
-# Profolio
+
+<div align="center">
+	<img src="public/profolio-logo.png" alt="Profolio Logo" width="200" />
+</div>
+
+<h1 align="center">Profolio</h1>
+
+<div align="center">
+	<a href="LICENSE">
+		<img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License">
+	</a>
+</div>
 
 **PDF in. Portfolio out.**
 
