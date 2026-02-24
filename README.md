@@ -39,7 +39,7 @@ Profolio turns your LinkedIn PDF export into a polished, live developer portfoli
 
 ```sh
 # 1. Clone the repo
-git clone <YOUR_GIT_URL>
+git clone https://github.com/GxAditya/Profolio
 cd profolio
 
 # 2. Install dependencies (Bun recommended)
