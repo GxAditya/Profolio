@@ -67,23 +67,25 @@ src/
 └── types/              # TypeScript types
 ```
 
-## Available Scripts
 
-| Command | Description |
-|---|---|
-| `bun run dev` | Start development server |
-| `bun run build` | Production build |
-| `bun run preview` | Preview production build |
-| `bun run test` | Run Vitest tests |
-| `bun run lint` | ESLint check |
+## How to Deploy Your Exported Portfolio
 
-## Deployment
+After building your portfolio and exporting it as HTML:
 
-Deploy the production build (`bun run build` → `dist/`) to any static host:
+1. **Export your portfolio HTML**
+	- Use Profolio's export feature to download your portfolio as a single `index.html` file.
 
-- **Vercel** — `vercel deploy`
-- **Netlify** — drag-and-drop the `dist/` folder
-- **GitHub Pages** — push `dist/` to `gh-pages` branch
+2. **Deploy on your static host**
+	- **GitHub Pages:** Create a new repository, upload `index.html`, and enable GitHub Pages in repository settings.
+	- **Vercel:** Drag and drop your `index.html` into a new Vercel project or deploy via the Vercel dashboard.
+	- **Netlify:** Drag and drop your `index.html` onto the Netlify dashboard or use the Netlify CLI.
+
+3. **Connect your custom domain (optional)**
+	- Follow your hosting provider's instructions to add a custom domain.
+
+Your exported portfolio is a fully static HTML file and can be hosted anywhere that serves static files.
+
+---
 
 ## License
 
