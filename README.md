@@ -86,7 +86,3 @@ After building your portfolio and exporting it as HTML:
 Your exported portfolio is a fully static HTML file and can be hosted anywhere that serves static files.
 
 ---
-
-## License
-
-MIT
